@@ -16,7 +16,7 @@ class CreateLigasTable extends Migration
         Schema::create('ligas', function (Blueprint $table) {
             $table->integer('id')->autoIncrement();
             $table->string('nome');
-            $table->string('cc',3);
+            $table->string('cc',3)->nullable();
             $table->integer('possui_tabela');
             $table->integer('is_top_list');
         });

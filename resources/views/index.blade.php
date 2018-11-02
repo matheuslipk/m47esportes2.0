@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container-fluid">
-
     @for($i=0; $i<3; $i++)
         <div id="accordion{{$i}}">
             <div class="card">
@@ -42,9 +41,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-        
+        </div>        
     @endfor
+    </div>
+
 
         <!-- O Modal -->
         <div class="modal" id="myModal">

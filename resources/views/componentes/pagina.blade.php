@@ -15,6 +15,7 @@
 
 </head>
 <body>
+    @include('componentes.navbar')
 	@hasSection('content')
 		@yield('content')
 	@endif

@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
+date_default_timezone_set('America/Fortaleza');
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class MinhaClasse extends Controller{
 	
+
+
     public static function get_token(){
     	return "5054-tkgWmwK03HzSx6";
     }
@@ -25,5 +29,9 @@ class MinhaClasse extends Controller{
         );
         $contexto = stream_context_create($opts);
         return file_get_contents($url, NULL, $contexto);   
+    }
+
+   public static function timestamp_to_data_mysql($timestamp){
+       return date("Y-m-d H:i:s", $timestamp);
     }
 }
