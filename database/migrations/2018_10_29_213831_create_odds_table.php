@@ -26,6 +26,7 @@ class CreateOddsTable extends Migration
             $table->foreign('evento_id')->references('id')->on('eventos');
             $table->foreign('cat_palpite_id')->references('id')->on('cat_palpites');
             $table->foreign('tipo_palpite_id')->references('id')->on('tipo_palpites');
+            $table->unique(['evento_id', 'tipo_palpite_id']);
         });
     }
 

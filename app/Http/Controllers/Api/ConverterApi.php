@@ -10,18 +10,20 @@ class ConverterApi extends Controller{
 
    public static function converterOdds($odds){
       $oddsConvertidas = new \stdClass;
+      $oddsConvertidas->evento_id = $odds->event_id;
+      $oddsConvertidas->FI_365 = $odds->FI;
 
       if(isset($odds->main->sp->full_time_result)){         
-         $tempoCompleto = $odds->main->sp->full_time_result;         
-         $oddsConvertidas->vencedor_encontro = ConverterApi::vencedorEncontro($tempoCompleto);
+         $tempoCompleto = $odds->main->sp->full_time_result;      
+         $oddsConvertidas->cat_palpites[]= ConverterApi::vencedorEncontro($tempoCompleto);
       }
       if(isset($odds->main->sp->double_chance)){
          $duplaChance = $odds->main->sp->double_chance;
-         $oddsConvertidas->dupla_chance = ConverterApi::duplaChance($duplaChance);
+         $oddsConvertidas->cat_palpites[] = ConverterApi::duplaChance($duplaChance);
       }      
       if(isset($odds->main->sp->both_teams_to_score)){
          $ambosMarcam = $odds->main->sp->both_teams_to_score;
-         $oddsConvertidas->ambos_marcam = ConverterApi::ambosMarcam($ambosMarcam);
+         $oddsConvertidas->cat_palpites[] = ConverterApi::ambosMarcam($ambosMarcam);
       }
       // if(isset($odds->goals->sp->alternative_total_goals)){
       //    $oddsConvertidas->cat_palpite[5] = ConverterApi::quantGols($odds);
@@ -29,7 +31,7 @@ class ConverterApi extends Controller{
 
       if(isset($odds->main->sp->result_both_teams_to_score)){
          $resultadoFinalEAmbas = $odds->main->sp->result_both_teams_to_score;
-         $oddsConvertidas->result_final_e_ambas = ConverterApi::resultFinalEAmbas($resultadoFinalEAmbas);
+         $oddsConvertidas->cat_palpites[] = ConverterApi::resultFinalEAmbas($resultadoFinalEAmbas);
       }
 
       return $oddsConvertidas;
@@ -108,7 +110,7 @@ class ConverterApi extends Controller{
 
    private static function ambosMarcam($ambos){
       $obj = new \stdClass;
-      $obj->categoria_id = 2;
+      $obj->categoria_id = 5;
       $obj->nome = "Ambos Marcam";
       $obj->tempo = "90 min";
 
