@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 date_default_timezone_set('America/Fortaleza');
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class MinhaClasse extends Controller{
@@ -34,4 +33,5 @@ class MinhaClasse extends Controller{
    public static function timestamp_to_data_mysql($timestamp){
        return date("Y-m-d H:i:s", $timestamp);
     }
+ 
 }

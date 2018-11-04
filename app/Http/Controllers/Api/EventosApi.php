@@ -6,9 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\DataBase\QueryException;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\MinhaClasse;
+use App\Http\Controllers\Api\ConverterApi;
 use App\Evento;
-use App\Liga;
-use App\Time;
 
 class EventosApi extends Controller
 {
@@ -35,9 +34,9 @@ class EventosApi extends Controller
 	   $arrayEventos = json_decode($resultado);
 
 
-	   foreach ($arrayEventos->results as $eventoApi) {
-	   	$this->cadastrar_evento($eventoApi, $variaveis["sport_id"]);
-	   }
+	   	foreach ($arrayEventos->results as $eventoApi) {
+	   		$this->cadastrar_evento($eventoApi, $variaveis["sport_id"]);
+	  	}
 
 	   return $resultado;
 	}
@@ -49,9 +48,12 @@ class EventosApi extends Controller
 	   $variaveis["FI"] = $request->input('FI');
 	   $variaveis["event_id"] = $request->input('event_id');
 	   
-	   $resultado = MinhaClasse::fazer_requisicao($url, $variaveis, $metodo); 
-	   
-	   return $resultado;
+	   $odds = MinhaClasse::fazer_requisicao($url, $variaveis, $metodo); 
+	   $objetoOdds = json_decode($odds);
+
+	   $teste = $this->inserir_odds($objetoOdds->results[0], $variaveis['event_id']);
+	   // return $odds;
+	   return json_encode( (array) $teste);
 	}
 
 	function resultado(Request $request){
@@ -68,22 +70,25 @@ class EventosApi extends Controller
 
 
 
+	private function inserir_odds($odds, $event_id){
+		$oddsConvertidas = ConverterApi::converterOdds($odds);
+		return $oddsConvertidas;
+	}
+
 	private function cadastrar_evento($eventoApi, $esporte_id){
 		try{
 			$evento = new Evento();
-	   	$evento->id = $eventoApi->our_event_id;
-	   	$evento->esporte_id = $esporte_id;
-	   	$evento->data =  MinhaClasse::timestamp_to_data_mysql($eventoApi->time);
-	   	$evento->status_evento_id = $eventoApi->time_status;
-	   	$evento->liga_id = $eventoApi->league->id;
-	   	$evento->time1_id = $eventoApi->home->id;
-	   	$evento->time2_id = $eventoApi->away->id;
-	   	$evento->FI_365 = $eventoApi->id;
-	   	$evento->save();
+		   	$evento->id = $eventoApi->our_event_id;
+		   	$evento->esporte_id = $esporte_id;
+		   	$evento->data =  MinhaClasse::timestamp_to_data_mysql($eventoApi->time);
+		   	$evento->status_evento_id = $eventoApi->time_status;
+		   	$evento->liga_id = $eventoApi->league->id;
+		   	$evento->time1_id = $eventoApi->home->id;
+		   	$evento->time2_id = $eventoApi->away->id;
+		   	$evento->FI_365 = $eventoApi->id;
+		   	$evento->save();
 		}catch(QueryException $e){
 			return "Deu errom heim";
-		}
-
-		
-	}
+		}		
+	}	
 }
