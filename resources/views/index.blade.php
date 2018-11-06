@@ -1,80 +1,113 @@
 @extends('componentes.pagina')
 
 @section('content')
-    <div class="container-fluid">
-    @for($i=0; $i<3; $i++)
-        <div id="accordion{{$i}}">
-            <div class="card">
-                <div class="card-header bg-secondary" data-toggle="collapse" data-target='#collapseOne{{$i}}'>
-                    <div>Brasil - Série A</div>
-                </div>
-                <div id="collapseOne{{$i}}" class="collapse show" data-parent="#accordion{{$i}}">
-                    <div class="card-body">
-                        <table border="0" class="center table table-sm">
-                            <thead>
+
+<div class="container-fluid">
+@foreach($ligas as $liga)
+
+@if(count($liga->eventos)==0)
+    @continue
+@endif
+
+    <div id="accordion{{$liga->id}}">
+        <div class="card">
+            <div class="card-header bg-secondary" data-toggle="collapse" data-target='#collapseOne{{$liga->id}}'>
+                <div>{{$liga->nome}}</div>
+            </div>
+
+            <!--Parte dos eventos-->            
+            <div id="collapseOne{{$liga->id}}" class="collapse show" data-parent="#accordion{{$liga->id}}">
+                <div class="card-body">
+                    <table border="0" class="center table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Equipes</th>
+                                <th>Casa</th>
+                                <th>Empate</th>
+                                <th>Fora</th>
+                                <th>+opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($liga->eventos as $evento)
+                                @php
+                                    $quantOdds = $evento->quantOdds($evento->id);
+                                    if($quantOdds==0){
+                                        continue;
+                                    }
+                                @endphp
+
                                 <tr>
-                                    <th>Times</th>
-                                    <th>Casa</th>
-                                    <th>Empate</th>
-                                    <th>Fora</th>
-                                    <th>+opções</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for($j=0; $j<3; $j++)
-                                <tr>
-                                    <td>Time 1 x Time 2</td>
-                                    <td><button class="btn btn-sm">2.00</button></td>
-                                    <td><button class="btn btn-sm">3.00</button></td>
-                                    <td><button class="btn btn-sm">2.00</button></td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm" data-toggle='modal' data-target='#myModal'>
-                                            <span class="badge badge-light">+4</span>
+                                        <span class="text-primary">{{ $evento->time1->nome }}</span> x
+                                        <span class="text-danger">{{ $evento->time2->nome }}</span> <br>
+                                        <span>{{ $evento->data }}</span> 
+                                    </td>
+                                    <td>@include('componentes.botaopalpite', ['evento'=>$evento, 'tipo_palpite_id'=>1])</td>
+                                    <td>@include('componentes.botaopalpite', ['evento'=>$evento, 'tipo_palpite_id'=>2])</td>
+                                    <td>@include('componentes.botaopalpite', ['evento'=>$evento, 'tipo_palpite_id'=>3])</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm" onclick="exibirModalOdds({{$evento}})">
+                                            <span class="badge badge-light">+{{$quantOdds}}</span>
                                         </button>
                                     </td>
-                                </tr>
-                                @endfor
-                                
-                            </tbody>
-                        </table>
-                       
-                    </div>
+                                </tr>                                                        
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        </div>        
-    @endfor
-    </div>
+            </div>            
+            <!--Fim Parte dos eventos-->
+
+        </div>
+    </div>        
 
 
-        <!-- O Modal -->
-        <div class="modal" id="myModal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-
-              <!-- Modal Header -->
-              <div class="modal-header">
-                <h4 class="modal-title">Cabeçalho do modal</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-
-              <!-- Modal body -->
-              <div class="modal-body">
-                Corpo do modal
-              </div>
-
-            </div>
+    <!--Modal-->
+    <div class="modal fade" id="modal-odds" tabindex="-1" role="dialog" aria-labelledby="modal-odds" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="titulo-modal"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+                <table class="table table-sm">
+                    <tbody id="modal-body">
+                        
+                    </tbody>
+                </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
-
+      </div>
     </div>
+    
+@endforeach
+</div>
 @endsection
+
 
 
 @section('css')
 <style type="text/css">
-    .conteiner{
-        background: #CCC;
+    tr{
+        font-size: 12px;
+    }
+    body{
+        background: #666;
+    }
+    .cat_palpite{
+        background: #aaa;
+        font-size: 19px;
     }
 </style>
 @endsection
 
+@section('javascript')
+    @include('js.minhasFuncoes')
+@endsection

@@ -42,7 +42,7 @@ class EventosApi extends Controller
 	   return $resultado;
 	}
 
-	function pre_math_odds(Request $request){
+	public function pre_math_odds(Request $request){
 	   $url = "https://api.betsapi.com/v1/bet365/start_sp";
 	   $metodo = "GET";
 	   $variaveis["token"] = MinhaClasse::get_token();
@@ -52,9 +52,13 @@ class EventosApi extends Controller
 	   $odds = MinhaClasse::fazer_requisicao($url, $variaveis, $metodo); 
 	   $objetoOdds = json_decode($odds);
 
-	   $teste = $this->inserir_odds($objetoOdds->results[0], $variaveis['event_id']);
-	   // return $odds;
-	   return json_encode( (array) $teste);
+	   if(isset($objetoOdds->results[0])){
+	   		$oddsConvertidas = Odd::inserir_odds($objetoOdds->results[0], $variaveis['event_id']);
+	   		return json_encode( (array) $oddsConvertidas);
+	   }
+	   
+	   return 'Nenhum evento encontrado';
+	   
 	}
 
 	function resultado(Request $request){
@@ -67,35 +71,6 @@ class EventosApi extends Controller
 	   $resultado = MinhaClasse::fazer_requisicao($url, $variaveis, $metodo); 
 	   
 	   return $resultado;
-	}
-
-
-
-	private function inserir_odds($odds, $event_id){
-		$oddsConvertidas = ConverterApi::converterOdds($odds);
-		foreach ($oddsConvertidas->cat_palpites as $cat_palpite) {
-			foreach ($cat_palpite->odds as $odd) {
-				$oddBanco = Odd::where([
-					['evento_id', $oddsConvertidas->evento_id],
-					['tipo_palpite_id', $odd['tipo_palpite_id']],
-				])->first();
-
-				if (isset($oddBanco)) {
-					$oddBanco->valor = $odd['taxa'];
-					$oddBanco->updated_at = MinhaClasse::timestamp_to_data_mysql(time());
-					$oddBanco->save();					
-				}else{
-					$o = new Odd();
-					$o->evento_id = $oddsConvertidas->evento_id;
-					$o->cat_palpite_id = $cat_palpite->categoria_id;
-					$o->tipo_palpite_id = $odd['tipo_palpite_id'];
-					$o->valor = $odd['taxa'];
-					$o->save();
-				}
-					
-			}
-		}
-		return $oddsConvertidas;
 	}
 
 	private function cadastrar_evento($eventoApi, $esporte_id){

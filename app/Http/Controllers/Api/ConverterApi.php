@@ -25,9 +25,9 @@ class ConverterApi extends Controller{
          $ambosMarcam = $odds->main->sp->both_teams_to_score;
          $oddsConvertidas->cat_palpites[] = ConverterApi::ambosMarcam($ambosMarcam);
       }
-      // if(isset($odds->goals->sp->alternative_total_goals)){
-      //    $oddsConvertidas->cat_palpite[5] = ConverterApi::quantGols($odds);
-      // }
+      if(isset($odds->goals->sp->alternative_total_goals)){
+         $oddsConvertidas->cat_palpites[] = ConverterApi::quantGols($odds);
+      }
 
       if(isset($odds->main->sp->result_both_teams_to_score)){
          $resultadoFinalEAmbas = $odds->main->sp->result_both_teams_to_score;
@@ -110,7 +110,7 @@ class ConverterApi extends Controller{
 
    private static function ambosMarcam($ambos){
       $obj = new \stdClass;
-      $obj->categoria_id = 5;
+      $obj->categoria_id = 6;
       $obj->nome = "Ambos Marcam";
       $obj->tempo = "90 min";
 
@@ -137,6 +137,12 @@ class ConverterApi extends Controller{
    }
 
    private static function quantGols($odds){
+      $obj = new \stdClass;
+      $obj->categoria_id = 5;
+      $obj->nome = "Total de Gols";
+      $obj->tempo = "90 min";
+
+      $temp=[];
       if(isset($odds->goals->sp->alternative_total_goals)){
          $golsAlternativos = $odds->goals->sp->alternative_total_goals;
       }
@@ -149,90 +155,163 @@ class ConverterApi extends Controller{
          switch ($opc->header){
             case("Over "):
                if($opc->goals=="1.5"){
-                  $retorno[48] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>48,
+                     'nome'=>'+1.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="2.5"){
-                  $retorno[49] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>49,
+                     'nome'=>'+2.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="3.5"){
-                  $retorno[50] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>50,
+                     'nome'=>'+3.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="4.5"){
-                  $retorno[51] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>51,
+                     'nome'=>'+4.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="5.5"){
-                  $retorno[52] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>52,
+                     'nome'=>'+5.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
             case("Under"):
                if($opc->goals=="1.5"){
-                  $retorno[58] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>58,
+                     'nome'=>'-1.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="2.5"){
-                  $retorno[59] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>59,
+                     'nome'=>'-2.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }   
                if($opc->goals=="3.5"){
-                  $retorno[60] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>60,
+                     'nome'=>'-3.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="4.5"){
-                  $retorno[61] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>61,
+                     'nome'=>'-4.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="5.5"){
-                  $retorno[62] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>62,
+                     'nome'=>'-5.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
          }
+         
       }
       
       foreach ($gols as $opc){
          switch ($opc->header){
             case("Over"):
                if($opc->goals=="1.5"){
-                  $retorno[48] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>48,
+                     'nome'=>'+1.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="2.5"){
-                  $retorno[49] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>49,
+                     'nome'=>'+2.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="3.5"){
-                  $retorno[50] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>50,
+                     'nome'=>'+3.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="4.5"){
-                  $retorno[51] = $opc->odds;
-                  break;
-               }
-               
+                  $temp = [
+                     'tipo_palpite_id'=>51,
+                     'nome'=>'+4.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
+               }             
             case("Under"):
                if($opc->goals=="1.5"){
-                  $retorno[58] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>58,
+                     'nome'=>'-1.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="2.5"){
-                  $retorno[59] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>59,
+                     'nome'=>'-2.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }   
                if($opc->goals=="3.5"){
-                  $retorno[60] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>60,
+                     'nome'=>'-3.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
                if($opc->goals=="4.5"){
-                  $retorno[61] = $opc->odds;
-                  break;
+                  $temp = [
+                     'tipo_palpite_id'=>61,
+                     'nome'=>'-4.5',
+                     'taxa'=>$opc->odds,
+                  ];
+                  $odd[]=$temp;break;
                }
          }
       }
-      
-      return $retorno;
+
+      $obj->odds = $odd;
+      return $obj;
    }
 
    private static function resultFinalEAmbas($ambos){

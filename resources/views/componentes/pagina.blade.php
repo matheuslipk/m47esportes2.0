@@ -13,6 +13,10 @@
     	@yield('css')
     @endif
 
+    @hasSection('javascript')
+        @yield('javascript')
+    @endif
+
 </head>
 <body>
     @include('componentes.navbar')

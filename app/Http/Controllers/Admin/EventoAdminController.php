@@ -21,9 +21,9 @@ class EventoAdminController extends Controller
             $liga->eventos = Evento::where([
                 ['liga_id',$liga->id],
                 ['data','>=',MinhaClasse::timestamp_to_data_mysql(time())],             
-            ])->get();
+            ])->orderBy('data')
+            ->get();
         }
-        // return $ligas;
 
     	return view('admin.eventos', compact('ligas'));
     }

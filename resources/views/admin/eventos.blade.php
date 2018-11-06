@@ -22,33 +22,30 @@
                 		<thead>
 					        <tr>
 					            <th>Equipes</th>
-					            <th>Casa</th>
-					            <th>Empate</th>
-					            <th>Fora</th>
-					            <th>+opções</th>
+					            <th colspan="2">+opções</th>
 					        </tr>
 					    </thead>
-					    
-	                    	@foreach($liga->eventos as $evento)							   
-						    <tbody>
+					    <tbody>
+	                    	@foreach($liga->eventos as $evento)						    
 						        <tr>
 						            <td>
 						            	<span class="text-primary">{{ $evento->time1->nome }}</span> x
 						            	<span class="text-danger">{{ $evento->time2->nome }}</span> <br>
 						            	<span>{{ $evento->data }}</span> 
 						            </td>
-						            <td><button class="btn btn-sm">2.00</button></td>
-						            <td><button class="btn btn-sm">3.00</button></td>
-						            <td><button class="btn btn-sm">2.00</button></td>
 						            <td>
-						                <button class="btn btn-primary btn-sm" data-toggle='modal' data-target='#myModal'>
+						                <button class="btn btn-primary btn-sm" onclick="atualizar_odds({{$evento->id}})">
 						                    <span class="badge badge-light">Atualizar Odds</span>
 						                </button>
 						            </td>
-						        </tr>                                
-						    </tbody>							
+						            <td>
+						                <button class="btn btn-danger btn-sm" onclick="atualizar_odds({{$evento->id}})">
+						                    <span class="badge badge-light">Remover Odds</span>
+						                </button>
+						            </td>
+						        </tr>						    							
 	                    	@endforeach
-
+	                    </tbody>
                 	</table>
                 </div>
             </div>            
@@ -74,7 +71,15 @@
 </style>
 @endsection
 
-
+@section('javascript')
+<script type="text/javascript">
+	function atualizar_odds(evento_id){
+		$.post('/api365/prematch',{
+			event_id : evento_id
+		});
+	}
+</script>
+@endsection
 
 
 
