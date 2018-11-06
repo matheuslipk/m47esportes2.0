@@ -100,26 +100,47 @@ function montarResultFinalEAmbas(categoria){
 
 function botaopalpite(palpite) {
     var btn="";
-    btn+="<button class='btn btn-info' onclick='enviarPalpite("+palpite.evento_id+", "+palpite.tipo_palpite_id+")'>";
+    btn+="<button class='btn btn-info btn-sm' data-evento='"+ palpite.evento_id +"' data-palpite='"+ palpite.tipo_palpite_id +"' onclick='enviarPalpite(this)'>";
     btn+=palpite.valor;
     btn+="</button>";
     return btn;
 }
 
-function enviarPalpite(evento_id, odds_id){
-    $.get("/sessao/palpite/"+evento_id+"/"+odds_id);
+function enviarPalpite(btn){
+    var evento_id = $(btn).attr('data-evento');
+    var tipo_palpite_id = $(btn).attr('data-palpite');
+    var tipoAcao="";
+
+    if($(btn).hasClass('btn-danger')){
+        tipoAcao='remove';
+    }else{
+        tipoAcao='add';
+    }
+
+    if(tipoAcao=='add'){
+        $("button[data-evento='"+evento_id+"']").removeClass('btn-danger');
+        $("button[data-evento='"+evento_id+"'][data-palpite='"+tipo_palpite_id+"']").addClass('btn-danger');
+    }else if(tipoAcao=='remove'){
+        $("button[data-evento='"+evento_id+"']").removeClass('btn-danger');
+    }
+
+    $.get("/sessao/palpite/"+evento_id+"/"+tipo_palpite_id, {
+        acao : tipoAcao
+    }).done(function (data){
+        alert("OK");
+    });
 }
 
 function getLinha2(odd1, odd2){
     var linha="";
     linha+="<tr>";
 
-    linha+="<td colspan='4'>";
+    linha+="<td colspan='6'>";
     linha+= odd1.tipo_palpite.nome + "<br>";
     linha+= botaopalpite(odd1);
     linha+="</td>";
 
-    linha+="<td colspan='4'>";
+    linha+="<td colspan='6'>";
     linha+= odd2.tipo_palpite.nome + "<br>";
     linha+= botaopalpite(odd2);
     linha+="</td>";
