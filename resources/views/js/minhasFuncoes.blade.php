@@ -20,14 +20,14 @@ function exibirModalOdds(evento){
 }
 
 
-function montarResultadoFinal(categoria){
+function montarResultadoFinal(odds){
     var string="";
-    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
+    string+="<tr class='cat_palpite'><td colspan='12'>"+odds[0].cat_palpite.nome+"</td></tr>";
     string+="<tr>";
-    for(id_odds in categoria){
+    for(id_odds in odds){
         string += "<td colspan='4'>";
-        string += categoria[id_odds].tipo_palpite.nome + '<br>';
-        string += botaopalpite(categoria[id_odds]);
+        string += odds[id_odds].tipo_palpite.nome + '<br>';
+        string += botaopalpite(odds[id_odds]);
         string += "</td>";
     }
     string+="</tr>";
@@ -100,7 +100,12 @@ function montarResultFinalEAmbas(categoria){
 
 function botaopalpite(palpite) {
     var btn="";
-    btn+="<button class='btn btn-info btn-sm' data-evento='"+ palpite.evento_id +"' data-palpite='"+ palpite.tipo_palpite_id +"' onclick='enviarPalpite(this)'>";
+    if(palpite.selecionado != null){
+        btn+="<button class='btn btn-info btn-sm btn-danger' data-evento='"+ palpite.evento_id +"' data-palpite='"+ palpite.tipo_palpite_id +"' onclick='enviarPalpite(this)'>";
+    }else{
+        btn+="<button class='btn btn-info btn-sm' data-evento='"+ palpite.evento_id +"' data-palpite='"+ palpite.tipo_palpite_id +"' onclick='enviarPalpite(this)'>";
+    }
+    
     btn+=palpite.valor;
     btn+="</button>";
     return btn;
@@ -127,7 +132,7 @@ function enviarPalpite(btn){
     $.get("/sessao/palpite/"+evento_id+"/"+tipo_palpite_id, {
         acao : tipoAcao
     }).done(function (data){
-        alert("OK");
+        // alert("OK");
     });
 }
 

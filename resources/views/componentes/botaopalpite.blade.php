@@ -1,6 +1,8 @@
 @php
 $palpites = session('palpites');
 $palpiteExist = false;
+
+if(is_array($palpites))
 foreach ($palpites as $palpite) {
 	if($palpite['evento_id']==$evento->id && $palpite['tipo_palpite_id']==$tipo_palpite_id){
 		@endphp
