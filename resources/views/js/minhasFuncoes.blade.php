@@ -22,26 +22,49 @@ function exibirModalOdds(evento){
 function exibirModalPalpites(){
     $.get('sessao/meus_palpites').done(function(palpites){
         var string = "";
+        var cotaTotal=1;
+        var quantPalpites = 0;
         for(index in palpites){
+            evento_id = palpites[index].evento_id;
+            tipo_palpite_id = palpites[index].tipo_palpite.id;
+
             string+="<tr>";
             string+="<td>";
             string+= "<span class='text-primary'>"+ palpites[index].evento.time1.nome + "</span> x ";
             string+= "<span class='text-danger'>"+ palpites[index].evento.time2.nome + '</span> <br>';
             string+=palpites[index].tipo_palpite.cat_palpite.nome + '<br>';
-            string+=palpites[index].tipo_palpite.nome + '<br>';
+            string+= "<b>"+palpites[index].tipo_palpite.nome + '</b><br>';
             string+="</td>";
             string+="<td>";
-            string+=palpites[index].valor;
+            string+= "<span class='odd-palpite'>"+palpites[index].valor+"</span>";
+            string+="<button class='btn btn-danger btn-sm btn-remove' "+
+                    "onclick='removePalpite("+evento_id+", "+tipo_palpite_id+", this)'>X</button>";
             string+="</td>";
             string+="</tr>";
+
+            cotaTotal *= palpites[index].valor;
+            quantPalpites++;
         }
+        if(cotaTotal>800){
+            cotaTotal=800;
+        }
+        string+="<tr>";
+        string+="<td>Quant Palpites: <span id='quantPalpites'>"+quantPalpites+"</span></td>"; 
+        string+="<td>Cota total: <span class='text-success' id='cotaTotal'>"+cotaTotal.toFixed(2)+"</span></td>"; 
+        string+="</tr>";
+
+        string+="<tr>";
+        string+="<td colspan='2'><input/></td>";  
+        string+="</tr>";
+        string+="<tr>";
+        string+="<td><input/></td>";
+        string+="<td><button>Fazer Aposta</button></td>";  
+        string+="</tr>";
+
 
         $("#modal-palpites-body").html(string);
-        $('#modal-palpites').modal();
-        
-    });
-
-    
+        $('#modal-palpites').modal();        
+    });    
 }
 
 function montarResultadoFinal(odds){
@@ -141,24 +164,44 @@ function enviarPalpite(btn){
     var tipoAcao="";
 
     if($(btn).hasClass('btn-danger')){
-        tipoAcao='remove';
+        removePalpite(evento_id, tipo_palpite_id);
     }else{
-        tipoAcao='add';
+        addPalpite(evento_id, tipo_palpite_id);        
     }
+    
+}
 
-    if(tipoAcao=='add'){
+function addPalpite(evento_id, tipo_palpite_id) {
+    $.get("/sessao/palpite/"+evento_id+"/"+tipo_palpite_id, {
+        acao : 'add'
+    }).done(function (data){
+        if(data.sucesso==false){
+            alert(data.erro);
+            return;
+        }
         $("button[data-evento='"+evento_id+"']").removeClass('btn-danger');
         $("button[data-evento='"+evento_id+"'][data-palpite='"+tipo_palpite_id+"']").addClass('btn-danger');
-    }else if(tipoAcao=='remove'){
-        $("button[data-evento='"+evento_id+"']").removeClass('btn-danger');
-    }
-
-    $.get("/sessao/palpite/"+evento_id+"/"+tipo_palpite_id, {
-        acao : tipoAcao
-    }).done(function (data){
-        // alert("OK");
     });
 }
+
+function removePalpite(evento_id, tipo_palpite_id, btnRemove) {
+    $.get("/sessao/palpite/"+evento_id+"/"+tipo_palpite_id, {
+        acao : 'remove'
+    }).done(function (data){
+        $("button[data-evento='"+evento_id+"']").removeClass('btn-danger');     
+        if(typeof(btnRemove) !="undefined"){
+            cotaPalpiteExcluido = $(btnRemove).parent().find(".odd-palpite").html();
+            quantPalpites = $("#quantPalpites").html();
+
+            $(btnRemove).parent().parent().remove();
+            cotaTotal = $("#cotaTotal").html();
+            cotaTotal /= cotaPalpiteExcluido;
+            $("#cotaTotal").html(cotaTotal.toFixed(2));
+            $("#quantPalpites").html((quantPalpites-1));
+        }
+    });
+}
+
 
 function getLinha2(odd1, odd2){
     var linha="";

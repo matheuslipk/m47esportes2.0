@@ -12,6 +12,10 @@ use App\Liga;
 
 class EventoAdminController extends Controller
 {
+    public function __construct(){
+        // $this->middleware('auth:web-admin');
+    }
+
     public function index(){
         $ligas = Liga::where('is_top_list',1)
             ->orderBy('nome')

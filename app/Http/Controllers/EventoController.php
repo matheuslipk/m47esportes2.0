@@ -54,7 +54,8 @@ class EventoController extends Controller
         ];
         //Pegando palpites na sessão
         $palpites = session('palpites');
-
+        
+        if(is_array($palpites))
         //Verificando se existe o $evento_id salvo na sessao 
         foreach ($palpites as $palpite) {
             if ($palpite['evento_id']==$evento_id) {

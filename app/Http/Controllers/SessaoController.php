@@ -11,11 +11,11 @@ class SessaoController extends Controller{
 	public function salvarPalpite(Request $request, $evento_id, $tipo_palpite_id){		
 
 		if($request->input('acao')=='add'){
-			$this->addPalpite($request, $evento_id, $tipo_palpite_id);
-
+			$retorno = $this->addPalpite($request, $evento_id, $tipo_palpite_id);
 		}elseif ($request->input('acao')=='remove') {
-			$this->removePalpite($request, $evento_id);
+			$retorno = $this->removePalpite($request, $evento_id);
 		}	
+		return $retorno;
 			
 	}
 
@@ -26,12 +26,26 @@ class SessaoController extends Controller{
 
 	private function addPalpite(&$request, $evento_id, $tipo_palpite_id){
 		$this->removePalpite($request, $evento_id);
+		$tempPalpites = $request->session()->get('palpites');
+
+		if($request->session()->has('palpites') && count($request->session()->get('palpites'))>=12){
+			return [
+					'sucesso' => false,
+					'erro' => 'Limite máximo de 14 palpites'
+				];
+		}
+
 		$odd = Odd::where([
 			['evento_id',$evento_id],
 			['tipo_palpite_id',$tipo_palpite_id],
 		])->first();
 
-		if(!isset($odd))return;
+		if(!isset($odd)) {
+			return [
+				'sucesso' => false,
+				'erro' => 'Odd não encontrada'
+			];
+		}
 
 		$evento = Evento::find($evento_id);
 		$tipoPalpite = TipoPalpite::find($tipo_palpite_id);
@@ -48,6 +62,7 @@ class SessaoController extends Controller{
 		];
 
 		$request->session()->push('palpites' , $palpite);
+		return ['sucesso' => true];
 	}
 
 	private function removePalpite(&$request, $evento_id){
@@ -59,6 +74,7 @@ class SessaoController extends Controller{
 				}
 			}
 		}
+		return ['sucesso' => true];
 	}
     
 }

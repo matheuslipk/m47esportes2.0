@@ -105,7 +105,7 @@
                 </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
           </div>
         </div>
       </div>
@@ -141,6 +141,9 @@
     .flutuante>button{
         border-radius: 20px;
         font-size: 18px;
+    }
+    .btn-remove{
+        margin: 0px 0px 0px 10px;
     }
 </style>
 @endsection
