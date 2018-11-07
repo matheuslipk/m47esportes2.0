@@ -19,6 +19,30 @@ function exibirModalOdds(evento){
     });
 }
 
+function exibirModalPalpites(){
+    $.get('sessao/meus_palpites').done(function(palpites){
+        var string = "";
+        for(index in palpites){
+            string+="<tr>";
+            string+="<td>";
+            string+= "<span class='text-primary'>"+ palpites[index].evento.time1.nome + "</span> x ";
+            string+= "<span class='text-danger'>"+ palpites[index].evento.time2.nome + '</span> <br>';
+            string+=palpites[index].tipo_palpite.cat_palpite.nome + '<br>';
+            string+=palpites[index].tipo_palpite.nome + '<br>';
+            string+="</td>";
+            string+="<td>";
+            string+=palpites[index].valor;
+            string+="</td>";
+            string+="</tr>";
+        }
+
+        $("#modal-palpites-body").html(string);
+        $('#modal-palpites').modal();
+        
+    });
+
+    
+}
 
 function montarResultadoFinal(odds){
     var string="";

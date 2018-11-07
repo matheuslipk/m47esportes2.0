@@ -60,7 +60,7 @@ class EventoController extends Controller
             if ($palpite['evento_id']==$evento_id) {
                 $contem = [
                     'resultado' => true,
-                    'tipo_palpite' => $palpite['tipo_palpite_id'],
+                    'tipo_palpite' => $palpite['tipo_palpite']->id,
                 ];
                 break;
             }

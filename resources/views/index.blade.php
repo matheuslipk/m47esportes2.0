@@ -63,7 +63,7 @@
     </div>        
 
 
-    <!--Modal-->
+    <!--Modal Odds-->
     <div class="modal fade" id="modal-odds" tabindex="-1" role="dialog" aria-labelledby="modal-odds" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -86,8 +86,35 @@
         </div>
       </div>
     </div>
-    
+
+    <!--Modal Palpites-->
+    <div class="modal fade" id="modal-palpites" tabindex="-1" role="dialog" aria-labelledby="modal-palpites" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="titulo-modal-palpites">Seus palpites</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+                <table class="table table-sm">
+                    <tbody id="modal-palpites-body">
+                        
+                    </tbody>
+                </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>    
+
 @endforeach
+<div class="flutuante">
+    <button class="btn btn-success" onclick="exibirModalPalpites()">Palpites</button>
+</div>
 </div>
 @endsection
 
@@ -104,6 +131,16 @@
     .cat_palpite{
         background: #aaa;
         font-size: 19px;
+    }
+    .flutuante{
+        position: fixed;
+        right: 30px;
+        bottom: 23px;
+        z-index: 100;
+    }
+    .flutuante>button{
+        border-radius: 20px;
+        font-size: 18px;
     }
 </style>
 @endsection

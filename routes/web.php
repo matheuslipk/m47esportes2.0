@@ -30,7 +30,7 @@ Route::prefix('sessao')->group(function () {
 			'evento' => '[0-9]+',
 			'palpite' => '[0-9]+',
 		]);
-	Route::get('teste', 'SessaoController@teste');
+	Route::get('meus_palpites', 'SessaoController@meus_palpites');
 });
 
 Route::get('evento/{id}/odds', 'EventoController@getOdds');
