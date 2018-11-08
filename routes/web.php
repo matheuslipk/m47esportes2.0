@@ -9,13 +9,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/register', "AuthAdmin\RegistroController@registrar");
 
     Route::get('/eventos', "Admin\EventoAdminController@index")->name('admin-evento');
-
-
 });
-
-
-
-Route::get('/', 'EventoController@index');
 
 Route::prefix('api365')->group(function () {
     Route::get('upcoming', 'Api\EventosApi@eventos_futuros');
@@ -31,6 +25,17 @@ Route::prefix('sessao')->group(function () {
 			'palpite' => '[0-9]+',
 		]);
 	Route::get('meus_palpites', 'SessaoController@meus_palpites');
+});
+
+Route::prefix('aposta')->group(function () {
+	Route::post('fazerAposta', 'ApostaController@fazerAposta')->name('fazerAposta');
+	Route::get('{id}', 'ApostaController@get');
+});
+
+Route::get('/', 'EventoController@index');
+
+Route::get('/teste', function(){
+	return session()->all('palpites');
 });
 
 Route::get('evento/{id}/odds', 'EventoController@getOdds');

@@ -53,15 +53,6 @@ function exibirModalPalpites(){
         string+="<td>Cota total: <span class='text-success' id='cotaTotal'>"+cotaTotal.toFixed(2)+"</span></td>"; 
         string+="</tr>";
 
-        string+="<tr>";
-        string+="<td colspan='2'><input/></td>";  
-        string+="</tr>";
-        string+="<tr>";
-        string+="<td><input/></td>";
-        string+="<td><button>Fazer Aposta</button></td>";  
-        string+="</tr>";
-
-
         $("#modal-palpites-body").html(string);
         $('#modal-palpites').modal();        
     });    
@@ -216,13 +207,19 @@ function getLinha2(odd1, odd2){
     linha+= odd2.tipo_palpite.nome + "<br>";
     linha+= botaopalpite(odd2);
     linha+="</td>";
-
     linha+="</tr>";
-
-
 
     return linha;
 }    
+
+function fazerAposta(){
+    $.get('/aposta/fazerAposta', {
+        valorAposta: $('#valorAposta').val(),
+        nomeAposta: $('#nomeAposta').val()
+    }).done(function(data){
+        
+    });
+}
 
 
 </script>

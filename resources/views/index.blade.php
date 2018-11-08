@@ -103,6 +103,18 @@
                         
                     </tbody>
                 </table>
+                <form action="{{route('fazerAposta')}}" method="post" id="form-fazerAposta">
+                    @csrf
+                    <div class="form-group">
+                        <label for="valorAposta">Valor da Aposta</label>
+                        <input class="form-control" placeholder="Valor da aposta" type="number" name="valorAposta" id="valorAposta">
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeAposta">Nome da aposta</label>
+                        <input class="form-control" placeholder="Digite um nome para sua aposta" name="nomeAposta" id="nomeAposta">
+                    </div>
+                    <button class="btn btn-sm btn-warning">Fazer Aposta</button>
+                </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
@@ -122,7 +134,7 @@
 
 @section('css')
 <style type="text/css">
-    tr{
+    tr, form{
         font-size: 12px;
     }
     body{
