@@ -3,21 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Time;
+use App\Evento;
 use App\Aposta;
 use App\Palpite;
+use App\CatPalpite;
+use App\TipoPalpite;
+use App\SituacaoPalpite;
 
 class ApostaController extends Controller{
 
 	public function get(Request $request, $aposta_id){
 		$aposta = Aposta::find($aposta_id);
+    	$tipoPalpites = TipoPalpite::all();
+    	$catPalpites = CatPalpite::all();
+    	$situacaoPalpites = SituacaoPalpite::all();
+    	$eventos = Evento::find($this->getIndexEventos($aposta->palpites));
+    	$times = Time::find($this->getIndexTimes($eventos));
+
+    	// return $times;
+
 		if(isset($aposta)){
 			foreach ($aposta->palpites as $palpite) {
-				$palpite->tipo_palpite->cat_palpite;
-				$palpite->evento->time1;
-				$palpite->evento->time2;
-				$palpite->situacao_palpite;
+				$palpite->tipo_palpite = $tipoPalpites->where('id', $palpite->tipo_palpite_id)->first();
+				$palpite->tipo_palpite->cat_palpite = $catPalpites->where('id', $palpite->tipo_palpite->cat_palpite_id)->first();
+				$palpite->evento = $eventos->where('id', $palpite->evento_id)->first();
+				$palpite->evento->time1 = $times->where('id', $palpite->evento->time1_id)->first();
+				$palpite->evento->time2 = $times->where('id', $palpite->evento->time2_id)->first();
+				$palpite->situacao_palpite = $situacaoPalpites->where('id', $palpite->situacao_palpite_id)->first();
 			}
-			// return $aposta;
 			return view('public.aposta', compact('aposta'));
 		}else{
 			return 'Aposta não encontrada';
@@ -59,12 +73,29 @@ class ApostaController extends Controller{
 	    		$p->save();
 	    	}
 	    	$this->limparSessaoPalpites($request);
-	    	return redirect('/');
+	    	return redirect('/aposta/'.$aposta->id);
     	}
 	    	
     }
 
     private function limparSessaoPalpites(Request $request){
     	$request->session()->forget('palpites');
+    }
+
+    private function getIndexEventos($palpites){
+    	$indexs = [];
+    	foreach ($palpites as $palpite) {
+    		$indexs[] = $palpite->evento_id;
+    	}
+    	return $indexs;
+    }
+
+    private function getIndexTimes($eventos){
+    	$indexs = [];
+    	foreach ($eventos as $evento) {
+    		$indexs[] = $evento->time1_id;
+    		$indexs[] = $evento->time2_id;
+    	}
+    	return $indexs;
     }
 }

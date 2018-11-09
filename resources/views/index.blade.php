@@ -31,11 +31,11 @@
                         <tbody>
                             @foreach($liga->eventos as $evento)
                                 @php
-                                    $quantOdds = $evento->quantOdds($evento->id);
-                                    if($quantOdds==0){
-                                        continue;
-                                    }
+                                $quantOdds = $evento->quantOdds;
                                 @endphp
+                                @if($quantOdds == 0)
+                                    @continue;
+                                @endif
 
                                 <tr>
                                     <td>
