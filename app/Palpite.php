@@ -14,5 +14,8 @@ class Palpite extends Model
     public function tipo_palpite(){
     	return $this->belongsTo('App\TipoPalpite');
     }
+    public function situacao_palpite(){
+    	return $this->belongsTo('App\SituacaoPalpite');
+    }
 
 }

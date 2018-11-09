@@ -13,6 +13,7 @@ class EventoController extends Controller
     public function index(){
         $ligas = Liga::where('is_top_list',1)
             ->orderBy('nome')
+            ->take(20)
             ->get();
 
         foreach ($ligas as $liga) {

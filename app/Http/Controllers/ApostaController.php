@@ -15,8 +15,10 @@ class ApostaController extends Controller{
 				$palpite->tipo_palpite->cat_palpite;
 				$palpite->evento->time1;
 				$palpite->evento->time2;
+				$palpite->situacao_palpite;
 			}
-			return $aposta;
+			// return $aposta;
+			return view('public.aposta', compact('aposta'));
 		}else{
 			return 'Aposta não encontrada';
 		}

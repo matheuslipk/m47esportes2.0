@@ -14,7 +14,7 @@ class CreateStatusEventosTable extends Migration
     public function up()
     {
         Schema::create('status_eventos', function (Blueprint $table) {
-            $table->integer('id')->autoIncrement();
+            $table->integer('id');
             $table->string('nome');
         });
     }
