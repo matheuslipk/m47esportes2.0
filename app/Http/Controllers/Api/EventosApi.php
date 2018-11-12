@@ -61,12 +61,12 @@ class EventosApi extends Controller
 	   
 	}
 
-	function resultado(Request $request){
+	public function resultado(Request $request){
 	   $url = "https://api.betsapi.com/v1/bet365/result";
 	   $metodo = "GET";
 	   $variaveis["token"] = MinhaClasse::get_token();
 	   $variaveis["FI"] = $request->input('FI');
-	   $variaveis["event_id"] = $request->input('event_id');
+	   $variaveis["event_id"] = $request->input('FI');
 	   
 	   $resultado = MinhaClasse::fazer_requisicao($url, $variaveis, $metodo); 
 	   

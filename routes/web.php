@@ -2,13 +2,17 @@
 
 Route::prefix('admin')->group(function () {
 	Route::get('/', "AdminController@index")->name('adminhome');
-    Route::get('/login', "AuthAdmin\LoginController@showLoginForm")->name('adminlogin');
-	Route::post('/login', "AuthAdmin\LoginController@login");
+    Route::get('/login', "AuthAdmin\LoginAdminController@showLoginForm")->name('adminlogin');
+	Route::post('/login', "AuthAdmin\LoginAdminController@login");
 
-    Route::get('/register', "AuthAdmin\RegistroController@showRegistroForm")->name('adminregistro');
-    Route::post('/register', "AuthAdmin\RegistroController@registrar");
+    Route::get('/register', "AuthAdmin\RegistroAdminController@showRegistroForm")->name('adminregistro');
+    Route::post('/register', "AuthAdmin\RegistroAdminController@registrar");
 
     Route::get('/eventos', "Admin\EventoAdminController@index")->name('admin-evento');
+    Route::get('/eventos/atualizar', "Admin\EventoAdminController@showAtualizarResultadoEventos");
+    Route::get('/eventos/getJSON', "Admin\EventoAdminController@getEventosJSON")->name('getEventosJSONAdmin');
+
+    Route::get('/evento/atualizarNaApi', "Admin\EventoAdminController@atualizarEventoApi");
 });
 
 Route::prefix('api365')->group(function () {

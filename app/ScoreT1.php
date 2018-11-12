@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class ScoreT1 extends Model
 {
-    //
+    public $timestamps = false;
 }

@@ -15,7 +15,7 @@ class CreateScoresTable extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->integer('id')->autoIncrement();
-            $table->integer('evento_id');
+            $table->integer('evento_id')->unique();
             $table->integer('score_t1');
             $table->integer('score_t2');
         });

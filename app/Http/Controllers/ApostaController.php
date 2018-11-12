@@ -10,11 +10,15 @@ use App\Palpite;
 use App\CatPalpite;
 use App\TipoPalpite;
 use App\SituacaoPalpite;
+use App\Http\Controllers\Api\MinhaClasse;
 
 class ApostaController extends Controller{
 
 	public function get(Request $request, $aposta_id){
 		$aposta = Aposta::find($aposta_id);
+		if(!isset($aposta)){
+			return "Aposta não encontrada";
+		}
     	$tipoPalpites = TipoPalpite::all();
     	$catPalpites = CatPalpite::all();
     	$situacaoPalpites = SituacaoPalpite::all();
@@ -57,6 +61,7 @@ class ApostaController extends Controller{
 
 	    	$aposta = new Aposta();
 	    	$aposta->nome = $request->input('nomeAposta');
+	    	$aposta->data_aposta = MinhaClasse::timestamp_to_data_mysql(time());
 	    	$aposta->cotacao_total = $cotaTotal;
 	    	$aposta->valor_apostado = $request->input('valorAposta');
 	    	$aposta->premiacao = $premiacao;
@@ -69,7 +74,7 @@ class ApostaController extends Controller{
 	    		$p->evento_id = $palpite['evento_id'];
 	    		$p->tipo_palpite_id = $palpite['tipo_palpite']['id'];
 	    		$p->cotacao = $palpite['valor'];
-	    		$p->situacao_palpite_id = 1;
+	    		$p->situacao_palpite_id = 3;
 	    		$p->save();
 	    	}
 	    	$this->limparSessaoPalpites($request);

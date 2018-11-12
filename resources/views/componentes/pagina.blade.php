@@ -18,7 +18,7 @@
     @endif
 
 </head>
-<body>
+<body style="background: #666">
     @include('componentes.navbar')
 	@hasSection('content')
 		@yield('content')
