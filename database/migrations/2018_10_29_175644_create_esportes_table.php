@@ -14,8 +14,11 @@ class CreateEsportesTable extends Migration
     public function up()
     {
         Schema::create('esportes', function (Blueprint $table) {
-            $table->integer('id')->autoIncrement();
+            $table->integer('id');
             $table->string('nome');
+        });
+        Schema::table('esportes', function (Blueprint $table) {
+            $table->primary('id');
         });
     }
 

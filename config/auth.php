@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'agentes',
     ],
 
     /*
@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'agentes',
         ],
 
         'web-admin' => [
@@ -70,9 +70,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'agentes' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Agente::class,
         ],
 
         'admins' => [
@@ -87,8 +87,8 @@ return [
     ],
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'agentes' => [
+            'provider' => 'agentes',
             'table' => 'password_resets',
             'expire' => 60,
         ],

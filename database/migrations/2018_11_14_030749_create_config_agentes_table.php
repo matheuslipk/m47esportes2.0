@@ -15,7 +15,13 @@ class CreateConfigAgentesTable extends Migration
     {
         Schema::create('config_agentes', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->integer('tipo_config_id');
+            $table->integer('agente_id');
+            $table->decimal('valor', 8 , 3);
+        });
+        Schema::table('config_agentes', function (Blueprint $table) {
+            $table->foreign('tipo_config_id')->references('id')->on('tipo_configs');
+            $table->foreign('agente_id')->references('id')->on('agentes');
         });
     }
 

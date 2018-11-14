@@ -14,7 +14,7 @@ class EventosApi extends Controller
 {
 
 	function __construct(){
-		// $this->middleware('auth:web-admin');
+		$this->middleware('auth:web-admin');
 	}
 
     function eventos_futuros(Request $request){

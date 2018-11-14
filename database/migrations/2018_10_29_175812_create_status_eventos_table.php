@@ -17,6 +17,9 @@ class CreateStatusEventosTable extends Migration
             $table->integer('id');
             $table->string('nome');
         });
+        Schema::table('status_eventos', function (Blueprint $table) {
+            $table->primary('id');
+        });
     }
 
     /**

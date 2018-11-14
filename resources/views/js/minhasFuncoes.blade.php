@@ -11,7 +11,7 @@ function exibirModalOdds(evento){
             else if(id_categoria==2) string += montarDuplaChance(cat_palpites[id_categoria]);
             else if(id_categoria==5) string += montarTotalDeGols(cat_palpites[id_categoria]);
             else if(id_categoria==6) string += montarAmbosMarcam(cat_palpites[id_categoria]);
-            else if(id_categoria==14) string += montarResultFinalEAmbas(cat_palpites[id_categoria]);                
+            else if(id_categoria==14) string += montarResultFinalEAmbas(cat_palpites[id_categoria]);   
         }
         
         $("#modal-body").html(string);
@@ -102,11 +102,22 @@ function montarTotalDeGols(odds){
     var string="";
     string+="<tr class='cat_palpite'><td colspan='12'>"+odds[0].cat_palpite.nome+"</td></tr>";
     string+="<tr>";
-    string+=getLinha2(odds[0], odds[5]);
-    string+=getLinha2(odds[1], odds[6]);
-    string+=getLinha2(odds[2], odds[7]);
-    string+=getLinha2(odds[3], odds[8]);
-    string+=getLinha2(odds[4], odds[9]);
+    if(odds[0] != null && odds[5] !=null){
+        string+=getLinha2(odds[0], odds[5]);
+    }
+    if(odds[1] != null && odds[6] !=null){
+        string+=getLinha2(odds[1], odds[6]);
+    }
+    if(odds[2] != null && odds[7] !=null){
+        string+=getLinha2(odds[2], odds[7]);
+    }
+    if(odds[3] != null && odds[8] !=null){
+        string+=getLinha2(odds[3], odds[8]);
+    }
+    if(odds[4] != null && odds[9] !=null){
+        string+=getLinha2(odds[4], odds[9]);
+    }
+    
     return string;
 }
 

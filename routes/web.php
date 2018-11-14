@@ -2,6 +2,8 @@
 
 Route::prefix('admin')->group(function () {
 	Route::get('/', "AdminController@index")->name('adminhome');
+	Route::get('/apostas', "Admin\ApostaAdminController@apostas")->name('adminapostas');
+
     Route::get('/login', "AuthAdmin\LoginAdminController@showLoginForm")->name('adminlogin');
 	Route::post('/login', "AuthAdmin\LoginAdminController@login");
 
@@ -13,6 +15,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/eventos/getJSON', "Admin\EventoAdminController@getEventosJSON")->name('getEventosJSONAdmin');
 
     Route::get('/evento/atualizarNaApi', "Admin\EventoAdminController@atualizarEventoApi");
+});
+
+Route::prefix('agente')->group(function () {
+    Route::get('{id}', 'Agente\ApostaAgenteController@apostas');
 });
 
 Route::prefix('api365')->group(function () {

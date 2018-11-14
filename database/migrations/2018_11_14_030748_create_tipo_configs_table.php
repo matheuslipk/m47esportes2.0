@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateConfigSistemasTable extends Migration
+class CreateTipoConfigsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateConfigSistemasTable extends Migration
      */
     public function up()
     {
-        Schema::create('config_sistemas', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        Schema::create('tipo_configs', function (Blueprint $table) {
+            $table->integer('id');
+            $table->string('nome');
+        });
+
+        Schema::table('tipo_configs', function (Blueprint $table) {
+            $table->primary('id');
         });
     }
 
@@ -26,6 +30,6 @@ class CreateConfigSistemasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('config_sistemas');
+        Schema::dropIfExists('tipo_configs');
     }
 }

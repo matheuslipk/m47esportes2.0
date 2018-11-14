@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AuthAdmin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Admin;
 
 class LoginAdminController extends Controller
 {
@@ -31,10 +32,25 @@ class LoginAdminController extends Controller
 
 	     if ($authOk) {
             $request->session()->regenerate();
+            $admin = Admin::where('email', $request->input('email'))->first();
+            $adminSession = [
+                'admin_id' => $admin->id,
+                'email' => $admin->email,
+            ];
+
+            $request->session()->put('admin', $adminSession);
 	     	return redirect('/admin/eventos');
 	     }
 
 	     return redirect()->back()->withInputs($request->only('email'));
 
+    }
+
+    public function logout(Request $request){
+       Auth::guard('web-admin')->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/admin');
     }
 }
