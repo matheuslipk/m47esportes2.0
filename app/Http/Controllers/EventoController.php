@@ -50,7 +50,7 @@ class EventoController extends Controller
             }
         }
         // return $ligas;
-    	return view('index', compact(['ligas']));
+    	return view('public.index', compact(['ligas']));
     }
 
     public function getIndexsLigas($array){

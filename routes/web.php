@@ -18,7 +18,7 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('agente')->group(function () {
-    Route::get('{id}', 'Agente\ApostaAgenteController@apostas');
+    Route::get('/apostas', 'Agente\ApostaAgenteController@apostas');
 });
 
 Route::prefix('api365')->group(function () {
@@ -39,7 +39,10 @@ Route::prefix('sessao')->group(function () {
 
 Route::prefix('aposta')->group(function () {
 	Route::post('fazerAposta', 'ApostaController@fazerAposta')->name('fazerAposta');
-	Route::get('{id}', 'ApostaController@get');
+	Route::get('{id}', 'ApostaController@get')
+		->where([
+			'id' => '[0-9]+',
+		]);
 });
 
 Route::get('/', 'EventoController@index');

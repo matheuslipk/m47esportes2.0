@@ -19,9 +19,10 @@ class CreateApostasTable extends Migration
             $table->integer('user_id')->nullable();
             $table->string('nome')->nullable();
             $table->decimal('cotacao_total',5,2);
-            $table->decimal('valor_apostado',5,2);
-            $table->decimal('premiacao',6,2);
-            $table->integer('ganhou');
+            $table->decimal('valor_apostado',6,2);
+            $table->decimal('comissao_agente',2,2)->nullable();
+            $table->decimal('premiacao',7,2);
+            $table->decimal('ganhou', 7,2);
             $table->timestamp('data_aposta')->nullable();
             $table->timestamp('data_validacao')->nullable();
             $table->string('controle')->nullable();

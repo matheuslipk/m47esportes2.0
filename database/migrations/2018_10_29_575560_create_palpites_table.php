@@ -23,7 +23,7 @@ class CreatePalpitesTable extends Migration
         });
 
         Schema::table('palpites', function (Blueprint $table) {
-            $table->unique(['evento_id', 'tipo_palpite_id']);
+            $table->unique(['aposta_id', 'evento_id', 'tipo_palpite_id']);
             $table->foreign('aposta_id')->references('id')->on('apostas');
             $table->foreign('evento_id')->references('id')->on('eventos');
             $table->foreign('tipo_palpite_id')->references('id')->on('tipo_palpites');

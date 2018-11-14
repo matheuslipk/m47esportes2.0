@@ -10,9 +10,9 @@
 					    Nº da Aposta: <b>{{$aposta->id}}</b><br>
 					    Criada em: {{$aposta->data_aposta}}<br>
 					    Nome: {{$aposta->nome}}<br>
-					    Cota Total: {{$aposta->cotacao_total}}<br>
-						Valor Apostado: R$ {{$aposta->valor_apostado}}<br>
-						Possíveis ganhos: R$ {{$aposta->premiacao}}
+					    @if(isset($aposta->agente_id))
+					    	Agente: {{$aposta->agente_id}}
+					    @endif
 					</div>
 
 					<div class="card-body text-center">
@@ -40,6 +40,9 @@
 					</div>
 
 					<div class="card-footer text-center">
+						Cota Total: {{$aposta->cotacao_total}}<br>
+						Valor Apostado: R$ {{$aposta->valor_apostado}}<br>
+						Possíveis ganhos: R$ {{$aposta->premiacao}}<br>
 						Aqui ficará algumas regras do site
 					</div>
 				</div>
