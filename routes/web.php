@@ -3,6 +3,7 @@
 Route::prefix('admin')->group(function () {
 	Route::get('/', "AdminController@index")->name('adminhome');
 	Route::get('/apostas', "Admin\ApostaAdminController@apostas")->name('adminapostas');
+	Route::get('/apostasJSON', "Admin\ApostaAdminController@apostasJSON");
 
     Route::get('/login', "AuthAdmin\LoginAdminController@showLoginForm")->name('adminlogin');
 	Route::post('/login', "AuthAdmin\LoginAdminController@login");
@@ -12,13 +13,23 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/eventos', "Admin\EventoAdminController@index")->name('admin-evento');
     Route::get('/eventos/atualizar', "Admin\EventoAdminController@showAtualizarResultadoEventos");
+    Route::get('/eventos/cadastrar', "Admin\EventoAdminController@showAtualizarResultadoEventos");
     Route::get('/eventos/getJSON', "Admin\EventoAdminController@getEventosJSON")->name('getEventosJSONAdmin');
 
     Route::get('/evento/atualizarNaApi', "Admin\EventoAdminController@atualizarEventoApi");
 });
 
 Route::prefix('agente')->group(function () {
-    Route::get('/apostas', 'Agente\ApostaAgenteController@apostas');
+    Route::get('/apostas', 'Agente\ApostaAgenteController@apostas')->name('agenteapostas');
+    Route::get('/apostasJSON', "Agente\ApostaAgenteController@apostasJSON");
+
+    Route::get('/aposta/validar', "Agente\ApostaAgenteController@showValidar")->name('agentevalidar');
+    Route::post('/aposta/validar', "Agente\ApostaAgenteController@validarAposta");
+
+    Route::get('/apostaJSON/{id}', "Agente\ApostaAgenteController@apostaJSON")
+    	->where([
+			'id' => '[0-9]+',
+		]);
 });
 
 Route::prefix('api365')->group(function () {

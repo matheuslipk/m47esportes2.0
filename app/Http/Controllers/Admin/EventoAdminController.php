@@ -63,8 +63,9 @@ class EventoAdminController extends Controller
         $eventos = Evento::where([
             ['data','>=',$dataInicio],
             ['data','<=',$dataFim],
-            ['status_evento_id',$statusEvento],
+            ['status_evento_id', 'LIKE', $statusEvento],
         ])
+        ->orderBy('data', 'desc')
         ->take(50)
         ->get();
 

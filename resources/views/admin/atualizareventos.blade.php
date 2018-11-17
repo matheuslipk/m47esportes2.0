@@ -23,6 +23,7 @@
 				<div class="form-group">
 					<label>Status do Jogo</label>
 					<select class="form-control" id="statusEvento">
+						<option value="">Todos</option>
 						<option selected value="0">Não iniciado</option>
 						<option value="1">Rolando</option>
 						<option value="3">Finalizado</option>
@@ -71,7 +72,8 @@ function atualizarListaEventos(){
 			tbody+="<td>"+
 				"<span class='evento-id'>"+eventos[index].id+" - "+eventos[index].status_evento_id+"</span> <br>" +
 				"<span class='text-primary'>"+eventos[index].time1.nome + "</span> vs " +
-				"<span class='text-danger'>" + eventos[index].time2.nome + "</span>" +
+				"<span class='text-danger'>" + eventos[index].time2.nome + "</span><br>" +
+				"<span class='evento-data'>"+eventos[index].data+"</span>"
 				"</td>";
 			tbody+="<td><button class='btn btn-sm' onclick='atualizarEvento("+eventos[index].id+", "+eventos[index].FI_365+")'>Atualizar</button></td>";
 			tbody+='</tr>';
@@ -96,7 +98,7 @@ function atualizarEvento(evento_id, fi_365){
 
 @section('css')
 <style>
-	.evento-id{
+	.evento-id, .evento-data{
 		font-size: 12px;
 	}
 </style>

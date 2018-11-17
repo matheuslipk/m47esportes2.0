@@ -6,17 +6,47 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
       </li>
+
+      @guest()
       <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
+        <a class="nav-link" href="/login">Login</a>
       </li>
+      @endif
+
+      @auth('web')
       <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link" href="{{route('agenteapostas')}}">Suas apostas</a>
       </li>
+
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <a class="nav-link" href="{{route('agentevalidar')}}">Validar aposta</a>
       </li>
+      
+      <li class="nav-item">
+        <form method="post" action="{{route('logout')}}">
+          @csrf
+          <button class="btn btn-warning">Sair</button>
+        </form>
+      </li>
+      @endif
+
+      @auth('web-admin')
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('adminapostas')}}">Apostas</a>
+      </li>
+      
+      
+
+      <li class="nav-item">
+        <form method="post" action="{{route('logout')}}">
+          @csrf
+          <button class="btn btn-info">Sair</button>
+        </form>
+      </li>
+      @endif
+      
     </ul>
   </div>
 </nav>

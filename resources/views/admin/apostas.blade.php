@@ -3,13 +3,28 @@
 @section('content')
 <div class="container">
 	<div class="row">
-		<div class="col-sm-6 form-group">
+		<div class="col-6 form-group">
 			<label>Data de início</label>
 			<input class="form-control" type="date" name="dataInicio" id="dataInicio" value="{{date('Y-m-d', time())}}">
 		</div>
-		<div class="col-sm-6 form-group">
+		<div class="col-6 form-group">
 			<label>Data Final</label>
 			<input class="form-control" type="date" name="dataFinal" id="dataFinal" value="{{date('Y-m-d', time())}}">
+		</div>	
+	</div>
+
+	<div class="row">
+		<div class="col-6 form-group">
+			<label>Grupo de agentes</label>
+			<select class="form-control">
+				<option value="">Todos</option>
+			</select>
+		</div>
+		<div class="col-6 form-group">
+			<label>Agente</label>
+			<select class="form-control">
+				<option value="">Todos</option>
+			</select>
 		</div>
 	</div>
 
@@ -21,7 +36,7 @@
 
 	<div class="row">
 		<div class="col">
-			<table id="tabelaApostas" class="table table-hover table-hover table-dark">
+			<table id='tabelaApostas' class="table table-hover table-dark">
 				<thead>
 					<tr>
 						<th>Aposta</th>
@@ -49,7 +64,7 @@
 							<td>
 								#{{$aposta->id}}<br>
 								Nome: {{$aposta->nome}}<br>
-								Data: {{$aposta->data_aposta}}
+								Agente: {{$aposta->agente_id}}
 							</td>
 							<td>
 								Valor Apostado R$ {{$aposta->valor_apostado}}<br>
@@ -85,7 +100,7 @@
 		var dataInicio = $('#dataInicio').val();
 		var dataFinal = $('#dataFinal').val();
 
-		$.getJSON('/agente/apostasJSON',{
+		$.getJSON('/admin/apostasJSON',{
 			data_inicio : dataInicio,
 			data_final : dataFinal
 		}).done(function(data){
@@ -111,6 +126,7 @@
 			tabela+="<td>#"+
 				apostas[index].id+"<br>"+
 				"Nome: "+apostas[index].nome+"<br>"+
+				"Agente: "+apostas[index].agente_id+
 				"</td>";
 
 			tabela+="<td>"+
@@ -142,6 +158,8 @@
 	}
 </script>
 @endsection
+
+
 
 @section('css')
 <style>
