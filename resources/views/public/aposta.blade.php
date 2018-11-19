@@ -9,6 +9,9 @@
 					<div class="card-header text-center">
 					    Nº da Aposta: <b>{{$aposta->id}}</b><br>
 					    Criada em: {{$aposta->data_aposta}}<br>
+					    @if( isset($aposta->data_validacao) )
+					    Validada em: {{$aposta->data_validacao}}<br>
+					    @endif					    
 					    Nome: {{$aposta->nome}}<br>
 					    @if(isset($aposta->agente_id))
 					    	Agente: {{$aposta->agente_id}}

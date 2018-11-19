@@ -39,7 +39,7 @@
 						                </button>
 						            </td>
 						            <td>
-						                <button class="btn btn-danger btn-sm" onclick="atualizar_odds({{$evento->id}})">
+						                <button class="btn btn-danger btn-sm" onclick="remover_odds({{$evento->id}})">
 						                    <span class="badge badge-light">Remover Odds</span>
 						                </button>
 						            </td>
@@ -74,8 +74,14 @@
 @section('javascript')
 <script type="text/javascript">
 	function atualizar_odds(evento_id){
-		$.post('/api365/prematch',{
+		$.get('/api365/prematch',{
 			event_id : evento_id
+		});
+	}
+
+	function remover_odds(evento_id){
+		$.post('/admin/odds/remover',{
+			evento_id : evento_id
 		});
 	}
 </script>

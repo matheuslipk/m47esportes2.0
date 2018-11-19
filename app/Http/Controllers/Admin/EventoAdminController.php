@@ -55,6 +55,10 @@ class EventoAdminController extends Controller
         return view('admin.atualizareventos', compact('eventos'));
     }
 
+    public function showCadastrarEventos(Request $request){
+        return view('admin.cadastrareventos', compact('eventos'));
+    }
+
     public function getEventosJSON(Request $request){
         $dataInicio = $request->input('dataInicio');
         $dataFim = $request->input('dataFim');

@@ -11,12 +11,14 @@ Route::prefix('admin')->group(function () {
     Route::get('/register', "AuthAdmin\RegistroAdminController@showRegistroForm")->name('adminregistro');
     Route::post('/register', "AuthAdmin\RegistroAdminController@registrar");
 
-    Route::get('/eventos', "Admin\EventoAdminController@index")->name('admin-evento');
+    Route::get('/eventos', "Admin\EventoAdminController@index")->name('admineventos');
     Route::get('/eventos/atualizar', "Admin\EventoAdminController@showAtualizarResultadoEventos");
-    Route::get('/eventos/cadastrar', "Admin\EventoAdminController@showAtualizarResultadoEventos");
+    Route::get('/eventos/cadastrar', "Admin\EventoAdminController@showCadastrarEventos");
     Route::get('/eventos/getJSON', "Admin\EventoAdminController@getEventosJSON")->name('getEventosJSONAdmin');
 
     Route::get('/evento/atualizarNaApi', "Admin\EventoAdminController@atualizarEventoApi");
+
+	Route::post('/odds/remover', "Admin\OddsAdminController@removerOddsByEvento");    
 });
 
 Route::prefix('agente')->group(function () {
@@ -33,8 +35,8 @@ Route::prefix('agente')->group(function () {
 });
 
 Route::prefix('api365')->group(function () {
-    Route::get('upcoming', 'Api\EventosApi@eventos_futuros');
-    Route::post('prematch', 'Api\EventosApi@pre_math_odds');
+    Route::get('upcoming', 'Api\EventosApi@eventos_futuros')->name('upcoming');
+    Route::get('prematch', 'Api\EventosApi@pre_math_odds');
     Route::get('resultado', 'Api\EventosApi@resultado');
 });
 

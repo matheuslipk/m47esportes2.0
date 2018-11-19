@@ -37,7 +37,9 @@
         <a class="nav-link" href="{{route('adminapostas')}}">Apostas</a>
       </li>
       
-      
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('admineventos')}}">Eventos</a>
+      </li>
 
       <li class="nav-item">
         <form method="post" action="{{route('logout')}}">

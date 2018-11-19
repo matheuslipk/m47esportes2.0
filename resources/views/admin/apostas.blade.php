@@ -29,6 +29,19 @@
 	</div>
 
 	<div class="row">
+		<div class="col-6 form-group">
+			<label>Status da aposta</label>
+			<select class="form-control">
+				<option value="">Todos</option>
+			</select>
+		</div>
+		<div class="col-6 form-group">
+			<label>Prêmios a partir de</label>
+			<input class="form-control" type="number" name="premios_apartir" value="0" id="premios_apartir">
+		</div>
+	</div>
+
+	<div class="row">
 		<div class="col form-group">
 			<button class="btn btn-block" onclick="atualizarTabelaApostas()">Pesquisar</button>
 		</div>
@@ -36,7 +49,7 @@
 
 	<div class="row">
 		<div class="col">
-			<table id='tabelaApostas' class="table table-hover table-dark">
+			<table id='tabelaApostas' class="table table-hover">
 				<thead>
 					<tr>
 						<th>Aposta</th>
@@ -60,11 +73,18 @@
 						$somaValorApostado+=$aposta->valor_apostado;
 						@endphp
 
-						<tr onclick="window.location.href='/aposta/{{$aposta->id}}'">
+						@if($apostasComStatus[$aposta->id]['status']==2)
+							<tr class="table-danger" onclick="window.location.href='/aposta/{{$aposta->id}}'">
+						@elseif($apostasComStatus[$aposta->id]['status']==3)
+							<tr class="table-warning" onclick="window.location.href='/aposta/{{$aposta->id}}'">
+						@elseif($apostasComStatus[$aposta->id]['status']==1)
+							<tr class="table-success" onclick="window.location.href='/aposta/{{$aposta->id}}'">
+						@endif						
 							<td>
 								#{{$aposta->id}}<br>
 								Nome: {{$aposta->nome}}<br>
-								Agente: {{$aposta->agente_id}}
+								Agente: {{$aposta->agente_id}}<br>
+								Data: {{$aposta->data_aposta}}
 							</td>
 							<td>
 								Valor Apostado R$ {{$aposta->valor_apostado}}<br>
@@ -99,10 +119,12 @@
 	function atualizarTabelaApostas(){
 		var dataInicio = $('#dataInicio').val();
 		var dataFinal = $('#dataFinal').val();
+		var premiosApartir = $('#premios_apartir').val();
 
 		$.getJSON('/admin/apostasJSON',{
 			data_inicio : dataInicio,
-			data_final : dataFinal
+			data_final : dataFinal,
+			premios_apartir : premiosApartir
 		}).done(function(data){
 			$("#tabelaApostas>tbody").html(construirTabeleApostas(data));
 		});
@@ -126,7 +148,8 @@
 			tabela+="<td>#"+
 				apostas[index].id+"<br>"+
 				"Nome: "+apostas[index].nome+"<br>"+
-				"Agente: "+apostas[index].agente_id+
+				"Agente: "+apostas[index].agente_id+"<br>"+
+				"Data: "+apostas[index].data_aposta+
 				"</td>";
 
 			tabela+="<td>"+

@@ -25,12 +25,12 @@ class Odd extends Model
 					['evento_id', $oddsConvertidas->evento_id],
 					['tipo_palpite_id', $odd['tipo_palpite_id']],
 				])->first();
-
+				//Se ja existe as Odds, apenas atualize!
 				if (isset($oddBanco)) {
 					$oddBanco->valor = $odd['taxa'];
 					$oddBanco->updated_at = MinhaClasse::timestamp_to_data_mysql(time());
 					$oddBanco->save();					
-				}else{
+				}else{//Se não insira-as
 					$o = new Odd();
 					$o->evento_id = $oddsConvertidas->evento_id;
 					$o->cat_palpite_id = $cat_palpite->categoria_id;

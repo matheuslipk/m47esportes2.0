@@ -15,7 +15,7 @@
 			<div class="row">
 				<div class="col"></div>
 				<div class="col-sm-8 form-group">
-					<button onclick="exibirModal()" type="button" class="btn btn-info form-control">Visualizar</button>
+					<button onclick="exibirModal()" type="button" class="btn btn-info form-control">Validar</button>
 				</div>
 				<div class="col"></div>
 			</div>
@@ -34,7 +34,7 @@
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-			        <button id="botao-validar" type="submit" class="btn btn-primary">Validar</button>
+			        <button id="botao-validar" type="submit" class="btn btn-primary">CONFIRMAR!</button>
 			      </div>
 			    </div>
 			  </div>
