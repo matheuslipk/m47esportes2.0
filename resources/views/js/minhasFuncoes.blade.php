@@ -11,6 +11,7 @@ function exibirModalOdds(evento){
             else if(id_categoria==2) string += montarDuplaChance(cat_palpites[id_categoria]);
             else if(id_categoria==5) string += montarTotalDeGols(cat_palpites[id_categoria]);
             else if(id_categoria==6) string += montarAmbosMarcam(cat_palpites[id_categoria]);
+            else if(id_categoria==8) string += montarPlacarExato(cat_palpites[id_categoria]);   
             else if(id_categoria==14) string += montarResultFinalEAmbas(cat_palpites[id_categoria]);   
         }
         
@@ -97,7 +98,6 @@ function montarAmbosMarcam(categoria){
     string+="</tr>";
     return string;
 }
-
 function montarTotalDeGols(odds){
     var string="";
     string+="<tr class='cat_palpite'><td colspan='12'>"+odds[0].cat_palpite.nome+"</td></tr>";
@@ -118,6 +118,89 @@ function montarTotalDeGols(odds){
         string+=getLinha2(odds[4], odds[9]);
     }
     
+    return string;
+}
+function montarPlacarExato(odds){
+    var string="";
+    string+="<tr class='cat_palpite'><td colspan='12'>"+odds[0].cat_palpite.nome+"</td></tr>";
+    string+="<tr>";
+
+
+
+    //Inicio Casa
+    string+="<td colspan='4'>";
+    string+= "<div class='btn-group'>";//Inicio btn-group
+    string+= "<button class='btn btn-primary' data-toggle='dropdown'>";
+    string+= "Casa";
+    string+= "</button>";
+    string+= "<div class='dropdown-menu'>";//Inicio dropdown-menu
+
+    for(id_odds in odds){
+        var strTipoPalpite = (odds[id_odds].tipo_palpite.id).toString();
+        var golsT1 = strTipoPalpite.substr(1,1);
+        var golsT2 = strTipoPalpite.substr(2,1);  
+
+        if(golsT1 > golsT2){            
+            string+= botaopalpite(odds[id_odds]) + ' ';
+            string+= odds[id_odds].tipo_palpite.nome + '<br>';
+        }            
+    }
+    string+= "</div>";//Fim dropdown-menu
+    string+= "</div>";//Fim btn-group
+    string+="</td>";
+
+
+
+
+    //Inicio Empate
+    string+="<td colspan='4'>";
+    string+= "<div class='btn-group'>";//Inicio btn-group
+    string+= "<button class='btn' data-toggle='dropdown'>";
+    string+= "Empate";
+    string+= "</button>";
+    string+= "<div class='dropdown-menu'>";//Inicio dropdown-menu
+
+    for(id_odds in odds){
+        var strTipoPalpite = (odds[id_odds].tipo_palpite.id).toString();
+        var golsT1 = strTipoPalpite.substr(1,1);
+        var golsT2 = strTipoPalpite.substr(2,1);  
+
+        if(golsT1 == golsT2){
+            string+= botaopalpite(odds[id_odds]) + ' ';
+            string+= odds[id_odds].tipo_palpite.nome + '<br>';
+        }            
+    }
+    string+= "</div>";//Fim dropdown-menu
+    string+= "</div>";//Fim btn-group
+    string+="</td>";
+
+
+
+
+    //Inicio Fora
+    string+="<td colspan='4'>";
+    string+= "<div class='btn-group'>";//Inicio btn-group
+    string+= "<button class='btn btn-danger' data-toggle='dropdown'>";
+    string+= "Fora";
+    string+= "</button>";
+    string+= "<div class='dropdown-menu'>";//Inicio dropdown-menu
+
+    for(id_odds in odds){
+        var strTipoPalpite = (odds[id_odds].tipo_palpite.id).toString();
+        var golsT1 = strTipoPalpite.substr(1,1);
+        var golsT2 = strTipoPalpite.substr(2,1);  
+
+        if(golsT1 < golsT2){
+            string+= botaopalpite(odds[id_odds]) + ' ';
+            string+= odds[id_odds].tipo_palpite.nome + '<br>';
+        }            
+    }
+    string+= "</div>";//Fim dropdown-menu
+    string+= "</div>";//Fim btn-group
+     string+="</td>";
+
+
+    string+="</tr>";
     return string;
 }
 
@@ -146,7 +229,6 @@ function montarResultFinalEAmbas(categoria){
 
     return string;
 }
-
 function botaopalpite(palpite) {
     var btn="";
     if(palpite.selecionado != null){
@@ -159,7 +241,6 @@ function botaopalpite(palpite) {
     btn+="</button>";
     return btn;
 }
-
 function enviarPalpite(btn){
     var evento_id = $(btn).attr('data-evento');
     var tipo_palpite_id = $(btn).attr('data-palpite');
@@ -169,10 +250,8 @@ function enviarPalpite(btn){
         removePalpite(evento_id, tipo_palpite_id);
     }else{
         addPalpite(evento_id, tipo_palpite_id);        
-    }
-    
+    }   
 }
-
 function addPalpite(evento_id, tipo_palpite_id) {
     $.get("/sessao/palpite/"+evento_id+"/"+tipo_palpite_id, {
         acao : 'add'

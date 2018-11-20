@@ -511,7 +511,7 @@ class ConverterApi extends Controller{
             switch ($opc->opp){
                case("1-0"):
                   $temp =[
-                     'tipo_palpite_id'=>510,
+                     'tipo_palpite_id'=>501,
                      'nome'=> '0-1',
                      'taxa'=> $opc->odds,
                   ];
