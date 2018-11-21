@@ -99,7 +99,11 @@
 		});
 	}
 
-	function construirTabeleApostas(apostas){
+	function construirTabeleApostas(data){
+		var apostas = data.apostas;
+		var apostasComStatus = data.apostasComStatus;
+
+
 		var tabela="";
 		var somaValorApostado=0;
 		var somaLiquido=0;
@@ -113,7 +117,14 @@
 			somaLiquido += valorLiquido;
 			somaComissao += comissaoAgente;
 
-			tabela+="<tr onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+			if(apostasComStatus[ apostas[index].id ].status == 2 ){
+				tabela+="<tr class='table-danger' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+			}else if( apostasComStatus[ apostas[index].id ].status == 3 ){
+				tabela+="<tr class='table-warning' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+			}else if( apostasComStatus[ apostas[index].id ].status == 1 ){
+				tabela+="<tr class='table-success' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+			}
+			
 			tabela+="<td>#"+
 				apostas[index].id+"<br>"+
 				"Nome: "+apostas[index].nome+"<br>"+

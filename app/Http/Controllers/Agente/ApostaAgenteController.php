@@ -46,7 +46,15 @@ class ApostaAgenteController extends Controller{
         ->orderBy('id', 'desc')
         ->get();
 
-        return $apostas;
+        $indexApostas = $this->getIndexApostas($apostas);
+        $palpitesAgrupados = Palpite::whereIn('aposta_id', $indexApostas)->get()->groupBy('aposta_id');
+
+        $apostasComStatus = $this->getApostasComStatusJSON($palpitesAgrupados);
+
+        return [
+            'apostas' => $apostas,
+            'apostasComStatus' => $apostasComStatus,
+        ];
     }
 
     public function apostaJSON(Request $request, $id){
