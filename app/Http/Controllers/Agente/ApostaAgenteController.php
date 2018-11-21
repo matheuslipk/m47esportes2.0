@@ -24,7 +24,13 @@ class ApostaAgenteController extends Controller{
     	->take(20)
     	->orderBy('id', 'desc')
     	->get();
-    	return view('agente.apostas', compact('apostas'));
+
+        $indexApostas = $this->getIndexApostas($apostas);
+        $palpitesAgrupados = Palpite::whereIn('aposta_id', $indexApostas)->get()->groupBy('aposta_id');
+
+        $apostasComStatus = $this->getApostasComStatusJSON($palpitesAgrupados);
+
+    	return view('agente.apostas', compact('apostas', 'apostasComStatus'));
     }
 
     public function apostasJSON(Request $request){
@@ -184,5 +190,51 @@ class ApostaAgenteController extends Controller{
         $comissaoAgente = $linhaConfig['valor'];
 
         return $comissaoAgente;
+    }
+
+    public function getIndexApostas($arrayApostas){
+        $index = [];
+        foreach ($arrayApostas as $aposta) {
+            $index[] = $aposta->id;
+        }
+        return $index;
+    }
+
+    public function getApostasComStatusJSON($palpitesAgrupados){
+        $apostas = [];
+
+        foreach ($palpitesAgrupados as $indexAposta => $aposta) {
+            $quantPalpites = $aposta->count();
+            $quantAcertos = 0;
+            $quantPalpitesConferidos = 0;
+
+            foreach ($aposta as $palpite) {
+                $quantPalpitesConferidos++;
+
+                if($palpite->situacao_palpite_id===2){
+                    $aposta['status'] = 2;
+                    $apostas[$indexAposta] = $aposta;
+                    break;
+                }
+
+                if($palpite->situacao_palpite_id===1){
+                    $quantAcertos++;
+                    if($quantPalpites===$quantAcertos){
+                        $aposta['status'] = 1;
+                        $apostas[$indexAposta] = $aposta;
+                        break;
+                    }
+                }
+
+                if($palpite->situacao_palpite_id===3){
+                    $aposta['status'] = 3;
+                    if($quantPalpitesConferidos===$quantPalpites){
+                        $apostas[$indexAposta] = $aposta;
+                        break;
+                    }
+                }
+            }
+        }
+        return $apostas;
     }
 }

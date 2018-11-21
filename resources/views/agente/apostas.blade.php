@@ -21,7 +21,7 @@
 
 	<div class="row">
 		<div class="col">
-			<table id="tabelaApostas" class="table table-hover table-hover table-dark">
+			<table id="tabelaApostas" class="table table-hover">
 				<thead>
 					<tr>
 						<th>Aposta</th>
@@ -45,7 +45,13 @@
 						$somaValorApostado+=$aposta->valor_apostado;
 						@endphp
 
-						<tr onclick="window.location.href='/aposta/{{$aposta->id}}'">
+						@if($apostasComStatus[$aposta->id]['status']==2)
+							<tr class="table-danger" onclick="window.location.href='/aposta/{{$aposta->id}}'">
+						@elseif($apostasComStatus[$aposta->id]['status']==3)
+							<tr class="table-warning" onclick="window.location.href='/aposta/{{$aposta->id}}'">
+						@elseif($apostasComStatus[$aposta->id]['status']==1)
+							<tr class="table-success" onclick="window.location.href='/aposta/{{$aposta->id}}'">
+						@endif
 							<td>
 								#{{$aposta->id}}<br>
 								Nome: {{$aposta->nome}}<br>

@@ -45,10 +45,18 @@ class ApostaAdminController extends Controller{
         ->orderBy('id', 'desc')
         ->get();
 
-        return $apostas;
+        $indexApostas = $this->getIndexApostas($apostas);
+        $palpitesAgrupados = Palpite::whereIn('aposta_id', $indexApostas)->get()->groupBy('aposta_id');
+
+        $apostasComStatus = $this->getApostasComStatusJSON($palpitesAgrupados);
+
+        return [
+            'apostas' => $apostas,
+            'apostasComStatus' => $apostasComStatus,
+        ];
     }
 
-    public function getIndexApostas($arrayApostas){
+    private function getIndexApostas($arrayApostas){
         $index = [];
         foreach ($arrayApostas as $aposta) {
             $index[] = $aposta->id;
@@ -56,7 +64,7 @@ class ApostaAdminController extends Controller{
         return $index;
     }
 
-    public function getApostasComStatusAgrupadas($palpitesAgrupados){
+    private function getApostasComStatusAgrupadas($palpitesAgrupados){
         $apostasPerdidas = [];
         $apostasAbertas = [];
         $apostasGanhas = [];
@@ -97,7 +105,7 @@ class ApostaAdminController extends Controller{
         ];
     }
 
-    public function getApostasComStatusJSON($palpitesAgrupados){
+    private function getApostasComStatusJSON($palpitesAgrupados){
         $apostas = [];
 
         foreach ($palpitesAgrupados as $indexAposta => $aposta) {
