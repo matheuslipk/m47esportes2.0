@@ -21,7 +21,7 @@ class ApostaAgenteController extends Controller{
     	$apostas = Aposta::where([
     		['agente_id', Auth::user()->id]
     	])
-    	->take(20)
+    	->take(30)
     	->orderBy('id', 'desc')
     	->get();
 

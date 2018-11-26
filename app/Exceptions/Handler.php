@@ -56,7 +56,12 @@ class Handler extends ExceptionHandler
         switch ($guard) {
             case 'web-admin':
                 return redirect()->route('adminlogin');
-                break;            
+                break;
+
+            case 'gerente':
+                return redirect()->route('gerentelogin');
+                break;
+
             default:
                 return redirect()->route('login');
                 break;

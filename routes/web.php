@@ -19,6 +19,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/evento/atualizarNaApi', "Admin\EventoAdminController@atualizarEventoApi");
 
 	Route::post('/odds/remover', "Admin\OddsAdminController@removerOddsByEvento");    
+
+	Route::get('/agentes', "Admin\AgenteAdminController@index")->name('listaagentes');
 });
 
 Route::prefix('agente')->group(function () {
@@ -32,6 +34,17 @@ Route::prefix('agente')->group(function () {
     	->where([
 			'id' => '[0-9]+',
 		]);
+});
+
+Route::prefix('gerente')->group(function () {
+	Route::get('/', "GerenteController@index")->name('gerentehome');
+
+    Route::get('/login', "AuthGerente\LoginGerenteController@showLoginForm")->name('gerentelogin');
+	Route::post('/login', "AuthGerente\LoginGerenteController@login");
+
+
+	Route::get('/register', "AuthGerente\RegistroGerenteController@showRegistroForm")->name('gerenteregistro');
+    Route::post('/register', "AuthGerente\RegistroGerenteController@registrar");
 });
 
 Route::prefix('api365')->group(function () {

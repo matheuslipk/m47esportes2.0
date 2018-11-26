@@ -27,8 +27,9 @@ class EventosApi extends Controller
 	   	$variaveis["sport_id"] = 1;
 	   }
 	   
+
 	   $variaveis["league_id"] = $request->input('league_id');
-	   $variaveis["day"] = $request->input('day');
+	   $variaveis["day"] = str_replace('-', '', $request->input('data_eventos'));
 	   $variaveis["page"] = $request->input('page');
 	   
 	   $resultado = MinhaClasse::fazer_requisicao($url, $variaveis, $metodo); 

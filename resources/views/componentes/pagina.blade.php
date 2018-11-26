@@ -29,8 +29,21 @@
     </script>
 
 </head>
-<body style='background: #666'>
-    @include('componentes.navbar')
+<body style='background: #555'>
+    @guest()
+        @guest('web-admin')
+            @include('componentes.navbar.convidadonav')
+        @endif                
+    @endif
+
+    @auth('web')
+        @include('componentes.navbar.agentenav')
+    @endif
+
+    @auth('web-admin')
+        @include('componentes.navbar.adminnav')
+    @endif
+    
 	@hasSection('content')
 		@yield('content')
 	@endif

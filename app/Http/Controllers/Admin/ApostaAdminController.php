@@ -18,7 +18,7 @@ class ApostaAdminController extends Controller{
     	$apostas = Aposta::where([
     		['agente_id', "<>", '']
     	])
-    	->take(20)
+    	->take(50)
     	->orderBy('id', 'desc')
     	->get();
 
@@ -41,7 +41,7 @@ class ApostaAdminController extends Controller{
             ['data_aposta', ">=", $dataInico."T00:00"],
             ['data_aposta', "<=", $dataFinal."T23:59"],
         ])
-        ->take(50)
+        ->take(100)
         ->orderBy('id', 'desc')
         ->get();
 
