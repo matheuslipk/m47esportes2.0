@@ -14,16 +14,8 @@ class GerenteAdminController extends Controller
     }
 
     public function index(Request $request){
-    	if($request->filled('todos')){
-    		$status_contas = StatusConta::all();
-	    	$gerentes = Gerente::all();
-    	}else{
-    		$status_contas = StatusConta::all();
-	    	$gerentes = Gerente::where('status_conta_id', 1)->get();
-    	}
-
-	    	
-
+    	$status_contas = StatusConta::all();
+    	$gerentes = Gerente::orderBy('name')->get();		
 
     	foreach ($gerentes as $gerente) {
     		$gerente->status_conta = $status_contas->find($gerente->status_conta_id);

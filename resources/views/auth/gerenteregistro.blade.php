@@ -47,10 +47,9 @@
 
                             <div class="col-md-6">
                                 <select class="form-control" name="status_conta">
-                                    <option value="1">Ativa</option>
-                                    <option selected value="2">Inativa</option>
+                                    <option selected value="1">Ativa</option>
+                                    <option value="2">Inativa</option>
                                     <option value="3">Suspensa</option>
-                                    <option value="4">Limitada</option>
                                 </select>
                             </div>
                         </div>

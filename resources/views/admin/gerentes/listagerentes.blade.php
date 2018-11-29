@@ -2,10 +2,8 @@
 
 @section('content')
 <div class="container-fluid">
-	<div class="row">
-		<div class="col">
-			
-		</div>
+	
+	<div class="row justify-content-center">
 		<div class="col-sm-8">
 			<table class="table">
 				<thead>
@@ -27,11 +25,14 @@
 					@endforeach
 				</tbody>
 			</table>
-		</div>
-		<div class="col">
-			
-		</div>
-		
+		</div>		
 	</div>
+
+	<div class="row justify-content-center">
+		<div class="col-sm-4 text-center">
+			<a href="{{ route('gerenteregistro') }}" class="btn btn-info">Cadastrar Gerente</a>
+		</div>
+	</div>
+
 </div>
 @endsection

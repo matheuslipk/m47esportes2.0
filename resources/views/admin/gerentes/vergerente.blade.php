@@ -50,13 +50,6 @@
                                 	@else
                                 		<option value="3">Suspensa</option>
                                 	@endif
-
-                                	@if($gerente->status_conta_id == 4)
-                                		<option selected value="4">Limitada</option>
-                                	@else
-                                		<option value="4">Limitada</option>
-                                	@endif
-
                                 </select>
                             </div>
                         </div>
