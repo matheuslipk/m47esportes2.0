@@ -26,7 +26,15 @@ Route::prefix('admin')->group(function () {
 
 	Route::prefix('gerentes')->group(function () {
 		Route::get('/', "Admin\GerenteAdminController@index")->name('listagerentes');
-		Route::get('/{id}/editar', "Admin\GerenteAdminController@editar")->name('editargerente');
+		Route::get('/{id}/editar', "Admin\GerenteAdminController@editar")->name('editargerente')
+			->where([
+				'id' => '[0-9]+',
+			]);
+
+		Route::get('/{id}/salvar', "Admin\GerenteAdminController@salvar")->name('salvargerente')
+			->where([
+				'id' => '[0-9]+',
+			]);
 	});
 
 		
