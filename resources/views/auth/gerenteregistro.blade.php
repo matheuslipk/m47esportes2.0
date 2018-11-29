@@ -40,6 +40,23 @@
                             </div>
                         </div>
 
+                        <!--Início status da conta-->
+
+                        <div class="form-group row">
+                            <label for="status_conta" class="col-md-4 col-form-label text-md-right">Status da conta</label>
+
+                            <div class="col-md-6">
+                                <select class="form-control" name="status_conta">
+                                    <option value="1">Ativa</option>
+                                    <option selected value="2">Inativa</option>
+                                    <option value="3">Suspensa</option>
+                                    <option value="4">Limitada</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!--Fim status da conta-->
+
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 

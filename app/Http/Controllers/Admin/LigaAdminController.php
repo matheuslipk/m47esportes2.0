@@ -11,8 +11,11 @@ use App\Http\Controllers\Api\MinhaClasse;
 
 class LigaAdminController extends Controller
 {
-    public static function getLigasByEventos($eventos){    	
+	public function __construct(){
+        $this->middleware('auth:web-admin');
+    }
 
+    public static function getLigasByEventos($eventos){
     	
     }
 }

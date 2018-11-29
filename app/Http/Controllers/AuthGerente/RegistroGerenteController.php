@@ -7,15 +7,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Gerente;
 
-class RegistroGerenteController extends Controller
-{
+class RegistroGerenteController extends Controller{
+
+    public function __construct(){
+        $this->middleware('auth:web-admin');
+    }
+
     public function registrar(Request $request){
     	$admin = new Gerente();
     	$admin->name = $request->input('name');
     	$admin->email = $request->input('email');
+        $admin->status_conta_id = $request->input('status_conta');
     	$admin->password =  Hash::make($request->input('password'));
     	$admin->save();
-    	return redirect('/gerente');
+    	return redirect()->route('listagerentes');
     }
 
     public function showRegistroForm(){

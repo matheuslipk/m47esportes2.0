@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(StatusContaSeeder::class);
         $this->call(TipoConfigSeeder::class);
         $this->call(ConfigGlobalSeeder::class);
     }

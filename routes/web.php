@@ -20,7 +20,16 @@ Route::prefix('admin')->group(function () {
 
 	Route::post('/odds/remover', "Admin\OddsAdminController@removerOddsByEvento");    
 
-	Route::get('/agentes', "Admin\AgenteAdminController@index")->name('listaagentes');
+	Route::prefix('agentes')->group(function () {
+		Route::get('/', "Admin\AgenteAdminController@index")->name('listaagentes');
+	});
+
+	Route::prefix('gerentes')->group(function () {
+		Route::get('/', "Admin\GerenteAdminController@index")->name('listagerentes');
+		Route::get('/{id}/editar', "Admin\GerenteAdminController@editar")->name('editargerente');
+	});
+
+		
 });
 
 Route::prefix('agente')->group(function () {
@@ -38,6 +47,7 @@ Route::prefix('agente')->group(function () {
 
 Route::prefix('gerente')->group(function () {
 	Route::get('/', "GerenteController@index")->name('gerentehome');
+	Route::get('/apostas', "GerenteController@apostas")->name('gerenteapostas');
 
     Route::get('/login', "AuthGerente\LoginGerenteController@showLoginForm")->name('gerentelogin');
 	Route::post('/login', "AuthGerente\LoginGerenteController@login");
