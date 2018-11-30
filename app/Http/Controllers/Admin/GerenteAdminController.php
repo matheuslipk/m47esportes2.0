@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Agente;
 use App\Gerente;
 use App\StatusConta;
 
@@ -26,7 +27,8 @@ class GerenteAdminController extends Controller
     public function editar(Request $request, $id){
     	$gerente = Gerente::find($id);
     	if(isset($gerente)){
-    		return view('admin.gerentes.vergerente', compact('gerente'));
+            $agentes = Agente::where('gerente_id', $id)->get();
+    		return view('admin.gerentes.vergerente', compact('gerente', 'agentes'));
     	}else{
     		return [];
     	}

@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="container">
-	<h2>Registro Gerente</h2>
+	<h2>Registro de Agente por Admin</h2>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('gerenteregistro') }}">
+                    <form method="POST" action="{{ route('agenteregistro') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -55,6 +55,22 @@
                         </div>
 
                         <!--Fim status da conta-->
+
+                        <!--Início gerente-->
+
+                        <div class="form-group row">
+                            <label for="gerente" class="col-md-4 col-form-label text-md-right">Gerente</label>
+
+                            <div class="col-md-6">
+                                <select class="form-control" name="gerente">
+                                    @foreach($gerentes as $gerente)
+                                        <option value="{{$gerente->id}}">{{$gerente->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <!--Fim gerente-->
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Senha') }}</label>

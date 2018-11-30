@@ -5,18 +5,18 @@
 	<div class="row justify-content-center">
 		<div class="col-md-8">
 			<div class="card">
-				<div class="card-header">Informações do gerente</div>
+				<div class="card-header">Informações do agente</div>
 
 				<div class="card-body">
-					<form action="{{ route('salvargerente', ['id' => $gerente->id]) }}">
+					<form method="post" action="{{ route('salvaragente', ['id' => $agente->id]) }}">
 						@csrf
-						<input style="display: none" type="number" name="gerente_id" value="{{$gerente->id}}">
+						<input style="display: none" type="number" name="agente_id" value="{{$agente->id}}">
 
 						<div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">Nome</label>
 
                             <div class="col-md-6">
-                                <input disabled id="name" type="text" class="form-control" name="name" value="{{$gerente->name}}" required autofocus>
+                                <input disabled id="name" type="text" class="form-control" name="name" value="{{$agente->name}}" required autofocus>
                             </div>
                         </div>
 
@@ -24,7 +24,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
 
                             <div class="col-md-6">
-                                <input disabled id="email" type="email" class="form-control" name="email" value="{{$gerente->email}}" required autofocus>
+                                <input disabled id="email" type="email" class="form-control" name="email" value="{{$agente->email}}" required autofocus>
                             </div>
                         </div>
 
@@ -33,19 +33,19 @@
 
                             <div class="col-md-6">
                                 <select id="status_conta" disabled class="form-control" name="status_conta">
-                                	@if($gerente->status_conta_id == 1)
+                                	@if($agente->status_conta_id == 1)
                                 		<option selected value="1">Ativa</option>
                                 	@else
                                 		<option value="1">Ativa</option>
                                 	@endif
 
-                                	@if($gerente->status_conta_id == 2)
+                                	@if($agente->status_conta_id == 2)
                                 		<option selected value="2">Inativa</option>
                                 	@else
                                 		<option value="2">Inativa</option>
                                 	@endif
 
-                                	@if($gerente->status_conta_id == 3)
+                                	@if($agente->status_conta_id == 3)
                                 		<option selected value="3">Suspensa</option>
                                 	@else
                                 		<option value="3">Suspensa</option>
@@ -74,33 +74,6 @@
 			</div>
 		</div>		
 	</div>
-
-    @if(count($agentes) >= 1)
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <table class="table">
-                <thead>
-                    <tr><th colspan="3">LISTA DOS AGENTES</th></tr>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($agentes as $agente)
-                        <tr>
-                            <td>#{{ $agente->id }}</td>
-                            <td>{{ $agente->name }}</td>
-                            <td>{{ $agente->email }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-    @endif
 </div>
 @endsection
 

@@ -11,6 +11,8 @@ class LoginGerenteController extends Controller
 {
     public function __construct(){
 		$this->middleware('guest:gerente');
+        $this->middleware('guest:web-admin');
+        $this->middleware('guest');
 	}
 
     public function showLoginForm(){

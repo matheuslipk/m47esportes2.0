@@ -20,10 +20,25 @@ Route::prefix('admin')->group(function () {
 
 	Route::post('/odds/remover', "Admin\OddsAdminController@removerOddsByEvento");    
 
+	//('/admin/agentes')
 	Route::prefix('agentes')->group(function () {
 		Route::get('/', "Admin\AgenteAdminController@index")->name('listaagentes');
+		Route::get('/register', "Admin\AgenteAdminController@showRegistroForm")->name('agenteregistro');
+		Route::post('/register', "Admin\AgenteAdminController@registrar");
+
+		Route::get('/{id}/editar', "Admin\AgenteAdminController@editar")->name('editaragente')
+			->where([
+				'id' => '[0-9]+',
+			]);
+
+		Route::post('/{id}/salvar', "Admin\AgenteAdminController@salvar")->name('salvaragente')
+			->where([
+				'id' => '[0-9]+',
+			]);
+
 	});
 
+	//('/admin/gerentes')
 	Route::prefix('gerentes')->group(function () {
 		Route::get('/', "Admin\GerenteAdminController@index")->name('listagerentes');
 		Route::get('/{id}/editar', "Admin\GerenteAdminController@editar")->name('editargerente')
@@ -37,7 +52,6 @@ Route::prefix('admin')->group(function () {
 			]);
 	});
 
-		
 });
 
 Route::prefix('agente')->group(function () {

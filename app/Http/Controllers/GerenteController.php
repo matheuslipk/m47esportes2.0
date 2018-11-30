@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Aposta;
+use App\Agente;
+use App\Palpite;
 
 class GerenteController extends Controller
 {
@@ -15,18 +19,30 @@ class GerenteController extends Controller
     }
 
     public function apostas(Request $request){
-    	$apostas = Aposta::where([
-    		['agente_id', "<>", '']
-    	])
+        $gerente = Auth::guard('gerente')->user();
+        $agentes = Agente::where('gerente_id', $gerente->id)->get();
+        $indexAgentes = $this->getIndexes($agentes);
+
+    	$apostas = Aposta::whereIn('agente_id', $indexAgentes)
     	->take(50)
     	->orderBy('id', 'desc')
     	->get();
 
-        $indexApostas = $this->getIndexApostas($apostas);
+        $indexApostas = $this->getIndexes($apostas);
         $palpitesAgrupados = Palpite::whereIn('aposta_id', $indexApostas)->get()->groupBy('aposta_id');
 
-        $apostasComStatus = $this->getApostasComStatusJSON($palpitesAgrupados);
+        $apostasComStatus = Aposta::getApostasComStatusJSON($palpitesAgrupados);
 
     	return view('gerente.apostasgerente', compact('apostas', 'apostasComStatus'));
     }
+
+    private function getIndexes($arrayApostas){
+        $index = [];
+        foreach ($arrayApostas as $aposta) {
+            $index[] = $aposta->id;
+        }
+        return $index;
+    }
+
+    
 }
