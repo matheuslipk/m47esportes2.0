@@ -10,7 +10,9 @@ use App\Admin;
 class LoginAdminController extends Controller
 {
     public function __construct(){
-		$this->middleware('guest:web-admin');
+		$this->middleware('guest:web-admin')->except('logout');
+        $this->middleware('guest:gerente')->except('logout');
+        $this->middleware('guest')->except('logout');
 	}
 
     public function showLoginForm(){

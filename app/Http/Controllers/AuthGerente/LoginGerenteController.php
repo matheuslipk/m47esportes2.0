@@ -10,9 +10,9 @@ use App\Gerente;
 class LoginGerenteController extends Controller
 {
     public function __construct(){
-		$this->middleware('guest:gerente');
-        $this->middleware('guest:web-admin');
-        $this->middleware('guest');
+		$this->middleware('guest:gerente')->except('logout');
+        $this->middleware('guest:web-admin')->except('logout');
+        $this->middleware('guest')->except('logout');
 	}
 
     public function showLoginForm(){
