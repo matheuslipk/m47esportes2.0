@@ -41,7 +41,7 @@ class LoginGerenteController extends Controller
             ];
 
             $request->session()->put('gerente', $adminSession);
-	     	return redirect('/gerente');
+	     	return redirect('/gerente/apostas');
 	     }
 
 	     return redirect()->back()->withInputs($request->only('email'));

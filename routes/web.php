@@ -65,11 +65,14 @@ Route::prefix('agente')->group(function () {
     	->where([
 			'id' => '[0-9]+',
 		]);
+
+	Route::get('/relarotio', "Agente\RelatorioAgenteController@showRelatorio")->name('relatorio_agente');
+	Route::post('/relarotio', "Agente\RelatorioAgenteController@relatorio");
 });
 
 Route::prefix('gerente')->group(function () {
 	Route::get('/', "GerenteController@index")->name('gerentehome');
-	Route::get('/apostas', "GerenteController@apostas")->name('gerenteapostas');
+	Route::get('/apostas', "Gerente\ApostaGerenteController@apostas")->name('gerenteapostas');
 
     Route::get('/login', "AuthGerente\LoginGerenteController@showLoginForm")->name('gerentelogin');
 	Route::post('/login', "AuthGerente\LoginGerenteController@login");
@@ -77,6 +80,18 @@ Route::prefix('gerente')->group(function () {
 
 	Route::get('/register', "AuthGerente\RegistroGerenteController@showRegistroForm")->name('gerenteregistro');
     Route::post('/register', "AuthGerente\RegistroGerenteController@registrar");
+
+    Route::prefix('agentes')->group(function () {
+    	Route::get('/', "Gerente\AgenteGerenteController@index")->name('listaagentes_gerente');
+    	Route::get('/register', "Gerente\AgenteGerenteController@showRegistroForm")->name('agenteregistro_gerente');
+		Route::post('/register', "Gerente\AgenteGerenteController@registrar");
+
+		Route::get('/{id}/apostas', "Gerente\AgenteGerenteController@verAgente_gerente")->name('veragente_gerente')
+			->where([
+				'evento' => '[0-9]+',
+				'palpite' => '[0-9]+',
+			]);
+    });
 });
 
 Route::prefix('api365')->group(function () {

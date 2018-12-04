@@ -32,7 +32,9 @@
 <body style='background: #555'>
     @guest()
         @guest('web-admin')
-            @include('componentes.navbar.convidadonav')
+            @guest('gerente')
+                @include('componentes.navbar.convidadonav')
+            @endif              
         @endif                
     @endif
 
@@ -42,6 +44,10 @@
 
     @auth('web-admin')
         @include('componentes.navbar.adminnav')
+    @endif
+
+    @auth('gerente')
+        @include('componentes.navbar.gerentenav')
     @endif
     
 	@hasSection('content')

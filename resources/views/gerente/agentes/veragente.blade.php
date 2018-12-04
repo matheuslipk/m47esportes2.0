@@ -15,19 +15,6 @@
 
 	<div class="row">
 		<div class="col form-group">
-			<label>Agente</label>
-			<select class="form-control" name="agente">
-				<option value="">Totos</option>
-				@foreach($gerente->agentes as $agente)
-					<option value="{{ $agente->id }}">{{ $agente->name }}</option>
-				@endforeach
-			</select>
-		</div>
-			
-	</div>
-
-	<div class="row">
-		<div class="col form-group">
 			<button class="btn btn-block" onclick="atualizarTabelaApostas()">Pesquisar</button>
 		</div>
 	</div>

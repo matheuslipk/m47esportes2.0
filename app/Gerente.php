@@ -27,4 +27,8 @@ class Gerente extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function agentes(){
+        return $this->hasMany('App\Agente');
+    }
 }

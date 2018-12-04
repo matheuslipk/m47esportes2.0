@@ -6,24 +6,28 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Apostas
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{{ route('agenteapostas') }}">Suas apostas</a>
-          <a class="dropdown-item" href="{{ route('relatorio_agente') }}">Relatório</a>
-        </div>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('listaagentes_gerente') }}">Agentes</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('agentevalidar') }}">Validar aposta</a>
+        <a class="nav-link" href=" {{ route('gerenteapostas') }}">Apostas</a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Relatórios
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{route('listaagentes')}}">Por Agente</a>
+          <a class="dropdown-item" href="{{route('listagerentes')}}">Geral</a>
+        </div>
       </li>
       
       <li class="nav-item">
         <form method="post" action="{{route('logout')}}">
           @csrf
-          <button class="btn btn-warning">Sair</button>
+          <button class="btn btn-info">Sair</button>
         </form>
       </li>
       
