@@ -39,8 +39,8 @@ class ApostaAgenteController extends Controller{
 
         $apostas = Aposta::where([
             ['agente_id', Auth::user()->id],
-            ['data_aposta', ">=", $dataInico."T00:00"],
-            ['data_aposta', "<=", $dataFinal."T00:00"],
+            ['data_aposta', ">=", $dataInico."T00:00:00"],
+            ['data_aposta', "<=", $dataFinal."T23:59:59"],
         ])
         ->take(50)
         ->orderBy('id', 'desc')

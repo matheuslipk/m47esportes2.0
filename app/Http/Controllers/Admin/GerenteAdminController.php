@@ -43,6 +43,7 @@ class GerenteAdminController extends Controller
     	$gerente = Gerente::find($id);
     	if(isset($gerente)){
     		$gerente->name = $request->input('name');
+            $gerente->telefone = $request->input('telefone');
     		$gerente->email = $request->input('email');
     		$gerente->status_conta_id = $request->input('status_conta');
     		$gerente->save();

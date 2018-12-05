@@ -34,6 +34,7 @@ class AgenteGerenteController extends Controller
     public function registrar(Request $request){
         $agente = new Agente();
         $agente->name = $request->input('name');
+        $agente->telefone = $request->input('telefone');
         $agente->email = $request->input('email');
         $agente->gerente_id = Auth::guard('gerente')->user()->id;
         $agente->status_conta_id = 2;

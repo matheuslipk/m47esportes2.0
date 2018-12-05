@@ -4,7 +4,7 @@
 <div class="container">
 	<h2>Registro de Agente por Gerente</h2>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
@@ -23,6 +23,14 @@
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="telefone" class="col-md-4 col-form-label text-md-right">Telefone</label>
+
+                            <div class="col-md-6">
+                                <input placeholder="(99)99999-9999" id="telefone" class="form-control" name="telefone" required autofocus>
                             </div>
                         </div>
 

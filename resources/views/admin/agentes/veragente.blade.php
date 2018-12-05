@@ -21,6 +21,14 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="telefone" class="col-md-4 col-form-label text-md-right">Telefone</label>
+
+                            <div class="col-md-6">
+                                <input disabled id="telefone" class="form-control" name="telefone" value="{{$agente->telefone}}" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
 
                             <div class="col-md-6">
@@ -81,6 +89,7 @@
 <script type="text/javascript">
 	function ativarFormulario(){
 		$("#name").attr('disabled', false);
+        $("#telefone").attr('disabled', false);
 		$("#email").attr('disabled', false);
 		$("#status_conta").attr('disabled', false);
 		$("#btn-salvar").attr('disabled', false);
@@ -90,6 +99,7 @@
 
 	function desativarFormulario(){
 		$("#name").attr('disabled', true);
+        $("#telefone").attr('disabled', true);
 		$("#email").attr('disabled', true);
 		$("#status_conta").attr('disabled', true);
 		$("#btn-salvar").attr('disabled', true);

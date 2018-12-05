@@ -38,8 +38,8 @@ class ApostaAdminController extends Controller{
         $apostas = Aposta::where([
             ['agente_id', "<>", ''],
             ['premiacao', ">=", $premiosApartir],
-            ['data_aposta', ">=", $dataInico."T00:00"],
-            ['data_aposta', "<=", $dataFinal."T23:59"],
+            ['data_aposta', ">=", $dataInico."T00:00:00"],
+            ['data_aposta', "<=", $dataFinal."T23:59:59"],
         ])
         ->take(100)
         ->orderBy('id', 'desc')
