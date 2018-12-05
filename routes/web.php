@@ -12,8 +12,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/register', "AuthAdmin\RegistroAdminController@registrar");
 
     Route::get('/eventos', "Admin\EventoAdminController@index")->name('admineventos');
-    Route::get('/eventos/atualizar', "Admin\EventoAdminController@showAtualizarResultadoEventos");
-    Route::get('/eventos/cadastrar', "Admin\EventoAdminController@showCadastrarEventos");
+    Route::get('/eventos/atualizar', "Admin\EventoAdminController@showAtualizarResultadoEventos")->name('atualizareventos');
+    Route::get('/eventos/cadastrar', "Admin\EventoAdminController@showCadastrarEventos")->name('cadastroeventos');
     Route::get('/eventos/getJSON', "Admin\EventoAdminController@getEventosJSON")->name('getEventosJSONAdmin');
 
     Route::get('/evento/atualizarNaApi', "Admin\EventoAdminController@atualizarEventoApi");

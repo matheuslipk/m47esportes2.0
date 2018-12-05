@@ -20,8 +20,15 @@
         <a class="nav-link" href="{{route('adminapostas')}}">Apostas</a>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link" href="{{route('admineventos')}}">Eventos</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Eventos
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{route('admineventos')}}">Odds</a>
+          <a class="dropdown-item" href="{{route('cadastroeventos')}}">Cadastrar Eventos</a>
+          <a class="dropdown-item" href="{{route('atualizareventos')}}">Atualizar Eventos</a>
+        </div>
       </li>
 
       <li class="nav-item">

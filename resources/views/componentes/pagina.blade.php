@@ -29,7 +29,7 @@
     </script>
 
 </head>
-<body style='background: #555'>
+<body>
     @guest()
         @guest('web-admin')
             @guest('gerente')
