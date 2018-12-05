@@ -36,6 +36,8 @@ Route::prefix('admin')->group(function () {
 				'id' => '[0-9]+',
 			]);
 
+		Route::get('/by_gerente', "Admin\AgenteAdminController@getAgentesByGerente")->name('agentes_by_gerente');
+
 	});
 
 	//('/admin/gerentes')

@@ -33,17 +33,25 @@ class ApostaAdminController extends Controller{
     public function apostasJSON(Request $request){
         $dataInico = $request->input('data_inicio');
         $dataFinal = $request->input('data_final');
+        $agente = $request->input('agente');
         $premiosApartir = $request->input('premios_apartir');
 
-        $apostas = Aposta::where([
+        $filtros = [
             ['agente_id', "<>", ''],
             ['premiacao', ">=", $premiosApartir],
             ['data_aposta', ">=", $dataInico."T00:00:00"],
             ['data_aposta', "<=", $dataFinal."T23:59:59"],
-        ])
+        ];
+
+        if($agente != 0){
+            $filtros[] = ['agente_id', $agente];
+        }
+
+        $apostas = Aposta::where($filtros)
         ->take(100)
         ->orderBy('id', 'desc')
         ->get();
+
 
         $indexApostas = $this->getIndexApostas($apostas);
         $palpitesAgrupados = Palpite::whereIn('aposta_id', $indexApostas)->get()->groupBy('aposta_id');

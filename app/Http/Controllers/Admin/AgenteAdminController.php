@@ -75,4 +75,9 @@ class AgenteAdminController extends Controller
         
     }
 
+    public function getAgentesByGerente(Request $request){
+        $agentes = Agente::where('gerente_id', $request->input('gerente'))->get();
+        return $agentes;
+    }
+
 }

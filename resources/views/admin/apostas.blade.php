@@ -15,14 +15,23 @@
 
 	<div class="row">
 		<div class="col-6 form-group">
-			<label>Grupo de agentes</label>
-			<select class="form-control">
+			@php
+			$gerentes = App\Gerente::orderBy('name')->get();
+
+			@endphp
+			
+			<label>Gerente</label>
+			<select class="form-control" name="gerente" id="gerente" onchange="atualizarAgentes()">
 				<option value="">Todos</option>
+
+				@foreach($gerentes as $gerente)
+					<option value="{{$gerente->id}}"> {{$gerente->name}} </option>
+				@endforeach
 			</select>
 		</div>
 		<div class="col-6 form-group">
 			<label>Agente</label>
-			<select class="form-control">
+			<select class="form-control" name="agente" id="agente">
 				<option value="">Todos</option>
 			</select>
 		</div>
@@ -120,11 +129,17 @@
 		var dataInicio = $('#dataInicio').val();
 		var dataFinal = $('#dataFinal').val();
 		var premiosApartir = $('#premios_apartir').val();
+		var agente = $("#agente").val();
+		if(agente == ''){
+			agente=0;
+		}
 
 		$.getJSON('/admin/apostasJSON',{
 			data_inicio : dataInicio,
 			data_final : dataFinal,
+			agente : agente,
 			premios_apartir : premiosApartir
+
 		}).done(function(data){
 			$("#tabelaApostas>tbody").html(construirTabeleApostas(data));
 		});
@@ -192,6 +207,19 @@
 
 		return tabela;
 
+	}
+
+	function atualizarAgentes(){
+		$.get('{{ route('agentes_by_gerente') }}', {
+			gerente: $("#gerente").val()			
+		}).done(function (agente){
+			var select = "<option values=''>Todos</option>";
+			
+			for(index in agente){
+				select += "<option value='"+ agente[index].id +"'>"+  agente[index].name +"</option>" ;
+			}
+			$("#agente").html(select);
+		});
 	}
 </script>
 @endsection
