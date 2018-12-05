@@ -4,6 +4,16 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-2 col-md-3"></div>
+			<div class="col">
+				<a style="display: none" id="botaoCompartilhar" class="btn btn-info btn-block" href="whatsapp://send?text={{ route('viewaposta', $aposta->id) }}">
+					Compartilhar 
+				</a>
+			</div>
+			<div class="col-sm-2 col-md-3"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-2 col-md-3"></div>
 			<div class="col-sm-8 col-md-6">
 				<div class="card">
 					<div class="card-header text-center">
@@ -20,14 +30,20 @@
 
 					<div class="card-body text-center">
 						@foreach($aposta->palpites as $palpite)
-							@if($palpite->situacao_palpite_id==3)
-							<div class="palpite">
-							@elseif($palpite->situacao_palpite_id==2)
-							<div class="palpite palpite-errou">
-							@elseif($palpite->situacao_palpite_id==1)
-							<div class="palpite palpite-acertou">	
-							@endif
-								<div class="evento">
+
+						@php
+							$classe = "";
+							if($palpite->situacao_palpite_id==4){
+								$classe="palpite-anulado";
+							}elseif($palpite->situacao_palpite_id==2){
+								$classe = "palpite-errou";
+							}elseif($palpite->situacao_palpite_id==1){
+								$classe = "palpite-acertou";
+							}
+						@endphp
+
+						<div class="palpite {{$classe}}">
+							<div class="evento">
 								<span class="evento-id">Evento: {{$palpite->evento->id}}</span><br>
 								<span class="text-primary">{{$palpite->evento->time1->nome}}</span> vs 
 								<span class="text-danger">{{$palpite->evento->time2->nome}}</span><br>
@@ -54,6 +70,8 @@
 				
 		</div>
 	</div>
+
+	
 @endsection
 
 @section('css')
@@ -78,4 +96,24 @@
 			background: #ffa;
 		}
 	</style>
+@endsection
+
+@section('javascript')
+	<script>
+		$(document).ready(function(){
+
+			if( navigator.userAgent.match(/Android/i)
+			 		|| navigator.userAgent.match(/webOS/i)
+			 		|| navigator.userAgent.match(/iPhone/i)
+					|| navigator.userAgent.match(/iPad/i)
+					|| navigator.userAgent.match(/iPod/i)
+					|| navigator.userAgent.match(/BlackBerry/i)
+					|| navigator.userAgent.match(/Windows Phone/i)
+			 ){
+			    return $("#botaoCompartilhar").show();
+			  }
+		});
+
+	</script>
+
 @endsection

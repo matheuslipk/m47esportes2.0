@@ -114,10 +114,7 @@ Route::prefix('sessao')->group(function () {
 
 Route::prefix('aposta')->group(function () {
 	Route::post('fazerAposta', 'ApostaController@fazerAposta')->name('fazerAposta');
-	Route::get('{id}', 'ApostaController@get')
-		->where([
-			'id' => '[0-9]+',
-		]);
+	Route::get('{id}', 'ApostaController@get')->name('viewaposta');
 });
 
 Route::get('/', 'EventoController@index');
