@@ -13,11 +13,12 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{{ route('agenteapostas') }}">Suas apostas</a>
           <a class="dropdown-item" href="{{ route('relatorio_agente') }}">Relatório</a>
+          <a class="dropdown-item" href="{{ route('agentevalidar') }}">Validar aposta</a>
         </div>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('agentevalidar') }}">Validar aposta</a>
+        <a class="nav-link" href="{{ route('agenteconta') }}">Minha conta</a>
       </li>
       
       <li class="nav-item">

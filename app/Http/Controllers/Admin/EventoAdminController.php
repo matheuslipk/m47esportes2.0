@@ -52,11 +52,11 @@ class EventoAdminController extends Controller
 
 
     public function showAtualizarResultadoEventos(Request $request){
-        return view('admin.atualizareventos', compact('eventos'));
+        return view('admin.atualizareventos');
     }
 
     public function showCadastrarEventos(Request $request){
-        return view('admin.cadastrareventos', compact('eventos'));
+        return view('admin.cadastrareventos');
     }
 
     public function getEventosJSON(Request $request){

@@ -70,6 +70,10 @@ Route::prefix('agente')->group(function () {
 
 	Route::get('/relarotio', "Agente\RelatorioAgenteController@showRelatorio")->name('relatorio_agente');
 	Route::post('/relarotio', "Agente\RelatorioAgenteController@relatorio");
+
+	Route::get('/conta', "Agente\ContaAgenteController@showConta")->name('agenteconta');
+	Route::post('/conta', "Agente\ContaAgenteController@atualizarConta");
+	Route::post('/atualizarsenha', "Agente\ContaAgenteController@atualizarsenha")->name("agente-atualizarsenha");
 });
 
 Route::prefix('gerente')->group(function () {
