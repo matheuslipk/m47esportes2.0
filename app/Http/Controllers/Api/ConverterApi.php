@@ -66,6 +66,14 @@ class ConverterApi extends Controller{
       if(isset($odds->half->sp->first_half_goals)){
          $oddsConvertidas->cat_palpites[] = ConverterApi::quantGols1T($odds);
       }
+      if(isset($odds->half->sp->both_teams_to_score_in_1st_half)){
+         $AmbosMarcam1T = $odds->half->sp->both_teams_to_score_in_1st_half;
+         $oddsConvertidas->cat_palpites[] = ConverterApi::ambosMarcam1T($AmbosMarcam1T);
+      }
+      if(isset($odds->half->sp->half_time_correct_score)){
+         $placarExato1T = $odds->half->sp->half_time_correct_score;
+         $oddsConvertidas->cat_palpites[] = ConverterApi::placarExato1T($placarExato1T);
+      }
 
       //Segundo Tempo
 
@@ -1046,4 +1054,173 @@ class ConverterApi extends Controller{
       $obj->odds = $odd;
       return $obj;
    }
+
+   private static function ambosMarcam1T($ambos){
+      $obj = new \stdClass;
+      $obj->categoria_id = 106;
+      $obj->nome = "Ambos Marcam 1º Tempo";
+      $obj->tempo = "0 - 45 min";
+
+      foreach ($ambos as $opc){
+         if($opc->opp=="Yes"){
+            $temp = [
+               'tipo_palpite_id'=>192,
+               'nome'=>'Sim',
+               'taxa'=>$opc->odds,
+            ];
+         }
+         if($opc->opp=="No"){
+            $temp = [
+               'tipo_palpite_id'=>193,
+               'nome'=>'Não',
+               'taxa'=>$opc->odds,
+            ];
+         }
+         $odd[]=$temp;
+      }
+
+      $obj->odds = $odd;
+      return $obj;
+   }
+
+   private static function placarExato1T($placarExato){
+      $obj = new \stdClass;
+      $obj->categoria_id = 108;
+      $obj->nome = "Placar Exato 1T";
+      $obj->tempo = "0 - 45 min";
+
+
+      foreach ($placarExato as $opc){
+         
+         if($opc->header=="Home"){
+            switch ($opc->opp){
+               case("1-0"):
+                  $temp =[
+                     'tipo_palpite_id'=>610,
+                     'nome'=> $opc->opp,
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("2-0"):
+                  $temp =[
+                     'tipo_palpite_id'=>620,
+                     'nome'=> $opc->opp,
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("2-1"):
+                  $temp =[
+                     'tipo_palpite_id'=>621,
+                     'nome'=> $opc->opp,
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("3-0"):
+                  $temp =[
+                     'tipo_palpite_id'=>630,
+                     'nome'=> $opc->opp,
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("3-1"):
+                  $temp =[
+                     'tipo_palpite_id'=>631,
+                     'nome'=> $opc->opp,
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("3-2"):
+                  $temp =[
+                     'tipo_palpite_id'=>632,
+                     'nome'=> $opc->opp,
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;               
+            }            
+         }
+         if($opc->header=="X"){
+            switch ($opc->opp){
+               case("0-0"):
+                  $temp =[
+                     'tipo_palpite_id'=>600,
+                     'nome'=> $opc->opp,
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("1-1"):
+                  $temp =[
+                     'tipo_palpite_id'=>611,
+                     'nome'=> $opc->opp,
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("2-2"):
+                  $temp =[
+                     'tipo_palpite_id'=>622,
+                     'nome'=> $opc->opp,
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("3-3"):
+                  $temp =[
+                     'tipo_palpite_id'=>633,
+                     'nome'=> $opc->opp,
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+            }            
+         }
+         if($opc->header=="Away"){
+            switch ($opc->opp){
+               case("1-0"):
+                  $temp =[
+                     'tipo_palpite_id'=>601,
+                     'nome'=> '0-1',
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("2-0"):
+                  $temp =[
+                     'tipo_palpite_id'=>602,
+                     'nome'=> '0-2',
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("2-1"):
+                  $temp =[
+                     'tipo_palpite_id'=>612,
+                     'nome'=> '1-2',
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("3-0"):
+                  $temp =[
+                     'tipo_palpite_id'=>603,
+                     'nome'=> '0-3',
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("3-1"):
+                  $temp =[
+                     'tipo_palpite_id'=>613,
+                     'nome'=> '1-3',
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;
+               case("3-2"):
+                  $temp =[
+                     'tipo_palpite_id'=>623,
+                     'nome'=> '2-3',
+                     'taxa'=> $opc->odds,
+                  ];
+                  break;               
+            }            
+         }
+         $odd[]=$temp;
+      }
+
+      $obj->odds = $odd;
+      return $obj;
+   }
+
 }

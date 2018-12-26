@@ -24,6 +24,7 @@ function exibirModalOdds(evento){
             else if(id_categoria==101) stringt1 += montarResultado1T(cat_palpites[id_categoria]);
             else if(id_categoria==102) stringt1 += montarDuplaChance1T(cat_palpites[id_categoria]);
             else if(id_categoria==105) stringt1 += montarTotalDeGols1T(cat_palpites[id_categoria]);
+            else if(id_categoria==108) stringt1 += montarPlacarExato1T(cat_palpites[id_categoria]);
         }
         
         $("#modal-body").html(string);
@@ -426,6 +427,92 @@ function montarTotalDeGols1T(categoria){
 
     return string;
 }
+function montarPlacarExato1T(odds){
+    var string="";
+    string+="<tr class='cat_palpite'><td colspan='12'>"+odds[0].cat_palpite.nome+"</td></tr>";
+    string+="<tr>";
+
+
+
+    //Inicio Casa
+    string+="<td colspan='4'>";
+    string+= "<div class='btn-group'>";//Inicio btn-group
+    string+= "<button class='btn btn-primary' data-toggle='dropdown'>";
+    string+= "Casa";
+    string+= "</button>";
+    string+= "<div class='dropdown-menu'>";//Inicio dropdown-menu
+
+    for(id_odds in odds){
+        var strTipoPalpite = (odds[id_odds].tipo_palpite.id).toString();
+        var golsT1 = strTipoPalpite.substr(1,1);
+        var golsT2 = strTipoPalpite.substr(2,1);  
+
+        if(golsT1 > golsT2){            
+            string+= botaopalpite(odds[id_odds]) + ' ';
+            string+= odds[id_odds].tipo_palpite.nome + '<br>';
+        }            
+    }
+    string+= "</div>";//Fim dropdown-menu
+    string+= "</div>";//Fim btn-group
+    string+="</td>";
+
+
+
+
+    //Inicio Empate
+    string+="<td colspan='4'>";
+    string+= "<div class='btn-group'>";//Inicio btn-group
+    string+= "<button class='btn' data-toggle='dropdown'>";
+    string+= "Empate";
+    string+= "</button>";
+    string+= "<div class='dropdown-menu'>";//Inicio dropdown-menu
+
+    for(id_odds in odds){
+        var strTipoPalpite = (odds[id_odds].tipo_palpite.id).toString();
+        var golsT1 = strTipoPalpite.substr(1,1);
+        var golsT2 = strTipoPalpite.substr(2,1);  
+
+        if(golsT1 == golsT2){
+            string+= botaopalpite(odds[id_odds]) + ' ';
+            string+= odds[id_odds].tipo_palpite.nome + '<br>';
+        }            
+    }
+    string+= "</div>";//Fim dropdown-menu
+    string+= "</div>";//Fim btn-group
+    string+="</td>";
+
+
+
+
+    //Inicio Fora
+    string+="<td colspan='4'>";
+    string+= "<div class='btn-group'>";//Inicio btn-group
+    string+= "<button class='btn btn-danger' data-toggle='dropdown'>";
+    string+= "Fora";
+    string+= "</button>";
+    string+= "<div class='dropdown-menu'>";//Inicio dropdown-menu
+
+    for(id_odds in odds){
+        var strTipoPalpite = (odds[id_odds].tipo_palpite.id).toString();
+        var golsT1 = strTipoPalpite.substr(1,1);
+        var golsT2 = strTipoPalpite.substr(2,1);  
+
+        if(golsT1 < golsT2){
+            string+= botaopalpite(odds[id_odds]) + ' ';
+            string+= odds[id_odds].tipo_palpite.nome + '<br>';
+        }            
+    }
+    string+= "</div>";//Fim dropdown-menu
+    string+= "</div>";//Fim btn-group
+     string+="</td>";
+
+
+    string+="</tr>";
+    return string;
+}
+
+
+
 
 function botaopalpite(palpite) {
     var btn="";
