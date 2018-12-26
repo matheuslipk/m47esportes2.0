@@ -11,7 +11,7 @@
 
     <div id="accordion{{$liga->id}}">
         <div class="card">
-            <div class="card-header bg-secondary" data-toggle="collapse" data-target='#collapseOne{{$liga->id}}'>
+            <div class="card-header bg-dark text-white" data-toggle="collapse" data-target='#collapseOne{{$liga->id}}'>
                 <div>{{$liga->nome}}</div>
             </div>
 
