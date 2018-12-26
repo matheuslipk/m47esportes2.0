@@ -44,6 +44,16 @@ class ConverterApi extends Controller{
          $oddsConvertidas->cat_palpites[] = ConverterApi::margemVitoria($margemVitoria);
       }
 
+      if(isset($odds->goals->sp->exact_total_goals)){
+         $golsExatos = $odds->goals->sp->exact_total_goals;
+         $oddsConvertidas->cat_palpites[] = ConverterApi::golsExatos($golsExatos);
+      }
+
+      if(isset($odds->goals->sp->total_goals_both_teams_to_score)){
+         $golsComAmbas = $odds->goals->sp->total_goals_both_teams_to_score;
+         $oddsConvertidas->cat_palpites[] = ConverterApi::golsComAmbas($golsComAmbas);
+      }
+
       return $oddsConvertidas;
    }
 
@@ -706,5 +716,118 @@ class ConverterApi extends Controller{
 
       $obj->odds = $odd;
       return $obj;
+   }
+
+   private static function golsExatos($gols){
+      $obj = new \stdClass;
+      $obj->categoria_id = 15;
+      $obj->nome = "Gols Exatos na partida";
+      $obj->tempo = "90 min";
+
+      foreach ($gols as $gol){
+
+         if($gol->opp=="0 Goals"){
+            $temp = [
+               'tipo_palpite_id'=>150,
+               'nome'=> '0 gols',
+               'taxa'=> $gol->odds,
+            ];
+         }
+         if($gol->opp=="1 Goal"){
+            $temp = [
+               'tipo_palpite_id'=>151,
+               'nome'=> '1 gol',
+               'taxa'=> $gol->odds,
+            ];
+         }
+         if($gol->opp=="2 Goals"){
+            $temp = [
+               'tipo_palpite_id'=>152,
+               'nome'=> '2 gols',
+               'taxa'=> $gol->odds,
+            ];
+         }
+         if($gol->opp=="3 Goals"){
+            $temp = [
+               'tipo_palpite_id'=>153,
+               'nome'=> '3 gols',
+               'taxa'=> $gol->odds,
+            ];
+         }
+         if($gol->opp=="4 Goals"){
+            $temp = [
+               'tipo_palpite_id'=>154,
+               'nome'=> '4 gols',
+               'taxa'=> $gol->odds,
+            ];
+         }
+         if($gol->opp=="5 Goals"){
+            $temp = [
+               'tipo_palpite_id'=>155,
+               'nome'=> '5 gols',
+               'taxa'=> $gol->odds,
+            ];
+         }
+         if($gol->opp=="6 Goals"){
+            $temp = [
+               'tipo_palpite_id'=>156,
+               'nome'=> '6 gols',
+               'taxa'=> $gol->odds,
+            ];
+         }
+         if($gol->opp=="7+ Goals"){
+            $temp = [
+               'tipo_palpite_id'=>157,
+               'nome'=> '7 gols',
+               'taxa'=> $gol->odds,
+            ];
+         }
+         $odd[]=$temp;
+      }
+
+      $obj->odds = $odd;
+      return $obj;
+   }
+
+   private static function golsComAmbas($ambos){
+      $obj = new \stdClass;
+      $obj->categoria_id = 16;
+      $obj->nome = "Gols & Ambos marcam";
+      $obj->tempo = "90 min";
+
+      foreach ($ambos as $gols){
+         if($gols->opp=='Over 2.5 & Yes'){
+            $temp = [
+               'tipo_palpite_id'=>160,
+               'nome'=> '+2.5 & Sim',
+               'taxa'=> $gols->odds,
+            ];
+         }
+         if($gols->opp=='Over 2.5 & No'){
+            $temp = [
+               'tipo_palpite_id'=>161,
+               'nome'=> '-2.5 & Não',
+               'taxa'=> $gols->odds,
+            ];
+         }
+         if($gols->opp=='Under 2.5 & Yes'){
+            $temp = [
+               'tipo_palpite_id'=>162,
+               'nome'=> '-2.5 & Sim',
+               'taxa'=> $gols->odds,
+            ];
+         }
+         if($gols->opp=='Under 2.5 & No'){
+            $temp = [
+               'tipo_palpite_id'=>163,
+               'nome'=> '-2.5 & Não',
+               'taxa'=> $gols->odds,
+            ];
+         }
+         $odd[]=$temp;
+      }      
+
+      $obj->odds = $odd;
+      return $obj;      
    }
 }
