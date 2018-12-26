@@ -24,6 +24,7 @@ function exibirModalOdds(evento){
             else if(id_categoria==101) stringt1 += montarResultado1T(cat_palpites[id_categoria]);
             else if(id_categoria==102) stringt1 += montarDuplaChance1T(cat_palpites[id_categoria]);
             else if(id_categoria==105) stringt1 += montarTotalDeGols1T(cat_palpites[id_categoria]);
+            else if(id_categoria==106) stringt1 += montarAmbosMarcam1T(cat_palpites[id_categoria]);
             else if(id_categoria==108) stringt1 += montarPlacarExato1T(cat_palpites[id_categoria]);
         }
         
@@ -299,7 +300,9 @@ function montarGolsEAmbosMarcam(categoria){
 function montarResultado1T(odds){
     return montarCatGenerico(odds, 3);
 } 
-
+function montarAmbosMarcam1T(odds){
+    return montarCatGenerico(odds, 2);
+}
 function montarDuplaChance1T(odds){
     return montarCatGenerico(odds, 3);
 }
