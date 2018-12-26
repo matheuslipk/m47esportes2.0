@@ -74,14 +74,32 @@
             </button>
           </div>
           <div class="modal-body" >
-                <table class="table table-sm">
-                    <tbody id="modal-body">
-                        
-                    </tbody>
-                </table>
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#tempo-completo">Tempo Completo</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#tempo1"> 1º Tempo</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#tempo2"> 2º Tempo</a></li>
+                </ul>
+                <div class="tab-content">
+                    <table id="tempo-completo" class="table table-sm tab-pane fade in active show">
+                        <tbody id="modal-body">
+                            
+                        </tbody>
+                    </table>
+                    <table id="tempo1" class="table table-sm tab-pane">
+                        <tbody id="modal-body1">
+                            
+                        </tbody>
+                    </table>
+                    <table id="tempo2" class="table table-sm tab-pane">
+                        <tbody id="modal-body2">
+                            
+                        </tbody>
+                    </table>
+                </div>
+                    
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
           </div>
         </div>
       </div>
@@ -137,12 +155,10 @@
     tr, form{
         font-size: 12px;
     }
-    body{
-        background: #666;
-    }
     .cat_palpite{
-        background: #aaa;
+        background: #222;
         font-size: 19px;
+        color: #fff;
     }
     .flutuante{
         position: fixed;
