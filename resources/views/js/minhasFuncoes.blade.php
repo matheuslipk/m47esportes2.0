@@ -14,6 +14,8 @@ function exibirModalOdds(evento){
             else if(id_categoria==14) string += montarResultFinalEAmbas(cat_palpites[id_categoria]);
             else if(id_categoria==8) string += montarPlacarExato(cat_palpites[id_categoria]);              
             else if(id_categoria==17) string += montarMargemVitoria(cat_palpites[id_categoria]);
+            else if(id_categoria==15) string += montarGolsExatos(cat_palpites[id_categoria]);
+            else if(id_categoria==16) string += montarGolsEAmbosMarcam(cat_palpites[id_categoria]);
         }
         
         $("#modal-body").html(string);
@@ -281,9 +283,6 @@ function montarMargemVitoria(odds){
 
 
 
-
-
-
     //Inicio Fora
     string+="<td colspan='4'>";
     string+= "<div class='btn-group'>";//Inicio btn-group
@@ -306,6 +305,69 @@ function montarMargemVitoria(odds){
 
 
     string+="</tr>";
+    return string;
+}
+
+function montarGolsExatos(categoria){
+    var string="";
+    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
+    
+    for(id_odds in categoria){
+        if(id_odds % 3 == 0){
+            string+="<tr>";
+        }
+        string += "<td colspan='4'>";
+        string += categoria[id_odds].tipo_palpite.nome + '<br>';
+        string += botaopalpite(categoria[id_odds]);
+        string += "</td>";     
+
+       if(id_odds % 3 == 2){
+            string+="</tr>";
+        }
+    }
+
+    return string;
+}
+
+function montarGolsExatos(categoria){
+    var string="";
+    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
+    
+    for(id_odds in categoria){
+        if(id_odds % 3 == 0){
+            string+="<tr>";
+        }
+        string += "<td colspan='4'>";
+        string += categoria[id_odds].tipo_palpite.nome + '<br>';
+        string += botaopalpite(categoria[id_odds]);
+        string += "</td>";     
+
+       if(id_odds % 3 == 2){
+            string+="</tr>";
+        }
+    }
+
+    return string;
+}
+
+function montarGolsEAmbosMarcam(categoria){
+    var string="";
+    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
+    
+    for(id_odds in categoria){
+        if(id_odds % 2 == 0){
+            string+="<tr>";
+        }
+        string += "<td colspan='4'>";
+        string += categoria[id_odds].tipo_palpite.nome + '<br>';
+        string += botaopalpite(categoria[id_odds]);
+        string += "</td>";     
+
+       if(id_odds % 2 == 1){
+            string+="</tr>";
+        }
+    }
+
     return string;
 }
 
