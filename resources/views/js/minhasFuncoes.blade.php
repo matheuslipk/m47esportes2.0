@@ -75,43 +75,13 @@ function exibirModalPalpites(){
 }
 
 function montarResultadoFinal(odds){
-    var string="";
-    string+="<tr class='cat_palpite'><td colspan='12'>"+odds[0].cat_palpite.nome+"</td></tr>";
-    string+="<tr>";
-    for(id_odds in odds){
-        string += "<td colspan='4'>";
-        string += odds[id_odds].tipo_palpite.nome + '<br>';
-        string += botaopalpite(odds[id_odds]);
-        string += "</td>";
-    }
-    string+="</tr>";
-    return string;
+    return montarCatGenerico(odds, 3);
 }
-function montarDuplaChance(categoria){
-    var string="";
-    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
-    string+="<tr>";
-    for(id_odds in categoria){
-        string += "<td colspan='4'>";
-        string += categoria[id_odds].tipo_palpite.nome + '<br>';
-        string += botaopalpite(categoria[id_odds]);
-        string += "</td>";
-    }
-    string+="</tr>";
-    return string;
+function montarDuplaChance(odds){
+    return montarCatGenerico(odds, 3);
 }
-function montarAmbosMarcam(categoria){
-    var string="";
-    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
-    string+="<tr>";
-    for(id_odds in categoria){
-        string += "<td colspan='6'>";
-        string += categoria[id_odds].tipo_palpite.nome + '<br>';
-        string += botaopalpite(categoria[id_odds]);
-        string += "</td>";
-    }
-    string+="</tr>";
-    return string;
+function montarAmbosMarcam(odds){
+    return montarCatGenerico(odds, 2);
 }
 function montarTotalDeGols(odds){
     var string="";
@@ -319,113 +289,22 @@ function montarMargemVitoria(odds){
     return string;
 }
 function montarGolsExatos(categoria){
-    var string="";
-    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
-    
-    for(id_odds in categoria){
-        if(id_odds % 3 == 0){
-            string+="<tr>";
-        }
-        string += "<td colspan='4'>";
-        string += categoria[id_odds].tipo_palpite.nome + '<br>';
-        string += botaopalpite(categoria[id_odds]);
-        string += "</td>";     
-
-       if(id_odds % 3 == 2){
-            string+="</tr>";
-        }
-    }
-
-    return string;
-}
-function montarGolsExatos(categoria){
-    var string="";
-    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
-    
-    for(id_odds in categoria){
-        if(id_odds % 4 == 0){
-            string+="<tr>";
-        }
-        string += "<td colspan='3'>";
-        string += categoria[id_odds].tipo_palpite.nome + '<br>';
-        string += botaopalpite(categoria[id_odds]);
-        string += "</td>";     
-
-       if(id_odds % 4 == 3){
-            string+="</tr>";
-        }
-    }
-
-    return string;
+    return montarCatGenerico(categoria, 4);
 }
 function montarGolsEAmbosMarcam(categoria){
-    var string="";
-    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
-    
-    for(id_odds in categoria){
-        if(id_odds % 2 == 0){
-            string+="<tr>";
-        }
-        string += "<td colspan='6'>";
-        string += categoria[id_odds].tipo_palpite.nome + '<br>';
-        string += botaopalpite(categoria[id_odds]);
-        string += "</td>";     
-
-       if(id_odds % 2 == 1){
-            string+="</tr>";
-        }
-    }
-
-    return string;
+    return montarCatGenerico(categoria, 2);
 }
 
 //Primeiro Tempo
 function montarResultado1T(odds){
-    var string="";
-    string+="<tr class='cat_palpite'><td colspan='12'>"+odds[0].cat_palpite.nome+"</td></tr>";
-    string+="<tr>";
-    for(id_odds in odds){
-        string += "<td colspan='4'>";
-        string += odds[id_odds].tipo_palpite.nome + '<br>';
-        string += botaopalpite(odds[id_odds]);
-        string += "</td>";
-    }
-    string+="</tr>";
-    return string;
+    return montarCatGenerico(odds, 3);
 } 
 
-function montarDuplaChance1T(categoria){
-    var string="";
-    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
-    string+="<tr>";
-    for(id_odds in categoria){
-        string += "<td colspan='4'>";
-        string += categoria[id_odds].tipo_palpite.nome + '<br>';
-        string += botaopalpite(categoria[id_odds]);
-        string += "</td>";
-    }
-    string+="</tr>";
-    return string;
+function montarDuplaChance1T(odds){
+    return montarCatGenerico(odds, 3);
 }
-function montarTotalDeGols1T(categoria){
-    var string="";
-    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
-    
-    for(id_odds in categoria){
-        if(id_odds % 2 == 0){
-            string+="<tr>";
-        }
-        string += "<td colspan='6'>";
-        string += categoria[id_odds].tipo_palpite.nome + '<br>';
-        string += botaopalpite(categoria[id_odds]);
-        string += "</td>";     
-
-       if(id_odds % 2 == 1){
-            string+="</tr>";
-        }
-    }
-
-    return string;
+function montarTotalDeGols1T(odds){
+    return montarCatGenerico(odds, 2);
 }
 function montarPlacarExato1T(odds){
     var string="";
@@ -512,6 +391,30 @@ function montarPlacarExato1T(odds){
 }
 
 
+
+
+function montarCatGenerico(categoria, quantCol){
+    var string="";
+    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
+    if(quantCol<2) quantCol = 2;
+    if(quantCol>4) quantCol = 4;
+
+    for(id_odds in categoria){
+        if(id_odds % quantCol == 0){
+            string+="<tr>";
+        }
+        string += "<td colspan='"+ (12/quantCol) +"'>";
+        string += categoria[id_odds].tipo_palpite.nome + '<br>';
+        string += botaopalpite(categoria[id_odds]);
+        string += "</td>";     
+
+       if(id_odds % quantCol == (quantCol-1)){
+            string+="</tr>";
+        }
+    }
+
+    return string;
+}
 
 
 function botaopalpite(palpite) {
