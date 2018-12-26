@@ -80,21 +80,30 @@
                     <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#tempo2"> 2º Tempo</a></li>
                 </ul>
                 <div class="tab-content">
-                    <table id="tempo-completo" class="table table-sm tab-pane fade in active show">
-                        <tbody id="modal-body">
-                            
-                        </tbody>
-                    </table>
-                    <table id="tempo1" class="table table-sm tab-pane">
-                        <tbody id="modal-body1">
-                            
-                        </tbody>
-                    </table>
-                    <table id="tempo2" class="table table-sm tab-pane">
-                        <tbody id="modal-body2">
-                            
-                        </tbody>
-                    </table>
+                    <div id="tempo-completo" class="tab-pane fade in active show">
+                        <table class="table table-sm">
+                            <tbody id="modal-body">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                        
+                    <div  id="tempo1" class="tab-pane fade in">
+                        <table class="table table-sm">
+                            <tbody id="modal-body1">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                        
+                    <div id="tempo2" class="tab-pane fade in">
+                        <table class="table table-sm">
+                            <tbody id="modal-body2">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                        
                 </div>
                     
           </div>

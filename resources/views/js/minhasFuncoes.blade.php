@@ -5,6 +5,9 @@ function exibirModalOdds(evento){
         var tituloModal = "<span class='text-primary'>" +evento.time1.nome + "</span> x <span class='text-danger'>" 
                 + evento.time2.nome + "</span>";
         var string = "";
+        var stringt1 = "";
+        var stringt2 = "";
+
         $("#titulo-modal").html(tituloModal);            
         for(id_categoria in cat_palpites){
             if(id_categoria==1) string += montarResultadoFinal(cat_palpites[id_categoria]);
@@ -16,9 +19,17 @@ function exibirModalOdds(evento){
             else if(id_categoria==17) string += montarMargemVitoria(cat_palpites[id_categoria]);
             else if(id_categoria==15) string += montarGolsExatos(cat_palpites[id_categoria]);
             else if(id_categoria==16) string += montarGolsEAmbosMarcam(cat_palpites[id_categoria]);
+            //Fim do tempo completo
+
+            else if(id_categoria==101) stringt1 += montarResultado1T(cat_palpites[id_categoria]);
+            else if(id_categoria==102) stringt1 += montarDuplaChance1T(cat_palpites[id_categoria]);
+            else if(id_categoria==105) stringt1 += montarTotalDeGols1T(cat_palpites[id_categoria]);
         }
         
         $("#modal-body").html(string);
+        $("#modal-body1").html(stringt1);
+        $("#modal-body2").html(stringt2);
+
         $("#modal-odds").modal();
     });
 }
@@ -231,7 +242,6 @@ function montarResultFinalEAmbas(categoria){
 
     return string;
 }
-
 function montarMargemVitoria(odds){
     var string="";
     string+="<tr class='cat_palpite'><td colspan='12'>"+odds[0].cat_palpite.nome+"</td></tr>";
@@ -307,7 +317,6 @@ function montarMargemVitoria(odds){
     string+="</tr>";
     return string;
 }
-
 function montarGolsExatos(categoria){
     var string="";
     string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
@@ -328,28 +337,26 @@ function montarGolsExatos(categoria){
 
     return string;
 }
-
 function montarGolsExatos(categoria){
     var string="";
     string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
     
     for(id_odds in categoria){
-        if(id_odds % 3 == 0){
+        if(id_odds % 4 == 0){
             string+="<tr>";
         }
-        string += "<td colspan='4'>";
+        string += "<td colspan='3'>";
         string += categoria[id_odds].tipo_palpite.nome + '<br>';
         string += botaopalpite(categoria[id_odds]);
         string += "</td>";     
 
-       if(id_odds % 3 == 2){
+       if(id_odds % 4 == 3){
             string+="</tr>";
         }
     }
 
     return string;
 }
-
 function montarGolsEAmbosMarcam(categoria){
     var string="";
     string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
@@ -358,7 +365,56 @@ function montarGolsEAmbosMarcam(categoria){
         if(id_odds % 2 == 0){
             string+="<tr>";
         }
+        string += "<td colspan='6'>";
+        string += categoria[id_odds].tipo_palpite.nome + '<br>';
+        string += botaopalpite(categoria[id_odds]);
+        string += "</td>";     
+
+       if(id_odds % 2 == 1){
+            string+="</tr>";
+        }
+    }
+
+    return string;
+}
+
+//Primeiro Tempo
+function montarResultado1T(odds){
+    var string="";
+    string+="<tr class='cat_palpite'><td colspan='12'>"+odds[0].cat_palpite.nome+"</td></tr>";
+    string+="<tr>";
+    for(id_odds in odds){
         string += "<td colspan='4'>";
+        string += odds[id_odds].tipo_palpite.nome + '<br>';
+        string += botaopalpite(odds[id_odds]);
+        string += "</td>";
+    }
+    string+="</tr>";
+    return string;
+} 
+
+function montarDuplaChance1T(categoria){
+    var string="";
+    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
+    string+="<tr>";
+    for(id_odds in categoria){
+        string += "<td colspan='4'>";
+        string += categoria[id_odds].tipo_palpite.nome + '<br>';
+        string += botaopalpite(categoria[id_odds]);
+        string += "</td>";
+    }
+    string+="</tr>";
+    return string;
+}
+function montarTotalDeGols1T(categoria){
+    var string="";
+    string+="<tr class='cat_palpite'><td colspan='12'>"+categoria[0].cat_palpite.nome+"</td></tr>";
+    
+    for(id_odds in categoria){
+        if(id_odds % 2 == 0){
+            string+="<tr>";
+        }
+        string += "<td colspan='6'>";
         string += categoria[id_odds].tipo_palpite.nome + '<br>';
         string += botaopalpite(categoria[id_odds]);
         string += "</td>";     
@@ -406,7 +462,6 @@ function addPalpite(evento_id, tipo_palpite_id) {
         $("button[data-evento='"+evento_id+"'][data-palpite='"+tipo_palpite_id+"']").addClass('btn-danger');
     });
 }
-
 function removePalpite(evento_id, tipo_palpite_id, btnRemove) {
     $.get("/sessao/palpite/"+evento_id+"/"+tipo_palpite_id, {
         acao : 'remove'
