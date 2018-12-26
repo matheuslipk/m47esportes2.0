@@ -59,5 +59,9 @@ class TipoConfigSeeder extends Seeder
             'id' => 12,
             'nome' => 'Comissão com Odds >= 20',
         ]);
+        DB::table('tipo_configs')->insert([
+            'id' => 13,
+            'nome' => 'Tempo de atualização das Odds em minutos',
+        ]);
     }
 }

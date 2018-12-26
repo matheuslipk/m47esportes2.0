@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Api\MinhaClasse;
 use App\Odd;
 use App\Evento;
 use App\TipoPalpite;
+use App\ConfigGlobal;
 
 class SessaoController extends Controller{
 	public function salvarPalpite(Request $request, $evento_id, $tipo_palpite_id){		
 
 		if($request->input('acao')=='add'){
 			$retorno = $this->addPalpite($request, $evento_id, $tipo_palpite_id);
+			
+
 		}elseif ($request->input('acao')=='remove') {
 			$retorno = $this->removePalpite($request, $evento_id);
 		}	
@@ -28,10 +32,10 @@ class SessaoController extends Controller{
 		$this->removePalpite($request, $evento_id);
 		$tempPalpites = $request->session()->get('palpites');
 
-		if($request->session()->has('palpites') && count($request->session()->get('palpites'))>=12){
+		if($request->session()->has('palpites') && count($request->session()->get('palpites'))>=14){
 			return [
 					'sucesso' => false,
-					'erro' => 'Limite máximo de 14 palpites'
+					'erro' => 'Limite máximo de 14 palpites',
 				];
 		}
 
@@ -40,11 +44,26 @@ class SessaoController extends Controller{
 			['tipo_palpite_id',$tipo_palpite_id],
 		])->first();
 
+
+
 		if(!isset($odd)) {
 			return [
 				'sucesso' => false,
 				'erro' => 'Odd não encontrada'
 			];
+		}
+
+		$ultimaAtualizacao = MinhaClasse::date_mysql_to_timestamp($odd->updated_at);
+		$horaAtual = time();
+
+		$tempoAtualizacao = ConfigGlobal::where("tipo_config_id", 13)->first()->valor;
+
+		if($horaAtual >= ($ultimaAtualizacao + $tempoAtualizacao * 60)){
+			MinhaClasse::atualizarOdds($evento_id);
+			$odd = Odd::where([
+				['evento_id',$evento_id],
+				['tipo_palpite_id',$tipo_palpite_id],
+			])->first();
 		}
 
 		$evento = Evento::find($evento_id);

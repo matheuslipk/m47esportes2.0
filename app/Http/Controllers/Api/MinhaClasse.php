@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 date_default_timezone_set('America/Fortaleza');
 
 use App\Http\Controllers\Controller;
+use App\Odd;
 
 class MinhaClasse extends Controller{
 	
@@ -34,4 +35,24 @@ class MinhaClasse extends Controller{
        return date("Y-m-d H:i:s", $timestamp);
     }
  
+   public static function date_mysql_to_timestamp($str){
+      return strtotime($str);
+   }
+
+   public static function atualizarOdds($evento){
+      $url = "https://api.betsapi.com/v1/bet365/start_sp";
+      $metodo = "GET";
+      $variaveis["token"] = MinhaClasse::get_token();
+      $variaveis["event_id"] = $evento;
+      
+      $odds = MinhaClasse::fazer_requisicao($url, $variaveis, $metodo); 
+      $objetoOdds = json_decode($odds);
+
+      if(isset($objetoOdds->results[0])){
+         $oddsConvertidas = Odd::inserir_odds($objetoOdds->results[0], $variaveis['event_id']);
+         return json_encode( (array) $oddsConvertidas);
+      }
+      
+      return 'Nenhum evento encontrado';
+   }
 }

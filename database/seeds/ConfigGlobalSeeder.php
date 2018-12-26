@@ -59,5 +59,9 @@ class ConfigGlobalSeeder extends Seeder
             'tipo_config_id' => 12,
             'valor' => 0.15,
         ]);
+        DB::table('config_globals')->insert([
+            'tipo_config_id' => 13,
+            'valor' => 20,
+        ]);
     }
 }
