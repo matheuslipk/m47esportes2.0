@@ -1,5 +1,9 @@
 @extends('componentes.pagina')
 
+@section('titulo')
+Aposta {{ $aposta->id }} - {{ $aposta->nome }}
+@endsection
+
 @section('content')
 	<div class="container-fluid">
 		<div class="row">
