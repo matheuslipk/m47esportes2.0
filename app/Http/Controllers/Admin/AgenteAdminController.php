@@ -29,8 +29,10 @@ class AgenteAdminController extends Controller
 
     public function editar(Request $request, $id){
         $agente = Agente::find($id);
+        $configAgente = ConfigAgente::where('agente_id', $id)->get();
+
         if(isset($agente)){
-            return view('admin.agentes.veragente', compact('agente'));
+            return view('admin.agentes.veragente', compact('agente', 'configAgente'));
         }else{
             return [];
         }
@@ -84,6 +86,15 @@ class AgenteAdminController extends Controller
         return $agentes;
     }
 
+    public function editarConfigAgente(Request $request, $id){
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', 9)->update(['valor' => ($request->input('cota1')/100)]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', 10)->update(['valor' => ($request->input('cota2')/100)]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', 11)->update(['valor' => ($request->input('cota3')/100)]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', 12)->update(['valor' => ($request->input('cota4')/100)]);
+
+        return redirect()->route('editaragente', ['id'=>$id]);
+    }
+
     private function salvarConfigAgente($agente){        
         $configAdmin = ConfigGlobal::where([
             ['tipo_config_id', '>=', '9'],
@@ -96,8 +107,7 @@ class AgenteAdminController extends Controller
             $configAgente->agente_id = $agente->id;
             $configAgente->valor = $config->valor;
             $configAgente->save();
-        }
-        
+        }        
 
     }
 

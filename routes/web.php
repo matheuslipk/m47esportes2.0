@@ -31,6 +31,11 @@ Route::prefix('admin')->group(function () {
 				'id' => '[0-9]+',
 			]);
 
+		Route::post('/{id}/editar_config', "Admin\AgenteAdminController@editarConfigAgente")->name('editarconfig_agente')
+			->where([
+				'id' => '[0-9]+',
+			]);
+
 		Route::post('/{id}/salvar', "Admin\AgenteAdminController@salvar")->name('salvaragente')
 			->where([
 				'id' => '[0-9]+',
