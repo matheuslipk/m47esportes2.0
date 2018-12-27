@@ -19,13 +19,18 @@ function exibirModalOdds(evento){
             else if(id_categoria==17) string += montarMargemVitoria(cat_palpites[id_categoria]);
             else if(id_categoria==15) string += montarGolsExatos(cat_palpites[id_categoria]);
             else if(id_categoria==16) string += montarGolsEAmbosMarcam(cat_palpites[id_categoria]);
-            //Fim do tempo completo
-
+            
+            //Primeiro tempo
             else if(id_categoria==101) stringt1 += montarResultado1T(cat_palpites[id_categoria]);
             else if(id_categoria==102) stringt1 += montarDuplaChance1T(cat_palpites[id_categoria]);
             else if(id_categoria==105) stringt1 += montarTotalDeGols1T(cat_palpites[id_categoria]);
             else if(id_categoria==106) stringt1 += montarAmbosMarcam1T(cat_palpites[id_categoria]);
             else if(id_categoria==108) stringt1 += montarPlacarExato1T(cat_palpites[id_categoria]);
+
+            //Segundo tempo
+            else if(id_categoria==201) stringt2 += montarResultado2T(cat_palpites[id_categoria]);
+            else if(id_categoria==206) stringt2 += montarAmbosMarcam2T(cat_palpites[id_categoria]);
+            else if(id_categoria==205) stringt2 += montarTotalDeGols2T(cat_palpites[id_categoria]);
         }
         
         $("#modal-body").html(string);
@@ -394,7 +399,16 @@ function montarPlacarExato1T(odds){
 }
 
 
-
+//Segundo Tempo
+function montarResultado2T(odds){
+    return montarCatGenerico(odds, 3);
+}
+function montarAmbosMarcam2T(odds){
+    return montarCatGenerico(odds, 2);
+}
+function montarTotalDeGols2T(odds){
+    return montarCatGenerico(odds, 2);
+}
 
 function montarCatGenerico(categoria, quantCol){
     var string="";
