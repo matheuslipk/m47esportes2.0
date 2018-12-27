@@ -9,14 +9,14 @@
     @continue
 @endif
 
-    <div id="accordion{{$liga->id}}">
+    <div id="accordion{{$liga->id}}" class="">
         <div class="card">
             <div class="card-header bg-dark text-white" data-toggle="collapse" data-target='#collapseOne{{$liga->id}}'>
                 <div>{{$liga->nome}}</div>
             </div>
 
             <!--Parte dos eventos-->            
-            <div id="collapseOne{{$liga->id}}" class="collapse show" data-parent="#accordion{{$liga->id}}">
+            <div id="collapseOne{{$liga->id}}" class="collapse show card-campeonato" data-parent="#accordion{{$liga->id}}">
                 <div class="card-body">
                     <table border="0" class="center table table-sm">
                         <thead>
@@ -73,7 +73,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body" >
+          <div class="modal-body card-campeonato" >
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#tempo-completo">Tempo Completo</a></li>
                     <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#tempo1"> 1º Tempo</a></li>
@@ -161,6 +161,9 @@
 
 @section('css')
 <style type="text/css">
+    body{
+        background: rgba(75, 200, 125, 0.2);
+    }   
     tr, form{
         font-size: 12px;
     }
@@ -181,6 +184,12 @@
     }
     .btn-remove{
         margin: 0px 0px 0px 10px;
+    }
+    .card-campeonato{
+        background: rgba(150, 150, 150, 0.3);
+    }
+    #modal-odds{
+        background: rgba(207, 177, 254, 0.0);
     }
 </style>
 @endsection
