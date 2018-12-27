@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Agente;
 use App\Gerente;
-use Illuminate\Support\Facades\Hash;
 use App\StatusConta;
+use App\ConfigAgente;
+use App\ConfigGlobal;
 
 class AgenteAdminController extends Controller
 {
@@ -52,6 +54,8 @@ class AgenteAdminController extends Controller
         $agente->password = Hash::make($request->input('password'));
         $agente->save();
 
+        $this->salvarConfigAgente($agente);
+
         return redirect()->route('editaragente', ['id' => $agente->id]);
     }
 
@@ -78,6 +82,23 @@ class AgenteAdminController extends Controller
     public function getAgentesByGerente(Request $request){
         $agentes = Agente::where('gerente_id', $request->input('gerente'))->get();
         return $agentes;
+    }
+
+    private function salvarConfigAgente($agente){        
+        $configAdmin = ConfigGlobal::where([
+            ['tipo_config_id', '>=', '9'],
+            ['tipo_config_id', '<=', '12'],
+        ])->get();
+
+        foreach ($configAdmin as $config) {
+            $configAgente = new ConfigAgente();
+            $configAgente->tipo_config_id = $config->tipo_config_id;
+            $configAgente->agente_id = $agente->id;
+            $configAgente->valor = $config->valor;
+            $configAgente->save();
+        }
+        
+
     }
 
 }
