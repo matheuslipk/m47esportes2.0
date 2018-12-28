@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreatePalpiteBolaosTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('palpite_bolaos', function (Blueprint $table) {
+            $table->integer('id')->autoIncrement();
+            $table->integer('aposta_bolao_id');
+            $table->integer('evento_id');
+            $table->integer('palpite_id');
+            $table->integer('situacao_palpite_id');
+        });
+
+        Schema::table('palpite_bolaos', function (Blueprint $table) {
+            $table->unique(['aposta_bolao_id', 'evento_id']);
+            $table->foreign('aposta_bolao_id')->references('id')->on('aposta_bolaos');
+            $table->foreign('situacao_palpite_id')->references('id')->on('situacao_palpites');
+            $table->foreign('evento_id')->references('id')->on('eventos');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('palpite_bolaos');
+    }
+}
