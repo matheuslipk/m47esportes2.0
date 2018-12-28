@@ -31,6 +31,10 @@ class AgenteAdminController extends Controller
         $agente = Agente::find($id);
         $configAgente = ConfigAgente::where('agente_id', $id)->get();
 
+        if(count($configAgente)==0){
+            $configAgente = null;
+        }
+
         if(isset($agente)){
             return view('admin.agentes.veragente', compact('agente', 'configAgente'));
         }else{

@@ -90,6 +90,8 @@
 	</div>
     <br>
     <!--Inicio configuração agente-->
+    @if( is_object($configAgente) )
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -151,6 +153,8 @@
             </div>
         </div>
     </div>
+
+    @endif
     <!--Fim configuração agente-->
 
 </div>
