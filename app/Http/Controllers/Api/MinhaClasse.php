@@ -36,7 +36,7 @@ class MinhaClasse extends Controller{
     }
  
    public static function timestamp_to_datahora_formatada($timestamp){
-      return date("d/m/Y H:i:s", $timestamp);
+      return date("d/m/Y H:i", $timestamp);
    }
 
    public static function date_mysql_to_timestamp($str){

@@ -63,6 +63,10 @@
     </div>        
 
 
+        
+
+@endforeach
+
     <!--Modal Odds-->
     <div class="modal fade" id="modal-odds" tabindex="-1" role="dialog" aria-labelledby="modal-odds" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -148,9 +152,9 @@
           </div>
         </div>
       </div>
-    </div>    
+    </div>
+    <!--Fim Modal Palpites-->
 
-@endforeach
 <div class="flutuante">
     <button class="btn btn-success" onclick="exibirModalPalpites()">Palpites</button>
 </div>
