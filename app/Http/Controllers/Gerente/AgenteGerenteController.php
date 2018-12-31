@@ -35,7 +35,7 @@ class AgenteGerenteController extends Controller
     public function registrar(Request $request){
         $usuario = new User();
         $usuario->name = $request->input('name');
-        $usuario->nickname = $request->input('nickname')."_gerente";
+        $usuario->nickname = $request->input('nickname')."_agente";
         $usuario->password = ($request->input('password'));
         $usuario->save();
 
