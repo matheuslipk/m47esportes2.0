@@ -138,17 +138,22 @@
                     @csrf
                     <div class="form-group">
                         <label for="valorAposta">Valor da Aposta</label>
-                        <input class="form-control" placeholder="Valor da aposta" type="number" name="valorAposta" id="valorAposta" onkeyup ="atualizarPossivelGanho()">
+                        <input  min="2"  class="form-control" placeholder="Valor da aposta" type="number" name="valorAposta" id="valorAposta" onkeyup ="atualizarPossivelGanho()", onclick="atualizarPossivelGanho()">
                     </div>
                     <div class="form-group">
                         <label for="nomeAposta">Nome da aposta</label>
                         <input class="form-control" placeholder="Digite um nome para sua aposta" name="nomeAposta" id="nomeAposta">
                     </div>
-                    <button class="btn btn-sm btn-warning">Fazer Aposta</button>
+
+                    <div class="form-group">
+                        <button class="btn btn-sm btn-primary btn-block" id="btn-fazerAposta">Fazer Aposta</button>
+                        <button type="button" class="btn btn-sm btn-secondary btn-block" data-dismiss="modal">Voltar</button>
+                    </div>
+                    
                 </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+            <!--Colocar algumas informações das apostas-->
           </div>
         </div>
       </div>

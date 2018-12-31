@@ -72,6 +72,13 @@ function exibirModalPalpites(){
         if(cotaTotal>800){
             cotaTotal=800;
         }
+
+        if(cotaTotal<2.1){
+            $("#btn-fazerAposta").attr('disabled', true);
+        }else{
+            $("#btn-fazerAposta").attr('disabled', false);
+        }
+
         string+="<tr>";
         string+="<td>Quant Palpites: <span id='quantPalpites'>"+quantPalpites+"</span></td>"; 
         string+="<td>Cota total: <span class='text-success' id='cotaTotal'>"+cotaTotal.toFixed(2)+"</span></td>"; 
@@ -104,7 +111,7 @@ function atualizarPossivelGanho(){
         $("#valorAposta").val(300);
     }
 
-    $("#possivelGanho").html(possivelGanho.toFixed(2));
+    $("#possivelGanho").html("R$ " + possivelGanho.toFixed(2));
 }
 
 function montarResultadoFinal(odds){
