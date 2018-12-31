@@ -517,6 +517,13 @@ function removePalpite(evento_id, tipo_palpite_id, btnRemove) {
             cotaTotal /= cotaPalpiteExcluido;
             $("#cotaTotal").html(cotaTotal.toFixed(2));
             $("#quantPalpites").html((quantPalpites-1));
+
+            var cotaTotal = $("#cotaTotal").html();
+            if(cotaTotal<2.1){
+                $("#btn-fazerAposta").attr('disabled', true);
+            }else{
+                $("#btn-fazerAposta").attr('disabled', false);
+            }
         }
     });
 }
