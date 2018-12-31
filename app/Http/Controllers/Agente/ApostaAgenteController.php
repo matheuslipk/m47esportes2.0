@@ -113,10 +113,13 @@ class ApostaAgenteController extends Controller{
                 $aposta->data_validacao = MinhaClasse::timestamp_to_data_mysql(time());
                 $aposta->save();
 
-                return $resultado = [
+                $resultado = [
                     'sucesso' => true,
                     'msg' => 'Aposta Validada com sucesso!'
                 ];
+
+                return redirect()->route("viewaposta", ["id" => $aposta->id]);
+
             }else{
                 return $resultado = [
                     'sucesso' => false,
