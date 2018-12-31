@@ -20,6 +20,11 @@ class CreateMenssagemsTable extends Migration
             $table->text('mensagem');
             $table->timestamps();
         });
+
+        Schema::table('menssagems', function (Blueprint $table) {
+            $table->foreign('usuario_remetente')->references('id')->on('users');
+            $table->foreign('usuario_destino')->references('id')->on('users');
+        });
     }
 
     /**

@@ -14,7 +14,7 @@ class CreateAdminsTable extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->integer('id')->autoIncrement();
+            $table->integer('id');
             $table->string('nickname', 20);
             $table->string('name');
             $table->string('email')->unique();
@@ -25,6 +25,7 @@ class CreateAdminsTable extends Migration
         });
 
         Schema::table('admins', function (Blueprint $table) {
+            $table->foreign('id')->references('id')->on('users');
             $table->unique('nickname');
         });
     }

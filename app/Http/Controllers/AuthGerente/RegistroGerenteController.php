@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Gerente;
+use App\User;
 
 class RegistroGerenteController extends Controller{
 
@@ -14,14 +15,21 @@ class RegistroGerenteController extends Controller{
     }
 
     public function registrar(Request $request){
-    	$admin = new Gerente();
-    	$admin->name = $request->input('name');
-        $admin->nickname = $request->input('nickname');
-        $admin->telefone = $request->input('telefone');
-    	$admin->email = $request->input('email');
-        $admin->status_conta_id = $request->input('status_conta');
-    	$admin->password =  Hash::make($request->input('password'));
-    	$admin->save();
+        $usuario = new User();
+        $usuario->name = $request->input('name');
+        $usuario->nickname = $request->input('nickname')."_gerente";
+        $usuario->password = ($request->input('password'));
+        $usuario->save();
+
+    	$gerente = new Gerente();
+        $gerente->id = $usuario->id;
+    	$gerente->name = $request->input('name');
+        $gerente->nickname = $request->input('nickname');
+        $gerente->telefone = $request->input('telefone');
+    	$gerente->email = $request->input('email');
+        $gerente->status_conta_id = $request->input('status_conta');
+    	$gerente->password =  Hash::make($request->input('password'));
+    	$gerente->save();
     	return redirect()->route('listagerentes');
     }
 

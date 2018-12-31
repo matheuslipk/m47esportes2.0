@@ -14,6 +14,5 @@ class DatabaseSeeder extends Seeder
         $this->call(StatusContaSeeder::class);
         $this->call(TipoConfigSeeder::class);
         $this->call(ConfigGlobalSeeder::class);
-        $this->call(UserSeeder::class);
     }
 }

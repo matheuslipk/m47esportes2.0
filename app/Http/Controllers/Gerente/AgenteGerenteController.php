@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Aposta;
+use App\User;
 use App\Agente;
 use App\Palpite;
 use App\StatusConta;
@@ -32,8 +33,16 @@ class AgenteGerenteController extends Controller
     }
 
     public function registrar(Request $request){
+        $usuario = new User();
+        $usuario->name = $request->input('name');
+        $usuario->nickname = $request->input('nickname')."_gerente";
+        $usuario->password = ($request->input('password'));
+        $usuario->save();
+
         $agente = new Agente();
+        $agente->id = $usuario->id;
         $agente->name = $request->input('name');
+        $agente->nickname = $request->input('nickname');
         $agente->telefone = $request->input('telefone');
         $agente->email = $request->input('email');
         $agente->gerente_id = Auth::guard('gerente')->user()->id;

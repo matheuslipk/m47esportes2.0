@@ -21,12 +21,12 @@ class LoginGerenteController extends Controller
 
     public function login(Request $request){
     	$this->validate($request, [
-            'email' => 'required|string',
+            'nickname' => 'required|string',
             'password' => 'required|string',
         ]);
 
         $credenciais = [
-        	'email'=> $request->input('email'),
+        	'nickname'=> $request->input('nickname'),
         	'password' => $request->input('password')
         ];
 
@@ -34,17 +34,17 @@ class LoginGerenteController extends Controller
 
 	     if ($authOk) {
             $request->session()->regenerate();
-            $gerente = Gerente::where('email', $request->input('email'))->first();
+            $gerente = Gerente::where('nickname', $request->input('nickname'))->first();
             $adminSession = [
                 'gerente_id' => $gerente->id,
-                'email' => $gerente->email,
+                'nickname' => $gerente->nickname,
             ];
 
             $request->session()->put('gerente', $adminSession);
 	     	return redirect('/gerente/apostas');
 	     }
 
-	     return redirect()->back()->withInputs($request->only('email'));
+	     return redirect()->back()->withInputs($request->only('nickname'));
 
     }
 
@@ -54,5 +54,9 @@ class LoginGerenteController extends Controller
         $request->session()->invalidate();
 
         return redirect('/gerente/login');
+    }
+
+    public function username(){
+        return "nickname";
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Agente;
+use App\User;
 use App\Gerente;
 use App\StatusConta;
 use App\ConfigAgente;
@@ -51,7 +52,16 @@ class AgenteAdminController extends Controller
     }
 
     public function registrar(Request $request){
+        $usuario = new User();
+        $usuario->name = $request->input('name');
+        $usuario->nickname = $request->input('nickname')."_agente";
+        $usuario->password = ($request->input('password'));
+        $usuario->save();
+
+
+
         $agente = new Agente();
+        $agente->id = $usuario->id;
         $agente->name = $request->input('name');
         $agente->nickname = $request->input('nickname');
         $agente->telefone = $request->input('telefone');
@@ -61,9 +71,9 @@ class AgenteAdminController extends Controller
         $agente->password = Hash::make($request->input('password'));
         $agente->save();
 
-        $this->salvarConfigAgente($agente);
+        $this->salvarConfigAgente($usuario);
 
-        return redirect()->route('editaragente', ['id' => $agente->id]);
+        return redirect()->route('editaragente', ['id' => $usuario->id]);
     }
 
     public function salvar(Request $request, $id){
