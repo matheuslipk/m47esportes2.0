@@ -16,6 +16,7 @@ class RegistroGerenteController extends Controller{
     public function registrar(Request $request){
     	$admin = new Gerente();
     	$admin->name = $request->input('name');
+        $admin->nickname = $request->input('nickname');
         $admin->telefone = $request->input('telefone');
     	$admin->email = $request->input('email');
         $admin->status_conta_id = $request->input('status_conta');
