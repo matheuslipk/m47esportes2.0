@@ -9,6 +9,10 @@ class Aposta extends Model
 	public function palpites(){
 		return $this->hasMany('App\Palpite');
 	}
+
+    public function agente(){
+        return $this->belongsTo('App\Agente');
+    }
 	
     public $timestamps = false;
 

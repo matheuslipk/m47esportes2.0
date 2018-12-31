@@ -28,7 +28,7 @@ Aposta {{ $aposta->id }} - {{ $aposta->nome }}
 					    @endif					    
 					    Nome: {{$aposta->nome}}<br>
 					    @if(isset($aposta->agente_id))
-					    	Agente: {{$aposta->agente_id}}
+					    	Agente: {{$aposta->agente->nickname}}
 					    @endif
 					</div>
 
