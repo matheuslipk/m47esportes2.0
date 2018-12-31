@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->integer('id')->autoIncrement();
             $table->integer('status_conta_id');
+            $table->string('nickname', 20);
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -26,6 +27,7 @@ class CreateUsersTable extends Migration
 
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('status_conta_id')->references('id')->on('status_contas');
+            $table->unique('nickname');
         });
     }
 

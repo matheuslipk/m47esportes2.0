@@ -21,12 +21,12 @@ class LoginAdminController extends Controller
 
     public function login(Request $request){
     	$this->validate($request, [
-            'email' => 'required|string',
+            'nickname' => 'required|string',
             'password' => 'required|string',
         ]);
 
         $credenciais = [
-        	'email'=> $request->input('email'),
+        	'nickname'=> $request->input('nickname'),
         	'password' => $request->input('password')
         ];
 
@@ -34,17 +34,17 @@ class LoginAdminController extends Controller
 
 	     if ($authOk) {
             $request->session()->regenerate();
-            $admin = Admin::where('email', $request->input('email'))->first();
+            $admin = Admin::where('nickname', $request->input('nickname'))->first();
             $adminSession = [
                 'admin_id' => $admin->id,
-                'email' => $admin->email,
+                'nickname' => $admin->nickname,
             ];
 
             $request->session()->put('admin', $adminSession);
 	     	return redirect('/admin/eventos');
 	     }
 
-	     return redirect()->back()->withInputs($request->only('email'));
+	     return redirect()->back()->withInputs($request->only('nickname'));
 
     }
 
@@ -54,5 +54,9 @@ class LoginAdminController extends Controller
         $request->session()->invalidate();
 
         return redirect('/admin');
+    }
+
+    public function username(){
+        return "nickname";
     }
 }

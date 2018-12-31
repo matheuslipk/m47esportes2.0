@@ -16,6 +16,7 @@ class CreateGerentesTable extends Migration
         Schema::create('gerentes', function (Blueprint $table) {
             $table->integer('id')->autoIncrement();
             $table->integer('status_conta_id');
+            $table->string('nickname', 20);
             $table->string('name');
             $table->string('telefone');
             $table->string('email')->unique();
@@ -27,6 +28,7 @@ class CreateGerentesTable extends Migration
 
         Schema::table('gerentes', function (Blueprint $table) {
             $table->foreign('status_conta_id')->references('id')->on('status_contas');
+            $table->unique('nickname');
         });
     }
 
