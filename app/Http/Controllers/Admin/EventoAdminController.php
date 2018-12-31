@@ -29,7 +29,8 @@ class EventoAdminController extends Controller
 
         $eventos = Evento::where([
             ['data','>=',MinhaClasse::timestamp_to_data_mysql(time())]
-        ])->get();
+        ])->orderBy('data', 'asc')
+        ->get();
 
         $eventosAgrupados = $eventos->groupBy('liga_id');
 
