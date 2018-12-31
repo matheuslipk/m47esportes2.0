@@ -94,16 +94,22 @@ class ApostaController extends Controller{
     		$cotaTotal=800;
     	}
 
-    	$premiacao = $request->input('valorAposta')*$cotaTotal;
+        $valorApostado = $request->input('valorAposta');
+        if($valorApostado >= 200 ){
+            $valorApostado = 200;
+        }
+
+    	$premiacao = $valorApostado*$cotaTotal;
     	if($premiacao>8000){
     		$premiacao=8000;
     	}
+        
 
     	$aposta = new Aposta();
     	$aposta->nome = $request->input('nomeAposta');
     	$aposta->data_aposta = MinhaClasse::timestamp_to_data_mysql(time());
     	$aposta->cotacao_total = $cotaTotal;
-    	$aposta->valor_apostado = $request->input('valorAposta');
+    	$aposta->valor_apostado = $valorApostado;
     	$aposta->premiacao = $premiacao;
     	$aposta->ganhou = 0;
     	$aposta->save();

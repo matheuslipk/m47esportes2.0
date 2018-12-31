@@ -112,7 +112,7 @@ class AgenteAdminController extends Controller
 
     private function salvarConfigAgente($agente){        
         $configAdmin = ConfigGlobal::where([
-            ['tipo_config_id', '>=', '9'],
+            ['tipo_config_id', '>=', '1'],
             ['tipo_config_id', '<=', '12'],
         ])->get();
 

@@ -50,6 +50,8 @@ class AgenteGerenteController extends Controller
         $agente->password = Hash::make($request->input('password'));
         $agente->save();
 
+        $this->salvarConfigAgente($usuario);
+
         return redirect()->route('listaagentes_gerente');
     }
 
@@ -82,4 +84,20 @@ class AgenteGerenteController extends Controller
         return $index;
     }
     
+
+    private function salvarConfigAgente($agente){        
+        $configAdmin = ConfigGlobal::where([
+            ['tipo_config_id', '>=', '1'],
+            ['tipo_config_id', '<=', '12'],
+        ])->get();
+
+        foreach ($configAdmin as $config) {
+            $configAgente = new ConfigAgente();
+            $configAgente->tipo_config_id = $config->tipo_config_id;
+            $configAgente->agente_id = $agente->id;
+            $configAgente->valor = $config->valor;
+            $configAgente->save();
+        }        
+
+    }
 }

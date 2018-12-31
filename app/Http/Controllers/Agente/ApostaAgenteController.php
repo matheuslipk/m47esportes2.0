@@ -139,10 +139,17 @@ class ApostaAgenteController extends Controller{
             $cotaTotal=800;
         }
 
-        $premiacao = $request->input('valorAposta')*$cotaTotal;
+        $valorApostado = $request->input('valorAposta');
+        if($valorApostado >= 200 ){
+            $valorApostado = 200;
+        }
+
+        $premiacao = $valorApostado*$cotaTotal;
         if($premiacao>8000){
             $premiacao=8000;
         }
+
+
 
         $comissaoAgente = $this->getComissaoApostaAgente($cotaTotal);
 
@@ -152,7 +159,7 @@ class ApostaAgenteController extends Controller{
         $aposta->data_aposta = MinhaClasse::timestamp_to_data_mysql(time());
         $aposta->data_validacao = MinhaClasse::timestamp_to_data_mysql(time());
         $aposta->cotacao_total = $cotaTotal;
-        $aposta->valor_apostado = $request->input('valorAposta');
+        $aposta->valor_apostado = $valorApostado;
         $aposta->comissao_agente = $comissaoAgente;
         $aposta->premiacao = $premiacao;
         $aposta->ganhou = 0;
