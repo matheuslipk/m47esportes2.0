@@ -53,6 +53,7 @@ class AgenteAdminController extends Controller
     public function registrar(Request $request){
         $agente = new Agente();
         $agente->name = $request->input('name');
+        $agente->nickname = $request->input('nickname');
         $agente->telefone = $request->input('telefone');
         $agente->email = $request->input('email');
         $agente->gerente_id = $request->input('gerente');
