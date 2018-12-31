@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\MinhaClasse;
 use App\Agente;
+use App\User;
 
 class ContaAgenteController extends Controller{
 	public function __construct(){
@@ -20,6 +21,8 @@ class ContaAgenteController extends Controller{
     }
 
     public function atualizarConta(Request $request){
+        
+
     	$agente = Agente::find(Auth::guard('web')->user()->id);
     	$agente->telefone = $request->input('telefone');
     	$agente->email = $request->input('email');
@@ -29,8 +32,15 @@ class ContaAgenteController extends Controller{
     }
 
     public function atualizarSenha(Request $request){
+        
+
     	$agente = Agente::find(Auth::guard('web')->user()->id);
     	if(Hash::check($request->input('senha-antiga'), $agente->password)){
+
+            $usuario = User::find(Auth::guard('web')->user()->id);
+            $usuario->password = ($request->input('nova-senha'));
+            $usuario->save();
+
     		$agente->password = Hash::make($request->input('nova-senha'));
 	    	$agente->save();
 	    	return redirect()->route('agenteconta');
