@@ -293,76 +293,80 @@ class ConverterApi extends Controller{
          
       }
       
-      foreach ($gols as $opc){
-         switch ($opc->header){
-            case("Over"):
-               if($opc->goals=="1.5"){
-                  $temp = [
-                     'tipo_palpite_id'=>48,
-                     'nome'=>'+1.5',
-                     'taxa'=>$opc->odds,
-                  ];
-                  $odd[]=$temp;break;
-               }
-               if($opc->goals=="2.5"){
-                  $temp = [
-                     'tipo_palpite_id'=>49,
-                     'nome'=>'+2.5',
-                     'taxa'=>$opc->odds,
-                  ];
-                  $odd[]=$temp;break;
-               }
-               if($opc->goals=="3.5"){
-                  $temp = [
-                     'tipo_palpite_id'=>50,
-                     'nome'=>'+3.5',
-                     'taxa'=>$opc->odds,
-                  ];
-                  $odd[]=$temp;break;
-               }
-               if($opc->goals=="4.5"){
-                  $temp = [
-                     'tipo_palpite_id'=>51,
-                     'nome'=>'+4.5',
-                     'taxa'=>$opc->odds,
-                  ];
-                  $odd[]=$temp;break;
-               }             
-            case("Under"):
-               if($opc->goals=="1.5"){
-                  $temp = [
-                     'tipo_palpite_id'=>58,
-                     'nome'=>'-1.5',
-                     'taxa'=>$opc->odds,
-                  ];
-                  $odd[]=$temp;break;
-               }
-               if($opc->goals=="2.5"){
-                  $temp = [
-                     'tipo_palpite_id'=>59,
-                     'nome'=>'-2.5',
-                     'taxa'=>$opc->odds,
-                  ];
-                  $odd[]=$temp;break;
-               }   
-               if($opc->goals=="3.5"){
-                  $temp = [
-                     'tipo_palpite_id'=>60,
-                     'nome'=>'-3.5',
-                     'taxa'=>$opc->odds,
-                  ];
-                  $odd[]=$temp;break;
-               }
-               if($opc->goals=="4.5"){
-                  $temp = [
-                     'tipo_palpite_id'=>61,
-                     'nome'=>'-4.5',
-                     'taxa'=>$opc->odds,
-                  ];
-                  $odd[]=$temp;break;
-               }
+      if(isset($gols)){
+         foreach ($gols as $opc){
+            switch ($opc->header){
+               case("Over"):
+                  if($opc->goals=="1.5"){
+                     $temp = [
+                        'tipo_palpite_id'=>48,
+                        'nome'=>'+1.5',
+                        'taxa'=>$opc->odds,
+                     ];
+                     $odd[]=$temp;break;
+                  }
+                  if($opc->goals=="2.5"){
+                     $temp = [
+                        'tipo_palpite_id'=>49,
+                        'nome'=>'+2.5',
+                        'taxa'=>$opc->odds,
+                     ];
+                     $odd[]=$temp;break;
+                  }
+                  if($opc->goals=="3.5"){
+                     $temp = [
+                        'tipo_palpite_id'=>50,
+                        'nome'=>'+3.5',
+                        'taxa'=>$opc->odds,
+                     ];
+                     $odd[]=$temp;break;
+                  }
+                  if($opc->goals=="4.5"){
+                     $temp = [
+                        'tipo_palpite_id'=>51,
+                        'nome'=>'+4.5',
+                        'taxa'=>$opc->odds,
+                     ];
+                     $odd[]=$temp;break;
+                  }             
+               case("Under"):
+                  if($opc->goals=="1.5"){
+                     $temp = [
+                        'tipo_palpite_id'=>58,
+                        'nome'=>'-1.5',
+                        'taxa'=>$opc->odds,
+                     ];
+                     $odd[]=$temp;break;
+                  }
+                  if($opc->goals=="2.5"){
+                     $temp = [
+                        'tipo_palpite_id'=>59,
+                        'nome'=>'-2.5',
+                        'taxa'=>$opc->odds,
+                     ];
+                     $odd[]=$temp;break;
+                  }   
+                  if($opc->goals=="3.5"){
+                     $temp = [
+                        'tipo_palpite_id'=>60,
+                        'nome'=>'-3.5',
+                        'taxa'=>$opc->odds,
+                     ];
+                     $odd[]=$temp;break;
+                  }
+                  if($opc->goals=="4.5"){
+                     $temp = [
+                        'tipo_palpite_id'=>61,
+                        'nome'=>'-4.5',
+                        'taxa'=>$opc->odds,
+                     ];
+                     $odd[]=$temp;break;
+                  }
+            }
          }
       }
+
+         
 
       $obj->odds = $odd;
       return $obj;
