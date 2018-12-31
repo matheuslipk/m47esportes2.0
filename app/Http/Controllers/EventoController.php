@@ -47,6 +47,7 @@ class EventoController extends Controller
                 $evento->odds = $oddsPrincipais->where('evento_id', $evento->id);
                 $evento->time1 = $times->where('id', $evento->time1_id)->first();
                 $evento->time2 = $times->where('id', $evento->time2_id)->first();
+                $evento->data = MinhaClasse::data_mysql_to_datahora_formatada($evento->data);
             }
         }
         // return $ligas;

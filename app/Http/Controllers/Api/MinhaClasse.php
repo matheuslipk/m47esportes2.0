@@ -35,8 +35,17 @@ class MinhaClasse extends Controller{
        return date("Y-m-d H:i:s", $timestamp);
     }
  
+   public static function timestamp_to_datahora_formatada($timestamp){
+      return date("d/m/Y H:i:s", $timestamp);
+   }
+
    public static function date_mysql_to_timestamp($str){
       return strtotime($str);
+   }
+
+   public static function data_mysql_to_datahora_formatada($dataMysql){
+      $timestamp = MinhaClasse::date_mysql_to_timestamp($dataMysql);
+      return MinhaClasse::timestamp_to_datahora_formatada($timestamp);
    }
 
    public static function atualizarOdds($evento){

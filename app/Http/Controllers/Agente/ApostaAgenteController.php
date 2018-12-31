@@ -25,6 +25,10 @@ class ApostaAgenteController extends Controller{
     	->orderBy('id', 'desc')
     	->get();
 
+        foreach ($apostas as $aposta) {
+            $aposta->data_aposta = MinhaClasse::data_mysql_to_datahora_formatada($aposta->data_aposta);
+        }
+
         $indexApostas = $this->getIndexApostas($apostas);
         $palpitesAgrupados = Palpite::whereIn('aposta_id', $indexApostas)->get()->groupBy('aposta_id');
 

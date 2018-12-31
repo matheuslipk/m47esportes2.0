@@ -20,6 +20,9 @@ class ApostaController extends Controller{
 
 	public function get(Request $request, $aposta_id){
 		$aposta = Aposta::find($aposta_id);
+        $aposta->data_aposta = MinhaClasse::data_mysql_to_datahora_formatada($aposta->data_aposta);
+        $aposta->data_validacao = MinhaClasse::data_mysql_to_datahora_formatada($aposta->data_validacao);
+
 		if(!isset($aposta)){
 			return "Aposta não encontrada";
 		}
@@ -36,6 +39,7 @@ class ApostaController extends Controller{
 				$palpite->tipo_palpite = $tipoPalpites->where('id', $palpite->tipo_palpite_id)->first();
 				$palpite->tipo_palpite->cat_palpite = $catPalpites->where('id', $palpite->tipo_palpite->cat_palpite_id)->first();
 				$palpite->evento = $eventos->where('id', $palpite->evento_id)->first();
+                $palpite->evento->data = MinhaClasse::data_mysql_to_datahora_formatada($palpite->evento->data);
 				$palpite->evento->time1 = $times->where('id', $palpite->evento->time1_id)->first();
 				$palpite->evento->time2 = $times->where('id', $palpite->evento->time2_id)->first();
 				$palpite->situacao_palpite = $situacaoPalpites->where('id', $palpite->situacao_palpite_id)->first();
