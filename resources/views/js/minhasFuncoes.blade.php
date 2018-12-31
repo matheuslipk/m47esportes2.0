@@ -46,6 +46,8 @@ function exibirModalPalpites(){
         var string = "";
         var cotaTotal=1;
         var quantPalpites = 0;
+        var valorAposta = $("#valorAposta").val();
+
         for(index in palpites){
             evento_id = palpites[index].evento_id;
             tipo_palpite_id = palpites[index].tipo_palpite.id;
@@ -75,9 +77,34 @@ function exibirModalPalpites(){
         string+="<td>Cota total: <span class='text-success' id='cotaTotal'>"+cotaTotal.toFixed(2)+"</span></td>"; 
         string+="</tr>";
 
+        var possivelGanho = (cotaTotal.toFixed(2) * valorAposta);
+        if(possivelGanho > 8000){
+            possivelGanho = 8000;
+        }
+
+        string+="<tr>";
+        string+="<td></td>";
+        string+="<td><b>Possível ganho: <span id='possivelGanho'>R$ "+ possivelGanho.toFixed(2) +"</span></b></td>"; 
+        string+="</tr>";
+
         $("#modal-palpites-body").html(string);
         $('#modal-palpites').modal();        
     });    
+}
+
+function atualizarPossivelGanho(){
+    var cotaTotal = $("#cotaTotal").html();
+    var valorAposta = $("#valorAposta").val();
+    var possivelGanho = cotaTotal * valorAposta;
+
+    if (possivelGanho >= 8000){
+        possivelGanho = 8000;
+    }
+    if (valorAposta > 300){
+        $("#valorAposta").val(300);
+    }
+
+    $("#possivelGanho").html(possivelGanho.toFixed(2));
 }
 
 function montarResultadoFinal(odds){

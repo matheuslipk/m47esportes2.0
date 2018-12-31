@@ -134,7 +134,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="valorAposta">Valor da Aposta</label>
-                        <input class="form-control" placeholder="Valor da aposta" type="number" name="valorAposta" id="valorAposta">
+                        <input class="form-control" placeholder="Valor da aposta" type="number" name="valorAposta" id="valorAposta" onkeyup ="atualizarPossivelGanho()">
                     </div>
                     <div class="form-group">
                         <label for="nomeAposta">Nome da aposta</label>
