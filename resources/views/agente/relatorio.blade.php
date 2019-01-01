@@ -86,18 +86,18 @@
 				//Se aposta for premiada
 				if(data.apostasComStatus[ data.apostas[ index ].id ].status == 1){
 					premio = parseFloat(data.apostas[index].premiacao);
-					somaPremios += premio;					
+					somaPremios -= premio;					
 				}
 
 				somaApostas += valorAposta;
-				somaComissao += valorAposta * comissao;
+				somaComissao -= valorAposta * comissao;
 
 			}
 			var tr = "<tr>";
-			tr += "<td>"+ somaApostas +"</td>";
-			tr += "<td>"+ somaComissao +"</td>";
-			tr += "<td>"+ somaPremios +"</td>";
-			tr += "<td>"+ (somaApostas - somaComissao - somaPremios) +"</td>";
+			tr += "<td>R$"+ somaApostas +"</td>";
+			tr += "<td>R$"+ somaComissao +"</td>";
+			tr += "<td>R$"+ somaPremios +"</td>";
+			tr += "<td>R$"+ (somaApostas + somaComissao + somaPremios).toFixed(2) +"</td>";
 			tr += "</tr>";
 
 			$("#tabela_relatorio>tbody").html(tr);

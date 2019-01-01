@@ -34,6 +34,7 @@
 					$somaValorApostado=0;
 					$somaLiquido=0;
 					$somaComissao=0;
+					$somaPremiacao=0;
 					@endphp
 					@foreach($apostas as $aposta)
 						@php
@@ -43,15 +44,19 @@
 						$somaComissao+=$comissaoAgente;
 						$somaLiquido+=$valorLiquido;
 						$somaValorApostado+=$aposta->valor_apostado;
+						
+
+						if($apostasComStatus[$aposta->id]['status']==2){
+							$classe = "table-danger";
+						}elseif($apostasComStatus[$aposta->id]['status']==3){
+							$classe = "table-warning";
+						}elseif($apostasComStatus[$aposta->id]['status']==1){
+							$classe = "table-success";
+							$somaPremiacao += $aposta->premiacao;
+						}
 						@endphp
 
-						@if($apostasComStatus[$aposta->id]['status']==2)
-							<tr class="table-danger" onclick="window.location.href='/aposta/{{$aposta->id}}'">
-						@elseif($apostasComStatus[$aposta->id]['status']==3)
-							<tr class="table-warning" onclick="window.location.href='/aposta/{{$aposta->id}}'">
-						@elseif($apostasComStatus[$aposta->id]['status']==1)
-							<tr class="table-success" onclick="window.location.href='/aposta/{{$aposta->id}}'">
-						@endif
+						<tr class="{{ $classe }}" onclick="window.location.href='/aposta/{{$aposta->id}}'">
 							<td>
 								#{{$aposta->id}}<br>
 								Nome: {{$aposta->nome}}<br>
@@ -72,8 +77,9 @@
 						<th>Subtotal</th>
 						<th>Apostas R$ {{number_format($somaValorApostado, 2)}}</th>
 						<th>
-							Comissão R$ {{number_format($somaComissao, 2)}}<br>
-							Líquido R$ {{number_format($somaLiquido, 2)}}
+							Premiações R$ -{{number_format($somaPremiacao, 2)}}<br>
+							Comissão R$ -{{number_format($somaComissao, 2)}}<br>
+							Líquido R$ {{number_format(($somaLiquido-$somaPremiacao), 2)}}
 						</th>
 					</tr>
 				</tbody>
@@ -108,6 +114,7 @@
 		var somaValorApostado=0;
 		var somaLiquido=0;
 		var somaComissao=0;
+		var somaPremiacao=0;
 
 		for(index in apostas){
 			var comissaoAgente = apostas[index].valor_apostado * apostas[index].comissao_agente;
@@ -123,6 +130,7 @@
 				tabela+="<tr class='table-warning' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
 			}else if( apostasComStatus[ apostas[index].id ].status == 1 ){
 				tabela+="<tr class='table-success' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+				somaPremiacao += parseFloat(apostas[index].premiacao);
 			}
 			
 			tabela+="<td>#"+
@@ -137,18 +145,21 @@
 
 			tabela+="<td>"+
 				"Comissão "+(apostas[index].comissao_agente)*100+"%<br>"+
-				"Comissão R$ "+comissaoAgente+"<br>"+
-				"Líquido R$ "+valorLiquido+"<br>"+
+				"Comissão R$ "+comissaoAgente.toFixed(2)+"<br>"+
+				"Líquido R$ "+valorLiquido.toFixed(2)+"<br>"+
 				"</td>";			
 
 			tabela+='</tr>';
 		}
+		somaLiquido -= somaPremiacao;
+
 		tabela+='<tr>';
 		tabela+="<th>Subtotal</th>";
 		tabela+="<th>Apostas R$ "+somaValorApostado.toFixed(2)+"</th>";
 
 		tabela+="<th>"+
-				"Comissão R$ "+somaComissao.toFixed(2)+"<br>"+
+				"Comissão R$ -"+somaComissao.toFixed(2)+"<br>"+
+				"Premiações R$ -"+somaPremiacao.toFixed(2)+"<br>"+
 				"Líquido R$ "+somaLiquido.toFixed(2)+
 				"</th>";
 
