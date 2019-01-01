@@ -107,7 +107,7 @@ class EventoAdminController extends Controller
             $this->atualizarResultadoFinal($evento->id, $arrayEvento);
         }
         
-        return $evento;
+        return "Status evento: ".$evento->status_evento_id;
     }
 
 
@@ -159,13 +159,19 @@ class EventoAdminController extends Controller
             $score->score_t1 = $arrayEvento['results'][0]['scores'][2]['home'];
             $score->score_t2 = $arrayEvento['results'][0]['scores'][2]['away'];
             $score->save();
+            $this->apagarOddsEvento($evento_id);
         }else{
             $score = new Score();
             $score->evento_id = $evento_id;
             $score->score_t1 = $arrayEvento['results'][0]['scores'][2]['home'];
             $score->score_t2 = $arrayEvento['results'][0]['scores'][2]['away'];
             $score->save();
+            $this->apagarOddsEvento($evento_id);
         } 
+    }
+
+    private function apagarOddsEvento($evento_id){
+        Odd::where('evento_id', $evento_id)->delete();
     }
 
     private function getIndexsLigas($array){
