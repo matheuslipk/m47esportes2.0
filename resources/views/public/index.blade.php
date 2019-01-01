@@ -3,6 +3,8 @@
 @section('content')
 
 <div class="container-fluid">
+    <a class="btn btn-primary" href="/">Todos os jogos</a>
+    <a class="btn btn-primary" href="/?data=hoje">Jogos de hoje</a>
 @foreach($ligas as $liga)
 
 @if(count($liga->eventos)==0)

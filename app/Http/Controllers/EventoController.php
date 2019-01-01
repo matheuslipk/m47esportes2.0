@@ -14,15 +14,18 @@ use App\Http\Controllers\Api\MinhaClasse;
 
 class EventoController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $todasLigas = Liga::where('is_top_list',1)
             ->orderBy('nome')
             ->get();
 
-        $eventos = Evento::where([
-            ['data','>=',MinhaClasse::timestamp_to_data_mysql(time())]
-        ])->orderBy('data', 'asc')
-        ->get();
+        $filtro[] = ['data','>=',MinhaClasse::timestamp_to_data_mysql(time())];
+        if($request->filled('data')){
+            $data = date("Y-m-d", time())." 23:59:59";
+            $filtro[] = ['data','<=', $data];
+        }
+
+        $eventos = Evento::where($filtro)->orderBy('data', 'asc')->get();
 
         $eventosAgrupados = $eventos->groupBy('liga_id');
 
