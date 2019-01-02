@@ -20,12 +20,13 @@ class ApostaController extends Controller{
 
 	public function get(Request $request, $aposta_id){
 		$aposta = Aposta::find($aposta_id);
+        if(!isset($aposta) || $aposta->agente_id == ''){
+            return redirect('/');
+        }
         $aposta->data_aposta = MinhaClasse::data_mysql_to_datahora_formatada($aposta->data_aposta);
         $aposta->data_validacao = MinhaClasse::data_mysql_to_datahora_formatada($aposta->data_validacao);
 
-		if(!isset($aposta)){
-			return "Aposta não encontrada";
-		}
+		
     	$tipoPalpites = TipoPalpite::all();
     	$catPalpites = CatPalpite::all();
     	$situacaoPalpites = SituacaoPalpite::all();
