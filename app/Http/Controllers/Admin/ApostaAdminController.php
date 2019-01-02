@@ -118,5 +118,16 @@ class ApostaAdminController extends Controller{
         ];
     }
 
+    public function atualizarStatusApostas($apostas){
+        $apostasComStatus = Aposta::getApostasComStatusJSON2($apostas);
+
+        foreach ($apostasComStatus as $aposta_id => $palpites) {
+            $filtro = [
+                ['id', $aposta_id]
+            ];
+
+            Aposta::where($filtro)->update(['status_aposta_id' => $palpites['status']]);
+        }
+    }
 
 }

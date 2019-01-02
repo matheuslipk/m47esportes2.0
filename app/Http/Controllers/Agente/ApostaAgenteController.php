@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Agente;
 
+date_default_timezone_set('America/Fortaleza');
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -68,11 +70,21 @@ class ApostaAgenteController extends Controller{
 
             if( $aposta->agente_id == null){
                 $aposta->palpites;
-                return $resultado = [
-                    'sucesso' => true,
-                    'validacao_disponivel' => true,
-                    'aposta' => $apController->geJSON($id)
-                ];
+                if($this->todosEventosDisponiveis($aposta)){
+                    return $resultado = [
+                        'sucesso' => true,
+                        'validacao_disponivel' => true,
+                        'aposta' => $apController->geJSON($id)
+                    ];
+                }else{
+                    return $resultado = [
+                        'sucesso' => true,
+                        'validacao_disponivel' => false,
+                        'msg' => '1 ou mais eventos ja iniciaram',
+                        'aposta' => $apController->geJSON($id)
+                    ];
+                }
+                    
             }
             if( $aposta->agente_id == Auth::user()->id ){
                 $aposta->palpites;
@@ -86,6 +98,7 @@ class ApostaAgenteController extends Controller{
             if( $aposta->agente_id != Auth::user()->id ){
                 return $resultado = [
                     'sucesso'=> false,
+                    'validacao_disponivel' => false,
                     'msg' => 'Aposta validada por outro agente',
                 ];
             }
@@ -106,6 +119,12 @@ class ApostaAgenteController extends Controller{
     public function validarAposta(Request $request){
         $aposta = Aposta::find($request->input('aposta_id'));
         if( isset( $aposta ) ){
+            if(!$this->todosEventosDisponiveis($aposta)){
+                return $resultado = [
+                    'sucesso' => false,
+                    'msg' => '1 ou mais eventos ja iniciaram!'
+                ];
+            }
             if( $aposta->agente_id == null){
                 $comissaoAgente = $this->getComissaoApostaAgente($aposta->cotacao_total);
                 $aposta->agente_id = Auth::user()->id;
@@ -220,6 +239,16 @@ class ApostaAgenteController extends Controller{
             $index[] = $aposta->id;
         }
         return $index;
+    }
+
+    private function todosEventosDisponiveis($aposta){
+        foreach ($aposta->palpites as $palpite) {
+            $dataEvento = MinhaClasse::date_mysql_to_timestamp($palpite->evento->data);
+            if(time() >= $dataEvento){
+                return false;
+            }
+        }
+        return true;
     }
 
 
