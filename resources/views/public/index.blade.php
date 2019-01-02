@@ -81,9 +81,9 @@
           </div>
           <div class="modal-body card-campeonato" >
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#tempo-completo">Tempo Completo</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#tempo1"> 1º Tempo</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#tempo2"> 2º Tempo</a></li>
+                    <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#tempo-completo">90 Min</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#tempo1">1º Tempo</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#tempo2">2º Tempo</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tempo-completo" class="tab-pane fade in active show">
