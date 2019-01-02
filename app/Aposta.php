@@ -27,13 +27,13 @@ class Aposta extends Model
             $quantPalpites = $aposta->count();
             $quantAcertos = 0;
             $quantPalpitesConferidos = 0;
+            $apostas[$indexAposta] = $aposta;
 
             foreach ($aposta as $palpite) {
                 $quantPalpitesConferidos++;
 
                 if($palpite->situacao_palpite_id===2){
                     $aposta['status'] = 2;
-                    $apostas[$indexAposta] = $aposta;
                     break;
                 }
 
@@ -41,7 +41,6 @@ class Aposta extends Model
                     $quantAcertos++;
                     if($quantPalpites===$quantAcertos){
                         $aposta['status'] = 1;
-                        $apostas[$indexAposta] = $aposta;
                         break;
                     }
                 }
@@ -49,7 +48,6 @@ class Aposta extends Model
                 if($palpite->situacao_palpite_id===3){
                     $aposta['status'] = 3;
                     if($quantPalpitesConferidos===$quantPalpites){
-                        $apostas[$indexAposta] = $aposta;
                         break;
                     }
                 }
@@ -65,13 +63,13 @@ class Aposta extends Model
             $quantPalpites = $aposta->count();
             $quantAcertos = 0;
             $quantPalpitesConferidos = 0;
+            $apostas[$indexAposta] = $aposta;
 
             foreach ($aposta as $palpite) {
                 $quantPalpitesConferidos++;
 
                 if($palpite->situacao_palpite_id===2){
                     $aposta['status'] = 2;
-                    $apostas[$indexAposta] = $aposta;
                     break;
                 }
 
@@ -79,7 +77,6 @@ class Aposta extends Model
                     $quantAcertos++;
                     if($quantPalpites===$quantAcertos){
                         $aposta['status'] = 1;
-                        $apostas[$indexAposta] = $aposta;
                         break;
                     }
                 }
@@ -87,7 +84,6 @@ class Aposta extends Model
                 if($palpite->situacao_palpite_id===3){
                     $aposta['status'] = 3;
                     if($quantPalpitesConferidos===$quantPalpites){
-                        $apostas[$indexAposta] = $aposta;
                         break;
                     }
                 }
