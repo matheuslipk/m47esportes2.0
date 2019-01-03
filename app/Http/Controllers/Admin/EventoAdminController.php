@@ -91,7 +91,10 @@ class EventoAdminController extends Controller
         $eventoApi = new EventosApi();
         $resposta = $eventoApi->resultado($request);
         $arrayEvento = json_decode($resposta, true);
+        $statusEventoApi = $arrayEvento['results'][0]['time_status'];
         $evento = Evento::find($request->input('event_id'));
+
+        // return $statusEventoApi;
 
         if(isset($evento)){
             $evento->data = MinhaClasse::timestamp_to_data_mysql($arrayEvento['results'][0]['time']);
@@ -99,12 +102,14 @@ class EventoAdminController extends Controller
             $evento->save();
         }
 
-        if($evento->status_evento_id==3 && isset($arrayEvento['results'][0]['scores'][1])){
+        if($statusEventoApi==3 && isset($arrayEvento['results'][0]['scores'][1])){
             $this->atualizarPrimeiroTempo($evento->id, $arrayEvento);
         }
-        if($evento->status_evento_id==3 && isset($arrayEvento['results'][0]['scores'][2])){
+        if($statusEventoApi==3 && isset($arrayEvento['results'][0]['scores'][2])){
             $this->atualizarSegundoTempo($evento->id, $arrayEvento);
             $this->atualizarResultadoFinal($evento->id, $arrayEvento);
+        }else{
+            $this->atualizarResultadoFinal2($evento->id, $arrayEvento);
         }
         
         return "Status evento: ".$evento->status_evento_id;
@@ -165,6 +170,31 @@ class EventoAdminController extends Controller
             $score->evento_id = $evento_id;
             $score->score_t1 = $arrayEvento['results'][0]['scores'][2]['home'];
             $score->score_t2 = $arrayEvento['results'][0]['scores'][2]['away'];
+            $score->save();
+            $this->apagarOddsEvento($evento_id);
+        } 
+    }
+
+    private function atualizarResultadoFinal2($evento_id, $arrayEvento){
+        $score = Score::where('evento_id', $evento_id)->first();
+        if($arrayEvento['results'][0]['ss'] == null){
+            return;
+        }
+        $scores = explode("-", $arrayEvento['results'][0]['ss']);
+        $time1 = $scores[0];
+        $time2 = $scores[1];
+
+        if(isset($score)){
+            $score->evento_id = $evento_id;
+            $score->score_t1 = $time1;
+            $score->score_t2 = $time2;
+            $score->save();
+            $this->apagarOddsEvento($evento_id);
+        }else{
+            $score = new Score();
+            $score->evento_id = $evento_id;
+            $score->score_t1 = $time1;
+            $score->score_t2 = $time2;
             $score->save();
             $this->apagarOddsEvento($evento_id);
         } 
