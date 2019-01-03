@@ -77,18 +77,22 @@
 						$comissaoAgente = $aposta->valor_apostado * $aposta->comissao_agente;
 						$valorLiquido = $aposta->valor_apostado - $comissaoAgente - $aposta->ganhou;
 
-						$somaComissao+=$comissaoAgente;
-						$somaLiquido+=$valorLiquido;
-						$somaValorApostado+=$aposta->valor_apostado;
+						// $somaComissao+=$comissaoAgente;
+						// $somaLiquido+=$valorLiquido;
+						// $somaValorApostado+=$aposta->valor_apostado;
+						$classeAposta = "";
+						if($apostasComStatus[$aposta->id]['status']==2){
+							$classeAposta = "table-danger";
+							continue;
+						}elseif($apostasComStatus[$aposta->id]['status']==3){
+							$classeAposta = "table-warning";
+						}elseif($apostasComStatus[$aposta->id]['status']==1){
+							$classeAposta = "table-success";
+						}
 						@endphp
 
-						@if($apostasComStatus[$aposta->id]['status']==2)
-							<tr class="table-danger" onclick="window.location.href='/aposta/{{$aposta->id}}'">
-						@elseif($apostasComStatus[$aposta->id]['status']==3)
-							<tr class="table-warning" onclick="window.location.href='/aposta/{{$aposta->id}}'">
-						@elseif($apostasComStatus[$aposta->id]['status']==1)
-							<tr class="table-success" onclick="window.location.href='/aposta/{{$aposta->id}}'">
-						@endif						
+						<tr class="{{ $classeAposta }}" onclick="window.location.href='/aposta/{{$aposta->id}}'">
+
 							<td>
 								#{{$aposta->id}}<br>
 								Nome: {{$aposta->nome}}<br>
@@ -106,14 +110,14 @@
 							</td>
 						</tr>
 					@endforeach
-					<tr>
+					{{-- <tr>
 						<th>Subtotal</th>
 						<th>Apostas R$ {{number_format($somaValorApostado, 2)}}</th>
 						<th>
 							Comissão R$ {{number_format($somaComissao, 2)}}<br>
 							Líquido R$ {{number_format($somaLiquido, 2)}}
 						</th>
-					</tr>
+					</tr> --}}
 				</tbody>
 			</table>
 		</div>

@@ -94,9 +94,9 @@
 
 			}
 			var tr = "<tr>";
-			tr += "<td>R$"+ somaApostas +"</td>";
-			tr += "<td>R$"+ somaComissao +"</td>";
-			tr += "<td>R$"+ somaPremios +"</td>";
+			tr += "<td>R$"+ somaApostas.toFixed(2) +"</td>";
+			tr += "<td>R$"+ somaComissao.toFixed(2) +"</td>";
+			tr += "<td>R$"+ somaPremios.toFixed(2) +"</td>";
 			tr += "<td>R$"+ (somaApostas + somaComissao + somaPremios).toFixed(2) +"</td>";
 			tr += "</tr>";
 

@@ -19,7 +19,7 @@ class ApostaAdminController extends Controller{
     	$apostas = Aposta::where([
     		['agente_id', "<>", '']
     	])
-    	->take(50)
+    	->take(250)
     	->orderBy('id', 'desc')
     	->get();
 
