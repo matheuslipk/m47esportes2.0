@@ -53,7 +53,8 @@ class EventoAdminController extends Controller
 
 
     public function showAtualizarResultadoEventos(Request $request){
-        return view('admin.atualizareventos');
+        $statusEvento = Evento::getStatusEventos();
+        return view('admin.atualizareventos', compact('statusEvento'));
     }
 
     public function showCadastrarEventos(Request $request){
@@ -78,7 +79,11 @@ class EventoAdminController extends Controller
 
         $times = Time::find($arrayIdTimes);
 
+        $statusEvento = Evento::getStatusEventos();
+
         foreach ($eventos as $evento) {
+            $evento->status_evento_name = $statusEvento[$evento->status_evento_id];
+            $evento->data = MinhaClasse::data_mysql_to_datahora_formatada($evento->data);
             $evento->time1 = $times->where('id', $evento->time1_id)->first();
             $evento->time2 = $times->where('id', $evento->time2_id)->first();
         }
@@ -111,8 +116,10 @@ class EventoAdminController extends Controller
         }else{
             $this->atualizarResultadoFinal2($evento->id, $arrayEvento);
         }
+
+        $statusEvento = Evento::getStatusEventos();
         
-        return "Status evento: ".$evento->status_evento_id;
+        return "Evento  ".$statusEvento[$evento->status_evento_id];
     }
 
 

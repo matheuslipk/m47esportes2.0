@@ -7,6 +7,20 @@ use App\Odd;
 
 class Evento extends Model
 {
+    public static function getStatusEventos(){
+        $statusEvento[0] = "Não iniciado";
+        $statusEvento[1] = "Ao vivo";
+        $statusEvento[2] = "Em Espera";
+        $statusEvento[3] = "Finalizado";
+        $statusEvento[4] = "Adiado";
+        $statusEvento[5] = "Cancelado";
+        $statusEvento[7] = "Interrompido";
+        $statusEvento[8] = "Abandonado";
+        $statusEvento[99] = "Removido";
+
+        return $statusEvento;
+    }
+
     public function liga(){
     	return $this->belongsTo('App\Liga');
     }

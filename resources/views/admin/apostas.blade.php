@@ -101,8 +101,8 @@
 							</td>
 							<td>								
 								Comissão {{$aposta->comissao_agente*100}}% <br>
-								Comissão R$ {{$comissaoAgente}}<br>
-								Líquido R$ {{$valorLiquido}}
+								Comissão R$ {{number_format($comissaoAgente, 2)}}<br>
+								Líquido R$ {{number_format($valorLiquido, 2)}}
 							</td>
 						</tr>
 					@endforeach
@@ -163,16 +163,18 @@
 			somaComissao += comissaoAgente;
 
 
+			var classeAposta = "";
+
 			if(apostasComStatus[ apostas[index].id ].status == 2 ){
-				tabela+="<tr class='table-danger' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+				classeAposta = "table-danger";
 			}else if( apostasComStatus[ apostas[index].id ].status == 3 ){
-				tabela+="<tr class='table-warning' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+				classeAposta = "table-warning";
 			}else if( apostasComStatus[ apostas[index].id ].status == 1 ){
-				tabela+="<tr class='table-success' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+				classeAposta = "table-success";
 			}
 
 			
-
+			tabela+="<tr class='"+ classeAposta +"' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
 
 			tabela+="<td>#"+
 				apostas[index].id+"<br>"+
@@ -188,8 +190,8 @@
 
 			tabela+="<td>"+
 				"Comissão "+(apostas[index].comissao_agente)*100+"%<br>"+
-				"Comissão R$ "+comissaoAgente+"<br>"+
-				"Líquido R$ "+valorLiquido+"<br>"+
+				"Comissão R$ "+comissaoAgente.toFixed(2)+"<br>"+
+				"Líquido R$ "+valorLiquido.toFixed(2)+"<br>"+
 				"</td>";			
 
 			tabela+='</tr>';

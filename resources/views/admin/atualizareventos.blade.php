@@ -70,7 +70,7 @@ function atualizarListaEventos(){
 		for(index in eventos){
 			tbody+='<tr>';
 			tbody+="<td>"+
-				"<span class='evento-id'>"+eventos[index].id+" - "+eventos[index].status_evento_id+"</span> <br>" +
+				"<span class='evento-id'>"+eventos[index].id+" - "+eventos[index].status_evento_name+"</span> <br>" +
 				"<span class='text-primary'>"+eventos[index].time1.nome + "</span> vs " +
 				"<span class='text-danger'>" + eventos[index].time2.nome + "</span><br>" +
 				"<span class='evento-data'>"+eventos[index].data+"</span>"
