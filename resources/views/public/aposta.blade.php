@@ -55,8 +55,16 @@ Aposta {{ $aposta->id }} - {{ $aposta->nome }}
 							</div>	
 							<div class="desc-palpite">
 								<span>{{$palpite->tipo_palpite->cat_palpite->nome}}</span><br>
-								<span><b>{{$palpite->tipo_palpite->nome}}</b> : {{$palpite->cotacao}}</span><br>
-								<span class="status-evento">({{$palpite->situacao_palpite->nome}})</span>
+								<span><b>{{$palpite->tipo_palpite->nome}}</b> : {{$palpite->cotacao}}</span> <br>
+								@if(isset($palpite->evento->scores))
+									@if($palpite->tempoJogo=="completo")
+										<span>Resultado: <b>{{$palpite->evento->scores->score_t1}} x {{$palpite->evento->scores->score_t2}}</b></span>
+									@elseif($palpite->tempoJogo=="tempo1")
+										<span>Resultado: <b>{{$palpite->evento->scores->score_t1}} x {{$palpite->evento->scores->score_t2}}</b> 1ºT</span>
+									@elseif($palpite->tempoJogo=="tempo2")
+										<span>Resultado: <b>{{$palpite->evento->scores->score_t1}} x {{$palpite->evento->scores->score_t2}}</b>> 2ºT</span>
+									@endif
+								@endif
 							</div>						
 						</div>
 						@endforeach

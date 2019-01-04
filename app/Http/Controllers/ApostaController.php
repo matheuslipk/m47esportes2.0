@@ -12,6 +12,9 @@ use App\Palpite;
 use App\CatPalpite;
 use App\TipoPalpite;
 use App\SituacaoPalpite;
+use App\Score;
+use App\ScoreT1;
+use App\ScoreT2;
 use App\Http\Controllers\Api\MinhaClasse;
 use App\Http\Controllers\Agente\ApostaAgenteController;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +47,18 @@ class ApostaController extends Controller{
 				$palpite->evento->time1 = $times->where('id', $palpite->evento->time1_id)->first();
 				$palpite->evento->time2 = $times->where('id', $palpite->evento->time2_id)->first();
 				$palpite->situacao_palpite = $situacaoPalpites->where('id', $palpite->situacao_palpite_id)->first();
+                if($this->isPalpiteTempoCompleto($palpite->tipo_palpite->cat_palpite_id)){
+                    $palpite->evento->scores = Score::where('evento_id', $palpite->evento_id)->first();
+                    $palpite->tempoJogo = 'completo';
+                }elseif($this->isPalpiteTempo1($palpite->tipo_palpite->cat_palpite_id)){
+                    $palpite->evento->scores = ScoreT1::where('evento_id', $palpite->evento_id)->first();
+                    $palpite->tempoJogo = 'tempo1';
+                }elseif($this->isPalpiteTempo2($palpite->tipo_palpite->cat_palpite_id)){
+                    $palpite->evento->scores = ScoreT2::where('evento_id', $palpite->evento_id)->first();
+                    $palpite->tempoJogo = 'tempo2';
+                }
 			}
+            // return $aposta;
 			return view('public.aposta', compact('aposta'));
 		}else{
 			return 'Aposta não encontrada';
@@ -151,5 +165,24 @@ class ApostaController extends Controller{
     		$indexs[] = $evento->time2_id;
     	}
     	return $indexs;
+    }
+
+    private function isPalpiteTempo1($catPalpite){
+        if($catPalpite >=101 && $catPalpite <=108){
+            return true;
+        }
+        return false;
+    }
+    private function isPalpiteTempo2($catPalpite){
+        if($catPalpite >=201){
+            return true;
+        }
+        return false;
+    }
+    private function isPalpiteTempoCompleto($catPalpite){
+        if($catPalpite <=17){
+            return true;
+        }
+        return false;
     }
 }
