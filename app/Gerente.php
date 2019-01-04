@@ -28,7 +28,7 @@ class Gerente extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function agentes(){
-        return $this->hasMany('App\Agente');
-    }
+    // public function agentes(){
+    //     return $this->hasMany('App\Agente');
+    // }
 }

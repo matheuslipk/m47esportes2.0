@@ -9,6 +9,10 @@ use App\Admin;
 
 class RegistroAdminController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth:web-admin');
+    }
+    
     public function registrar(Request $request){
     	$admin = new Admin();
     	$admin->name = $request->input('name');

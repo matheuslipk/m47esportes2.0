@@ -92,7 +92,7 @@ class Aposta extends Model
         return $apostas;
     }
 
-    private static function getIndexApostas($arrayApostas){
+    public static function getIndexApostas($arrayApostas){
         $index = [];
         foreach ($arrayApostas as $aposta) {
             $index[] = $aposta->id;

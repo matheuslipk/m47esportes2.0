@@ -18,6 +18,9 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/evento/atualizarNaApi', "Admin\EventoAdminController@atualizarEventoApi");
 
+    Route::get('/relatorio', "Admin\RelatorioAdminController@index")->name("relatorio_admin");
+    Route::post('/relatorio', "Admin\RelatorioAdminController@relatorio");
+
 	Route::post('/odds/remover', "Admin\OddsAdminController@removerOddsByEvento");    
 
 	//('/admin/agentes')
