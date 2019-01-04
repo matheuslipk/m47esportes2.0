@@ -42,7 +42,7 @@
 	</div>
 
 	<div>
-		<table class="table table-sm" id="tabela_relatorio">
+		<table class="table table-sm table-striped table-bordered" id="tabela_relatorio">
 			<tbody>
 				
 			</tbody>
@@ -83,7 +83,15 @@
 			var somaPremiosGerente=0;
 
 			tr += "<tr>";
-			tr += "<th colspan='4'><b>GERENTE: "+ gerente.name +"</b></th>";
+			tr += "<th colspan='5'><b>GERENTE: "+ gerente.name +"</b></th>";
+			tr += "</tr>";
+
+			tr += "<tr>";
+			tr += "<th>Agente</th>";
+			tr += "<th>Arrecadado</th>";
+			tr += "<th>Comissão</th>";
+			tr += "<th>Prêmios</th>";
+			tr += "<th>Líquido</th>";
 			tr += "</tr>";
 
 			for(idxAgente in gerente.agentes){
@@ -100,7 +108,6 @@
 				tr += "<td>"+ (agente.premiacao).toFixed(2) +"</td>";
 				tr += "<td>"+ (liqAgente).toFixed(2) +"</td>";
 				tr += "</tr>";
-				console.log(agente); 
 			}
 			somaApostas += somaApostasGerente;
 			somaComissao += somaComissaoGerente;
