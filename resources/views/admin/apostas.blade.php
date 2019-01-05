@@ -96,7 +96,7 @@
 							<td>
 								#{{$aposta->id}}<br>
 								Nome: {{$aposta->nome}}<br>
-								Agente: {{$aposta->agente_id}}<br>
+								Agente: {{$aposta->agente->nickname}}<br>
 								Data: {{$aposta->data_aposta}}
 							</td>
 							<td>
@@ -177,13 +177,12 @@
 				classeAposta = "table-success";
 			}
 
-			
 			tabela+="<tr class='"+ classeAposta +"' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
 
 			tabela+="<td>#"+
 				apostas[index].id+"<br>"+
 				"Nome: "+apostas[index].nome+"<br>"+
-				"Agente: "+apostas[index].agente_id+"<br>"+
+				"Agente: "+apostas[index].agente.nickname+"<br>"+
 				"Data: "+apostas[index].data_aposta+
 				"</td>";
 

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Aposta;
 use App\Palpite;
+use App\Agente;
 use App\Http\Controllers\Api\MinhaClasse;
 
 class ApostaAdminController extends Controller{
@@ -23,8 +24,11 @@ class ApostaAdminController extends Controller{
     	->orderBy('id', 'desc')
     	->get();
 
+        $agentes = Agente::all();
+
         foreach ($apostas as $aposta) {
             $aposta->data_aposta = MinhaClasse::data_mysql_to_datahora_formatada($aposta->data_aposta);
+            $aposta->agente = $agentes->where('id', $aposta->agente_id)->first();
         }
 
         $indexApostas = $this->getIndexApostas($apostas);
@@ -56,6 +60,13 @@ class ApostaAdminController extends Controller{
         ->take(100)
         ->orderBy('id', 'desc')
         ->get();
+
+        $agentes = Agente::all();
+
+        foreach ($apostas as $aposta) {
+            $aposta->data_aposta = MinhaClasse::data_mysql_to_datahora_formatada($aposta->data_aposta);
+            $aposta->agente = $agentes->where('id', $aposta->agente_id)->first();
+        }
 
 
         $indexApostas = $this->getIndexApostas($apostas);
