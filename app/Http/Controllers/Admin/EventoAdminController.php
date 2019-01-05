@@ -107,13 +107,13 @@ class EventoAdminController extends Controller
             $evento->save();
         }
 
-        if($statusEventoApi==3 && isset($arrayEvento['results'][0]['scores'][1])){
+        if(($statusEventoApi==3 || $statusEventoApi==99)  && isset($arrayEvento['results'][0]['scores'][1])){
             $this->atualizarPrimeiroTempo($evento->id, $arrayEvento);
         }
-        if($statusEventoApi==3 && isset($arrayEvento['results'][0]['scores'][2])){
+        if(($statusEventoApi==3 || $statusEventoApi==99)  && isset($arrayEvento['results'][0]['scores'][2])){
             $this->atualizarSegundoTempo($evento->id, $arrayEvento);
             $this->atualizarResultadoFinal($evento->id, $arrayEvento);
-        }else{
+        }elseif(($statusEventoApi==3 || $statusEventoApi==99)){
             $this->atualizarResultadoFinal2($evento->id, $arrayEvento);
         }
 
