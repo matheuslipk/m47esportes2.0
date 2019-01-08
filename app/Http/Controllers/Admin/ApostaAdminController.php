@@ -57,7 +57,7 @@ class ApostaAdminController extends Controller{
         }
 
         $apostas = Aposta::where($filtros)
-        ->take(100)
+        ->take(250)
         ->orderBy('id', 'desc')
         ->get();
 

@@ -23,7 +23,7 @@ class ApostaAgenteController extends Controller{
     	$apostas = Aposta::where([
     		['agente_id', Auth::user()->id]
     	])
-    	->take(30)
+    	->take(40)
     	->orderBy('id', 'desc')
     	->get();
 
@@ -48,9 +48,13 @@ class ApostaAgenteController extends Controller{
             ['data_aposta', ">=", $dataInico."T00:00:00"],
             ['data_aposta', "<=", $dataFinal."T23:59:59"],
         ])
-        ->take(50)
+        ->take(100)
         ->orderBy('id', 'desc')
         ->get();
+
+        foreach ($apostas as $aposta) {
+            $aposta->data_aposta = MinhaClasse::data_mysql_to_datahora_formatada($aposta->data_aposta);
+        }
 
         $indexApostas = $this->getIndexApostas($apostas);
         $palpitesAgrupados = Palpite::whereIn('aposta_id', $indexApostas)->get()->groupBy('aposta_id');

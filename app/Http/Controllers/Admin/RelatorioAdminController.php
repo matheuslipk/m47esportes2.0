@@ -30,6 +30,7 @@ class RelatorioAdminController extends Controller
         $filtro = [
             ['agente_id', "<>", ''],
             ['data_aposta', '>=', $dataInicio],
+            ['data_aposta', '<=', $dataFim],
             ['agente_id', '<=', $dataFim],
         ];
 

@@ -136,6 +136,7 @@
 			tabela+="<td>#"+
 				apostas[index].id+"<br>"+
 				"Nome: "+apostas[index].nome+"<br>"+
+				"Data: "+apostas[index].data_aposta
 				"</td>";
 
 			tabela+="<td>"+
