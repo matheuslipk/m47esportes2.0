@@ -5,7 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Aposta extends Model
+
 {
+
+    public static function getControle($aposta_id){
+       return md5($aposta_id."-m47esportes");
+    }
+
 	public function palpites(){
 		return $this->hasMany('App\Palpite');
 	}

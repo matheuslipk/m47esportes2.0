@@ -1,7 +1,7 @@
 @extends('componentes.pagina')
 
 @section('titulo')
-Aposta {{ $aposta->id }} - {{ $aposta->nome }}
+#{{ $aposta->id }} - {{ $aposta->nome }}
 @endsection
 
 @section('content')
@@ -9,9 +9,16 @@ Aposta {{ $aposta->id }} - {{ $aposta->nome }}
 		<div class="row">
 			<div class="col-sm-2 col-md-3"></div>
 			<div class="col">
-				<a style="display: none" id="botaoCompartilhar" class="btn btn-info btn-block" href="whatsapp://send?text={{ route('viewaposta', $aposta->id) }}">
+				@if($aposta->controle==NULL)
+					<a style="display: none;" id="botaoCompartilhar" class="btn btn-info btn-block" href="whatsapp://send?text={{ route('viewaposta', $aposta->id) }}">
 					Compartilhar 
-				</a>
+					</a>
+				@else
+					<a style="display: none;" id="botaoCompartilhar" class="btn btn-info btn-block" href="whatsapp://send?text={{ route('viewcomprovante', $aposta->controle) }}">
+					Compartilhar 
+					</a>
+				@endif
+				
 			</div>
 			<div class="col-sm-2 col-md-3"></div>
 		</div>

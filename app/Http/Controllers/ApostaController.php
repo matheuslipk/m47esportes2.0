@@ -65,6 +65,50 @@ class ApostaController extends Controller{
 		}
 	}
 
+    public function getComprovante(Request $request, $controle){
+        $aposta = Aposta::where("controle", $controle)->first();
+        if(!isset($aposta) || $aposta->agente_id == ''){
+            return redirect('/');
+        }
+        $aposta->data_aposta = MinhaClasse::data_mysql_to_datahora_formatada($aposta->data_aposta);
+        $aposta->data_validacao = MinhaClasse::data_mysql_to_datahora_formatada($aposta->data_validacao);
+
+        
+        $tipoPalpites = TipoPalpite::all();
+        $catPalpites = CatPalpite::all();
+        $situacaoPalpites = SituacaoPalpite::all();
+        $eventos = Evento::find($this->getIndexEventos($aposta->palpites));
+        $times = Time::find($this->getIndexTimes($eventos));
+
+        // return $times;
+
+        if(isset($aposta)){
+            foreach ($aposta->palpites as $palpite) {
+                $palpite->tipo_palpite = $tipoPalpites->where('id', $palpite->tipo_palpite_id)->first();
+                $palpite->tipo_palpite->cat_palpite = $catPalpites->where('id', $palpite->tipo_palpite->cat_palpite_id)->first();
+                $palpite->evento = $eventos->where('id', $palpite->evento_id)->first();
+                $palpite->evento->data = MinhaClasse::data_mysql_to_datahora_formatada($palpite->evento->data);
+                $palpite->evento->time1 = $times->where('id', $palpite->evento->time1_id)->first();
+                $palpite->evento->time2 = $times->where('id', $palpite->evento->time2_id)->first();
+                $palpite->situacao_palpite = $situacaoPalpites->where('id', $palpite->situacao_palpite_id)->first();
+                if($this->isPalpiteTempoCompleto($palpite->tipo_palpite->cat_palpite_id)){
+                    $palpite->evento->scores = Score::where('evento_id', $palpite->evento_id)->first();
+                    $palpite->tempoJogo = 'completo';
+                }elseif($this->isPalpiteTempo1($palpite->tipo_palpite->cat_palpite_id)){
+                    $palpite->evento->scores = ScoreT1::where('evento_id', $palpite->evento_id)->first();
+                    $palpite->tempoJogo = 'tempo1';
+                }elseif($this->isPalpiteTempo2($palpite->tipo_palpite->cat_palpite_id)){
+                    $palpite->evento->scores = ScoreT2::where('evento_id', $palpite->evento_id)->first();
+                    $palpite->tempoJogo = 'tempo2';
+                }
+            }
+            // return $aposta;
+            return view('public.aposta', compact('aposta'));
+        }else{
+            return 'Aposta não encontrada';
+        }
+    }
+
     public function geJSON($aposta_id){
         $aposta = Aposta::find($aposta_id);
         if(!isset($aposta)){
@@ -132,6 +176,8 @@ class ApostaController extends Controller{
     	$aposta->premiacao = $premiacao;
     	$aposta->ganhou = 0;
     	$aposta->save();
+
+        Aposta::where('id', $aposta->id)->update(['controle'=>Aposta::getControle($aposta->id)]);
 
     	foreach ($request->session()->get('palpites') as $palpite) {
     		$p = new Palpite();

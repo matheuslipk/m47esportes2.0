@@ -126,6 +126,7 @@ Route::prefix('sessao')->group(function () {
 
 Route::prefix('aposta')->group(function () {
 	Route::post('fazerAposta', 'ApostaController@fazerAposta')->name('fazerAposta');
+	Route::get('/comprovante/{controle}', 'ApostaController@getComprovante')->name('viewcomprovante');
 	Route::get('{id}', 'ApostaController@get')->name('viewaposta');
 });
 

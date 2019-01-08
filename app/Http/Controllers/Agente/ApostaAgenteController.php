@@ -191,6 +191,8 @@ class ApostaAgenteController extends Controller{
         $aposta->ganhou = 0;
         $aposta->save();
 
+        Aposta::where('id', $aposta->id)->update(['controle'=>Aposta::getControle($aposta->id)]);
+
         foreach ($request->session()->get('palpites') as $palpite) {
             $p = new Palpite();
             $p->aposta_id = $aposta->id;
