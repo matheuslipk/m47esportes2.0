@@ -29,7 +29,7 @@ class RelatorioAgenteController extends Controller{
         $apostas = Aposta::where([
             ['agente_id', $agente->id],
             ['data_aposta', '>=', $dataInicio],
-            ['agente_id', '<=', $dataFim],
+            ['data_aposta', '<=', $dataFim],
         ])->get();
 
         $indexApostas = $this->getIndexApostas($apostas);
