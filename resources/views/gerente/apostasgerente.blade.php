@@ -16,8 +16,8 @@
 	<div class="row">
 		<div class="col form-group">
 			<label>Agente</label>
-			<select class="form-control" name="agente">
-				<option value="">Totos</option>
+			<select class="form-control" name="agente" id="agente">
+				<option value="0">Totos</option>
 				@foreach($gerente->agentes as $agente)
 					<option value="{{ $agente->id }}">{{ $agente->name }}</option>
 				@endforeach
@@ -68,7 +68,8 @@
 							<td>
 								#{{$aposta->id}}<br>
 								Nome: {{$aposta->nome}}<br>
-								Data: {{$aposta->data_aposta}}
+								Data: {{$aposta->data_aposta}}<br>
+								Agente: {{ $aposta->agente->nickname }}
 							</td>
 							<td>
 								Valor Apostado R$ {{$aposta->valor_apostado}}<br>
@@ -103,10 +104,12 @@
 	function atualizarTabelaApostas(){
 		var dataInicio = $('#dataInicio').val();
 		var dataFinal = $('#dataFinal').val();
+		var agente = $("#agente").val();
 
-		$.getJSON('/agente/apostasJSON',{
+		$.getJSON('/gerente/apostasJSON',{
 			data_inicio : dataInicio,
-			data_final : dataFinal
+			data_final : dataFinal,
+			agente : agente
 		}).done(function(data){
 			$("#tabelaApostas>tbody").html(construirTabeleApostas(data));
 		});
@@ -115,7 +118,6 @@
 	function construirTabeleApostas(data){
 		var apostas = data.apostas;
 		var apostasComStatus = data.apostasComStatus;
-
 
 		var tabela="";
 		var somaValorApostado=0;
@@ -130,17 +132,24 @@
 			somaLiquido += valorLiquido;
 			somaComissao += comissaoAgente;
 
+
+			var classeAposta = "";
+
 			if(apostasComStatus[ apostas[index].id ].status == 2 ){
-				tabela+="<tr class='table-danger' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+				classeAposta = "table-danger";
 			}else if( apostasComStatus[ apostas[index].id ].status == 3 ){
-				tabela+="<tr class='table-warning' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+				classeAposta = "table-warning";
 			}else if( apostasComStatus[ apostas[index].id ].status == 1 ){
-				tabela+="<tr class='table-success' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+				classeAposta = "table-success";
 			}
-			
+
+			tabela+="<tr class='"+ classeAposta +"' onclick=\"window.location.href='/aposta/"+apostas[index].id+"' \">";
+
 			tabela+="<td>#"+
 				apostas[index].id+"<br>"+
 				"Nome: "+apostas[index].nome+"<br>"+
+				"Agente: "+apostas[index].agente.nickname+"<br>"+
+				"Data: "+apostas[index].data_aposta+
 				"</td>";
 
 			tabela+="<td>"+
@@ -150,8 +159,8 @@
 
 			tabela+="<td>"+
 				"Comissão "+(apostas[index].comissao_agente)*100+"%<br>"+
-				"Comissão R$ "+comissaoAgente+"<br>"+
-				"Líquido R$ "+valorLiquido+"<br>"+
+				"Comissão R$ "+comissaoAgente.toFixed(2)+"<br>"+
+				"Líquido R$ "+valorLiquido.toFixed(2)+"<br>"+
 				"</td>";			
 
 			tabela+='</tr>';

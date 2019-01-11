@@ -87,6 +87,7 @@ Route::prefix('agente')->group(function () {
 Route::prefix('gerente')->group(function () {
 	Route::get('/', "GerenteController@index")->name('gerentehome');
 	Route::get('/apostas', "Gerente\ApostaGerenteController@apostas")->name('gerenteapostas');
+	Route::get('/apostasJSON', "Gerente\ApostaGerenteController@apostasJSON");
 
     Route::get('/login', "AuthGerente\LoginGerenteController@showLoginForm")->name('gerentelogin');
 	Route::post('/login', "AuthGerente\LoginGerenteController@login");
