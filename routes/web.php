@@ -107,6 +107,8 @@ Route::prefix('gerente')->group(function () {
 				'palpite' => '[0-9]+',
 			]);
     });
+    Route::get('/relatorio', "Gerente\RelatorioGerenteController@index")->name("relatorio_gerente");
+	Route::post('/relatorio', "Gerente\RelatorioGerenteController@relatorio");
 });
 
 Route::prefix('api365')->group(function () {

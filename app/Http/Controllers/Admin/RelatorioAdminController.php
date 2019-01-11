@@ -31,7 +31,6 @@ class RelatorioAdminController extends Controller
             ['agente_id', "<>", ''],
             ['data_aposta', '>=', $dataInicio],
             ['data_aposta', '<=', $dataFim],
-            ['agente_id', '<=', $dataFim],
         ];
 
         $apostas = Aposta::where($filtro)->get();

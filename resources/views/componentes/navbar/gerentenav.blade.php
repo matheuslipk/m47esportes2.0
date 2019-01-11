@@ -19,8 +19,7 @@
           Relatórios
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{{route('listaagentes')}}">Por Agente</a>
-          <a class="dropdown-item" href="{{route('listagerentes')}}">Geral</a>
+          <a class="dropdown-item" href="{{route('relatorio_gerente')}}">Geral</a>
         </div>
       </li>
       
