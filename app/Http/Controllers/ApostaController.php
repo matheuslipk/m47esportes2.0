@@ -135,7 +135,16 @@ class ApostaController extends Controller{
     	if($request->session()->has('palpites') && count($request->session()->get('palpites'))>0 ){
     		if(Auth::check()){
                 $apostaAgente = new ApostaAgenteController();
+
+                $limiteLiberado = $apostaAgente->isLimitesLiberado(Auth::user()->id, $request->input('valorAposta'));
+
+                if($limiteLiberado!==true){
+                    return $limiteLiberado;
+                }
+
                 $aposta = $apostaAgente->apostaAgente($request);
+
+
                 return redirect('/aposta/'.$aposta->id);
     			
 	    	}else{

@@ -33,29 +33,23 @@ class EventoController extends Controller
         $arrayIdTimes = $this->getIndexsTimes($eventos);
         $arrayIdEventos = $this->getIndexsEventos($eventos);
 
-        $times = Time::find($arrayIdTimes);
         $ligas = $todasLigas->whereIn('id', $arrayIdLigas);
-
-        $odds = Odd::whereIn('evento_id', $arrayIdEventos)
-            ->orderBy('evento_id')
-            ->get();
-
-        $oddsPrincipais = $odds->where('cat_palpite_id', 1);
-
-        // return $oddsPrincipais;
 
         foreach ($ligas as $liga) {
             $liga->eventos = $eventos->where('liga_id',$liga->id);
             foreach ($liga->eventos as $evento) {
-                $evento->quantOdds = $odds->where('evento_id', $evento->id)->count();
+                $odds = Odd::where('evento_id', $evento->id)->get();
+                $oddsPrincipais = $odds->where('cat_palpite_id', 1);
+
+                $evento->quantOdds = $odds->count();
                 $evento->odds = $oddsPrincipais->where('evento_id', $evento->id);
-                $evento->time1 = $times->where('id', $evento->time1_id)->first();
-                $evento->time2 = $times->where('id', $evento->time2_id)->first();
+                $evento->time1 = Time::where('id', $evento->time1_id)->first();
+                $evento->time2 = Time::where('id', $evento->time2_id)->first();
                 $evento->data = MinhaClasse::data_mysql_to_datahora_formatada($evento->data);
             }
         }
         // return $ligas;
-    	return view('public.index', compact(['ligas']));
+    	return view('public.index', compact('ligas'));
     }
 
     public function getIndexsLigas($array){

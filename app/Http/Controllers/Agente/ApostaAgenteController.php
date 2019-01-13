@@ -68,9 +68,22 @@ class ApostaAgenteController extends Controller{
     }
 
     public function apostaJSON(Request $request, $id){
+        
+
         $aposta = Aposta::find($id);
+
         if( isset( $aposta ) ){
             $apController = new ApostaController();
+
+            $limiteLiberado = $this->isLimitesLiberado(Auth::user()->id, $aposta->valor_apostado);
+
+            if($limiteLiberado!==true){
+                return $resultado = [
+                    'sucesso' => true,
+                    'validacao_disponivel' => false,
+                    'msg' => $limiteLiberado,
+                ];
+            }
 
             if( $aposta->agente_id == null){
                 $aposta->palpites;
@@ -90,6 +103,10 @@ class ApostaAgenteController extends Controller{
                 }
                     
             }
+
+
+            
+
             if( $aposta->agente_id == Auth::user()->id ){
                 $aposta->palpites;
                 return $resultado = [
@@ -121,6 +138,8 @@ class ApostaAgenteController extends Controller{
     }
 
     public function validarAposta(Request $request){
+        // return $this->isLimitesLiberado(Auth::user()->id);
+
         $aposta = Aposta::find($request->input('aposta_id'));
         if( isset( $aposta ) ){
             if(!$this->todosEventosDisponiveis($aposta)){
@@ -129,6 +148,17 @@ class ApostaAgenteController extends Controller{
                     'msg' => '1 ou mais eventos ja iniciaram!'
                 ];
             }
+
+            $limiteLiberado = $this->isLimitesLiberado(Auth::user()->id, $aposta->valor_apostado);
+
+            if($limiteLiberado!==true){
+                return $resultado = [
+                    'sucesso' => false,
+                    'validacao_disponivel' => false,
+                    'msg' => $limiteLiberado,
+                ];
+            }
+
             if( $aposta->agente_id == null){
                 $comissaoAgente = $this->getComissaoApostaAgente($aposta->cotacao_total);
                 $aposta->agente_id = Auth::user()->id;
@@ -237,6 +267,68 @@ class ApostaAgenteController extends Controller{
         $comissaoAgente = $linhaConfig['valor'];
 
         return $comissaoAgente;
+    }
+
+
+    public function isLimitesLiberado($agente_id, $valor_aposta){
+        $configAgente = $this->getConfigAgente($agente_id);
+        $limiteSemanal = $configAgente->where('tipo_config_id', 14)->first();
+        $somaApostas = $this->somaApostas();
+
+        if(!$limiteSemanal==null){
+            $valorLimite = $limiteSemanal->valor;
+            if($somaApostas+$valor_aposta > $valorLimite){
+                return "Você já fez R$ ". number_format($somaApostas, 2) ." em apostas. 
+                Seu limite em 7 dias é de R$ ". number_format($valorLimite, 2);
+            }
+        }else{
+            $limiteSemanal = ConfigGlobal::where('tipo_config_id', 14)->first();
+            $valorLimite = $limiteSemanal->valor;
+            if($somaApostas+$valor_aposta > $valorLimite){
+                return "Você já fez R$ ". number_format($somaApostas, 2) ." em apostas \n".
+                "Seu limite em 7 dias é de R$ ". number_format($valorLimite, 2);
+            }
+        }
+
+        return true;
+    }
+
+    public function somaApostas(){
+        $dataInicio = date("Y-m-d", strtotime("-6 days"))."T00:00:00";
+        $dataFim = date("Y-m-d", strtotime("now"))."T23:59:59";
+
+        $filtro = [
+            ['agente_id', Auth::user()->id],
+            ['data_aposta', '>=', $dataInicio],
+            ['data_aposta', '<=', $dataFim],
+        ];
+
+        $apostas = Aposta::where($filtro)->get();
+
+        $apostasComStatus = Aposta::getApostasComStatusJSON2($apostas);
+
+        $soma_apostas = $apostas->sum("valor_apostado");
+        $somaPremios = 0;
+        $somaComissao = 0;
+        foreach ($apostas as $aposta) {
+            $somaComissao += ($aposta->valor_apostado * $aposta->comissao_agente);
+            if($apostasComStatus[$aposta->id]['status']==1){
+                $somaPremios += $aposta->premiacao;
+            }
+            
+        }
+
+        return $soma_apostas;
+    }
+
+    public function getConfigAgente($agente_id){
+        $configs = ConfigAgente::where('agente_id', $agente_id)->get();
+        return $configs;
+    }
+
+    public function getConfigGlobal(){
+        $configs = ConfigGlobal::all();
+        return $configs;
     }
 
     public function getIndexApostas($arrayApostas){
