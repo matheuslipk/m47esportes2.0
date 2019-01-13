@@ -278,8 +278,8 @@ class ApostaAgenteController extends Controller{
         if(!$limiteSemanal==null){
             $valorLimite = $limiteSemanal->valor;
             if($somaApostas+$valor_aposta > $valorLimite){
-                return "Você já fez R$ ". number_format($somaApostas, 2) ." em apostas. 
-                Seu limite em 7 dias é de R$ ". number_format($valorLimite, 2);
+                return "Você já fez R$ ". number_format($somaApostas, 2) ." em apostas \n".
+                "Seu limite em 7 dias é de R$ ". number_format($valorLimite, 2);
             }
         }else{
             $limiteSemanal = ConfigGlobal::where('tipo_config_id', 14)->first();
