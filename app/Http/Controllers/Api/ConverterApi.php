@@ -54,6 +54,11 @@ class ConverterApi extends Controller{
          $oddsConvertidas->cat_palpites[] = ConverterApi::golsComAmbas($golsComAmbas);
       }
 
+      if(isset($odds->goals->sp->goals_odd_even)){
+         $golsParImpar = $odds->goals->sp->goals_odd_even;
+         $oddsConvertidas->cat_palpites[] = ConverterApi::golsParImpar($golsParImpar);
+      }
+
       //Primeiro tempo
       if(isset($odds->half->sp->half_time_result)){
          $vencedor1T = $odds->half->sp->half_time_result;
@@ -861,6 +866,34 @@ class ConverterApi extends Controller{
             $temp = [
                'tipo_palpite_id'=>163,
                'nome'=> '-2.5 & Não',
+               'taxa'=> $gols->odds,
+            ];
+         }
+         $odd[]=$temp;
+      }      
+
+      $obj->odds = $odd;
+      return $obj;      
+   }
+
+   private static function golsParImpar($ambos){
+      $obj = new \stdClass;
+      $obj->categoria_id = 7;
+      $obj->nome = "Gols: Par ou Ímpar";
+      $obj->tempo = "90 min";
+
+      foreach ($ambos as $gols){
+         if($gols->opp=='Even'){
+            $temp = [
+               'tipo_palpite_id'=>148,
+               'nome'=> 'Par',
+               'taxa'=> $gols->odds,
+            ];
+         }
+         if($gols->opp=='Odd'){
+            $temp = [
+               'tipo_palpite_id'=>147,
+               'nome'=> 'Ímpar',
                'taxa'=> $gols->odds,
             ];
          }
