@@ -16,6 +16,7 @@ class Evento extends Model
         $statusEvento[5] = "Cancelado";
         $statusEvento[7] = "Interrompido";
         $statusEvento[8] = "Abandonado";
+        $statusEvento[9] = "ANULADO";
         $statusEvento[99] = "Removido";
 
         return $statusEvento;

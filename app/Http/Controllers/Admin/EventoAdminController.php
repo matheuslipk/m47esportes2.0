@@ -15,6 +15,8 @@ use App\Odd;
 use App\Score;
 use App\ScoreT1;
 use App\ScoreT2;
+use App\Palpite;
+use App\Aposta;
 
 class EventoAdminController extends Controller
 {
@@ -66,11 +68,16 @@ class EventoAdminController extends Controller
         $dataFim = $request->input('dataFim');
         $statusEvento = $request->input('statusEvento');
 
-        $eventos = Evento::where([
+        $filtro = [
             ['data','>=',$dataInicio],
-            ['data','<=',$dataFim],
-            ['status_evento_id', 'LIKE', $statusEvento],
-        ])
+            ['data','<=',$dataFim],            
+        ];
+
+        if(!($statusEvento == 'todos')){
+            $filtro[] = ['status_evento_id', intval($statusEvento)];
+        }
+
+        $eventos = Evento::where($filtro)
         ->orderBy('data', 'desc')
         ->take(50)
         ->get();
@@ -122,6 +129,29 @@ class EventoAdminController extends Controller
         return "Evento  ".$statusEvento[$evento->status_evento_id];
     }
 
+    public function anularevento($evento_id){
+        $evento = Evento::find($evento_id);
+        if(isset($evento)){
+            $evento->status_evento_id = 9;
+            $evento->save();
+
+            Score::where('evento_id', $evento_id)->delete();
+            ScoreT1::where('evento_id', $evento_id)->delete();
+            ScoreT2::where('evento_id', $evento_id)->delete();
+            Palpite::where('evento_id', $evento->id)->update(['situacao_palpite_id' => 4]);
+
+            $palpites = Palpite::where('evento_id', $evento->id)->get();
+            foreach ($palpites as $palpite) {
+                $aposta = Aposta::find($palpite->aposta_id);
+                if(isset($aposta)){
+                    $aposta->premiacao = ($aposta->premiacao/$palpite->cotacao);
+                    $aposta->save();
+                }
+            }
+
+
+        }
+    }
 
 
     //privates

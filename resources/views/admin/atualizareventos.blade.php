@@ -23,10 +23,11 @@
 				<div class="form-group">
 					<label>Status do Jogo</label>
 					<select class="form-control" id="statusEvento">
-						<option value="">Todos</option>
+						<option value="todos">Todos</option>
 						<option selected value="0">Não iniciado</option>
 						<option value="1">Rolando</option>
 						<option value="3">Finalizado</option>
+						<option value="9">Anulado *</option>
 					</select> 
 				</div>
 			</div>
@@ -75,7 +76,10 @@ function atualizarListaEventos(){
 				"<span class='text-danger'>" + eventos[index].time2.nome + "</span><br>" +
 				"<span class='evento-data'>"+eventos[index].data+"</span>"
 				"</td>";
-			tbody+="<td><button class='btn btn-sm' onclick='atualizarEvento("+eventos[index].id+", "+eventos[index].FI_365+")'>Atualizar</button></td>";
+			tbody+="<td>"+
+				"<button class='btn btn-sm btn-primary' onclick='atualizarEvento("+eventos[index].id+", "+eventos[index].FI_365+")'>Atualizar</button> "+
+				"<button class='btn btn-sm btn-danger' onclick='anularEvento("+eventos[index].id+")'>X</button>"+
+			"</td>";
 			tbody+='</tr>';
 		}
 		$('#tabelaEventos>tbody').html(tbody);
@@ -93,6 +97,16 @@ function atualizarEvento(evento_id, fi_365){
 		alert(data);
 	});
 }
+
+function anularEvento(evento_id){
+	if(confirm("Tem certeza que deseja anular esse evento?")){
+		$.get('/admin/evento/anular/'+evento_id).done(function(data){
+			alert("EVENTO ANULADO");
+		});
+	}
+	
+}
+
 </script>
 @endsection
 

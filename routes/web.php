@@ -16,6 +16,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/eventos/cadastrar', "Admin\EventoAdminController@showCadastrarEventos")->name('cadastroeventos');
     Route::get('/eventos/getJSON', "Admin\EventoAdminController@getEventosJSON")->name('getEventosJSONAdmin');
 
+    Route::get('/evento/anular/{id}', "Admin\EventoAdminController@anularevento")->name('anularevento')->where(['id' => '[0-9]+']);
+
     Route::get('/evento/atualizarNaApi', "Admin\EventoAdminController@atualizarEventoApi");
 
     Route::get('/relatorio', "Admin\RelatorioAdminController@index")->name("relatorio_admin");
