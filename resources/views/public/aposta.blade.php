@@ -72,6 +72,9 @@
 										<span>Resultado: <b>{{$palpite->evento->scores->score_t1}} x {{$palpite->evento->scores->score_t2}}</b>> 2ºT</span>
 									@endif
 								@endif
+								@if($palpite->situacao_palpite_id==4)
+									<br><b>{{ __('Palpite Anulado') }}</b>
+								@endif
 							</div>						
 						</div>
 						@endforeach

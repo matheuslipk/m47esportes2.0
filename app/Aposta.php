@@ -32,6 +32,7 @@ class Aposta extends Model
         foreach ($palpitesAgrupados as $indexAposta => $aposta) {
             $quantPalpites = $aposta->count();
             $quantAcertos = 0;
+            $quantAnulados = 0;
             $quantPalpitesConferidos = 0;
             $apostas[$indexAposta] = $aposta;
 
@@ -45,7 +46,7 @@ class Aposta extends Model
 
                 if($palpite->situacao_palpite_id===1){
                     $quantAcertos++;
-                    if($quantPalpites===$quantAcertos){
+                    if($quantPalpites===($quantAcertos + $quantAnulados)){
                         $aposta['status'] = 1;
                         break;
                     }
@@ -54,6 +55,14 @@ class Aposta extends Model
                 if($palpite->situacao_palpite_id===3){
                     $aposta['status'] = 3;
                     if($quantPalpitesConferidos===$quantPalpites){
+                        break;
+                    }
+                }
+
+                if($palpite->situacao_palpite_id===4){
+                    $quantAnulados++;
+                    if( $quantPalpites===($quantAcertos + $quantAnulados) ){
+                        $aposta['status'] = 1;
                         break;
                     }
                 }
