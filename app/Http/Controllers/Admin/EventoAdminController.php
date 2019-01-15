@@ -25,7 +25,8 @@ class EventoAdminController extends Controller
     }
 
     public function index(){
-        $todasLigas = Liga::where('is_top_list',1)
+        $todasLigas = Liga::where('is_top_list', '>=', 1)
+            ->orderBy('is_top_list', 'desc')
             ->orderBy('nome')
             ->get();
 
@@ -45,6 +46,9 @@ class EventoAdminController extends Controller
         foreach ($ligas as $liga) {
             $liga->eventos = $eventos->where('liga_id',$liga->id);
             foreach ($liga->eventos as $evento) {
+                $odds = Odd::where('evento_id', $evento->id)->get();
+
+                $evento->quantOdds = $odds->count();
                 $evento->time1 = $times->where('id', $evento->time1_id)->first();
                 $evento->time2 = $times->where('id', $evento->time2_id)->first();
             }

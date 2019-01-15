@@ -11,7 +11,7 @@
 
     <div id="accordion{{$liga->id}}">
         <div class="card">
-            <div class="card-header bg-secondary" data-toggle="collapse" data-target='#collapseOne{{$liga->id}}'>
+            <div class="card-header bg-secondary text-white" data-toggle="collapse" data-target='#collapseOne{{$liga->id}}'>
                 <div>{{$liga->nome}}</div>
             </div>
 
@@ -34,14 +34,16 @@
 						            	<span>{{ $evento->data }}</span> 
 						            </td>
 						            <td>
-						                <button class="btn btn-primary btn-sm" onclick="atualizar_odds({{$evento->id}})">
-						                    <span class="badge badge-light">Atualizar Odds</span>
-						                </button>
-						            </td>
-						            <td>
-						                <button class="btn btn-danger btn-sm" onclick="remover_odds({{$evento->id}})">
-						                    <span class="badge badge-light">Remover Odds</span>
-						                </button>
+						            	@if($evento->quantOdds == 0)
+							                <button class="btn btn-primary btn-sm" onclick="atualizar_odds({{$evento->id}})">
+							                    <span class="badge badge-light">Atualizar Odds</span>
+							                </button>
+
+						                @else
+							                <button class="btn btn-danger btn-sm" onclick="remover_odds({{$evento->id}})">
+							                    <span class="badge badge-light">Remover Odds</span>
+							                </button>
+						                @endif
 						            </td>
 						        </tr>						    							
 	                    	@endforeach
@@ -63,11 +65,19 @@
 @section('css')
 <style type="text/css">
 	body{
-		background: #666;
-	}
-	table{
-		font-size: 14px;
-	}
+        background: rgba(75, 200, 125, 0.2);
+    }   
+    tr, form{
+        font-size: 12px;
+    }
+    .cat_palpite{
+        background: #222;
+        font-size: 19px;
+        color: #fff;
+    }
+    .card-campeonato{
+        background: rgba(150, 150, 150, 0.3);
+    }
 </style>
 @endsection
 

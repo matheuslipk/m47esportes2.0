@@ -16,6 +16,7 @@ class EventoController extends Controller
 {
     public function index(Request $request){
         $todasLigas = Liga::where('is_top_list','>=', 1)
+            ->orderBy('is_top_list', 'desc')
             ->orderBy('nome')
             ->get();
 
