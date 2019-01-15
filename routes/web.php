@@ -20,6 +20,10 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/evento/atualizarNaApi', "Admin\EventoAdminController@atualizarEventoApi");
 
+    Route::get('/ligas', "Admin\LigaAdminController@index")->name('adminligas');
+    Route::get('/liga/{id}', "Admin\LigaAdminController@getLiga")->name('adminliga');
+    Route::post('/liga/{id}', "Admin\LigaAdminController@update")->name('adminliga');
+
     Route::get('/relatorio', "Admin\RelatorioAdminController@index")->name("relatorio_admin");
     Route::post('/relatorio', "Admin\RelatorioAdminController@relatorio");
 

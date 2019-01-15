@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Liga extends Model
 {
+	public $timestamps = false;
+	
     public function eventos(){
     	return $this->hasMany('App\Evento');
     }
