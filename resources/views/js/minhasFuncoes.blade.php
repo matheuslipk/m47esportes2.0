@@ -19,6 +19,9 @@ function exibirModalOdds(evento){
             else if(id_categoria==17) string += montarMargemVitoria(cat_palpites[id_categoria]);
             else if(id_categoria==15) string += montarGolsExatos(cat_palpites[id_categoria]);
             else if(id_categoria==16) string += montarGolsEAmbosMarcam(cat_palpites[id_categoria]);
+            else if(id_categoria==7) string += montarParImpar(cat_palpites[id_categoria]);
+            else if(id_categoria==18) string += casaMaisGols(cat_palpites[id_categoria]);
+            else if(id_categoria==19) string += foraMaisGols(cat_palpites[id_categoria]);
             
             //Primeiro tempo
             else if(id_categoria==101) stringt1 += montarResultado1T(cat_palpites[id_categoria]);
@@ -333,6 +336,15 @@ function montarGolsExatos(categoria){
 }
 function montarGolsEAmbosMarcam(categoria){
     return montarCatGenerico(categoria, 2);
+}
+function montarParImpar(categoria){
+    return montarCatGenerico(categoria, 2);
+}
+function casaMaisGols(categoria){
+    return montarCatGenerico(categoria, 3);
+}
+function foraMaisGols(categoria){
+    return montarCatGenerico(categoria, 3);
 }
 
 //Primeiro Tempo

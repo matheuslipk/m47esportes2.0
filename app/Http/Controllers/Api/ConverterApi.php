@@ -95,6 +95,18 @@ class ConverterApi extends Controller{
          $oddsConvertidas->cat_palpites[] = ConverterApi::quantGols2T($odds);
       }
 
+      //Tempo Misto
+      if(isset($odds->goals->sp->home_team_highest_scoring_half)){
+         $casaMaisGols = $odds->goals->sp->home_team_highest_scoring_half;
+         $oddsConvertidas->cat_palpites[] = ConverterApi::casaMaisGols($casaMaisGols);
+      }
+
+      if(isset($odds->goals->sp->away_team_highest_scoring_half)){
+         $foraMaisGols = $odds->goals->sp->away_team_highest_scoring_half;
+         $oddsConvertidas->cat_palpites[] = ConverterApi::foraMaisGols($foraMaisGols);
+      }
+
+
       return $oddsConvertidas;
    }
 
@@ -1377,6 +1389,63 @@ class ConverterApi extends Controller{
          
       }
       
+      $obj->odds = $odd;
+      return $obj;
+   }
+
+   //Tempo Misto
+   private static function casaMaisGols($odds){
+      $obj = new \stdClass;
+      $obj->categoria_id = 18;
+      $obj->nome = "Casa - Tempo com Mais Gols";
+      $obj->tempo = "Misto";
+         
+      $odd[]=[
+         'tipo_palpite_id'=>180,
+         'nome'=>'Tempo 1',
+         'taxa'=>$odds[0]->odds
+      ];
+
+      $odd[]=[
+         'tipo_palpite_id'=>181,
+         'nome'=>'Tempo 2',
+         'taxa'=>$odds[1]->odds
+      ];
+
+      $odd[]=[
+         'tipo_palpite_id'=>182,
+         'nome'=>'Empate',
+         'taxa'=>$odds[2]->odds
+      ];
+
+      $obj->odds = $odd;
+      return $obj;
+   }
+
+   private static function ForaMaisGols($odds){
+      $obj = new \stdClass;
+      $obj->categoria_id = 19;
+      $obj->nome = "Fora - Tempo com Mais Gols";
+      $obj->tempo = "Misto";
+         
+      $odd[]=[
+         'tipo_palpite_id'=>183,
+         'nome'=>'Tempo 1',
+         'taxa'=>$odds[0]->odds
+      ];
+
+      $odd[]=[
+         'tipo_palpite_id'=>184,
+         'nome'=>'Tempo 2',
+         'taxa'=>$odds[1]->odds
+      ];
+
+      $odd[]=[
+         'tipo_palpite_id'=>185,
+         'nome'=>'Empate',
+         'taxa'=>$odds[2]->odds
+      ];
+
       $obj->odds = $odd;
       return $obj;
    }
