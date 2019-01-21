@@ -53,6 +53,45 @@ class EventoController extends Controller
     	return view('public.index', compact('ligas'));
     }
 
+    public function indexApi(Request $request){
+        $todasLigas = Liga::where('is_top_list','>=', 1)
+            ->orderBy('is_top_list', 'desc')
+            ->orderBy('nome')
+            ->get();
+
+        $filtro[] = ['data','>=',MinhaClasse::timestamp_to_data_mysql(time())];
+        if($request->filled('data')){
+            $data = date("Y-m-d", time())." 23:59:59";
+            $filtro[] = ['data','<=', $data];
+        }
+
+        $eventos = Evento::where($filtro)->orderBy('data', 'asc')->get();
+
+        $eventosAgrupados = $eventos->groupBy('liga_id');
+
+        $arrayIdLigas = $this->getIndexsLigas($eventosAgrupados);
+        $arrayIdTimes = $this->getIndexsTimes($eventos);
+        $arrayIdEventos = $this->getIndexsEventos($eventos);
+
+        $ligas = $todasLigas->whereIn('id', $arrayIdLigas);
+
+        foreach ($ligas as $liga) {
+            $liga->eventos = $eventos->where('liga_id',$liga->id);
+            foreach ($liga->eventos as $evento) {
+                $odds = Odd::where('evento_id', $evento->id)->get();
+                $oddsPrincipais = $odds->where('cat_palpite_id', 1);
+
+                $evento->quantOdds = $odds->count();
+                $evento->odds = $oddsPrincipais->where('evento_id', $evento->id);
+                $evento->time1 = Time::where('id', $evento->time1_id)->first();
+                $evento->time2 = Time::where('id', $evento->time2_id)->first();
+                $evento->data = MinhaClasse::data_mysql_to_datahora_formatada($evento->data);
+            }
+        }
+        // return $ligas;
+        return $ligas;
+    }
+
     public function getIndexsLigas($array){
         $arrayIndex = [];
         foreach ($array as $key => $a) {
