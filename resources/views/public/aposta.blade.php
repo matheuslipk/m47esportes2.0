@@ -23,6 +23,8 @@
 			<div class="col-sm-2 col-md-3"></div>
 		</div>
 
+		
+
 		<div class="row">
 			<div class="col-sm-2 col-md-3"></div>
 			<div class="col-sm-8 col-md-6">
@@ -91,6 +93,22 @@
 			</div>
 				
 		</div>
+
+
+		<!-- Aposta -->
+		@include('componentes.imprimiraposta', $aposta)
+
+		<div class="row">
+			<div class="col-sm-2 col-md-3"></div>
+			<div class="col">
+				<button id="btnCopiarAposta" onclick="imprimir()" class="btn btn-success btn-block">Copiar Aposta</button>
+			</div>
+			<div class="col-sm-2 col-md-3"></div>
+		</div>
+
+		<br>
+		<br>
+
 	</div>
 
 	
@@ -135,6 +153,12 @@
 			    return $("#botaoCompartilhar").show();
 			  }
 		});
+
+		function imprimir(){
+	      var aux = document.getElementById("textAposta");
+	      aux.select();
+	      document.execCommand("copy");
+	   }
 
 	</script>
 
