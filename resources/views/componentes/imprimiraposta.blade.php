@@ -1,6 +1,6 @@
 <section>
 	<div class="text-aposta">
-		<textarea class='' readonly id='textAposta' style='height: 500px; width: 500px' >
+		<textarea class='' readonly id='textAposta' style='height: 0px; width: 0px' >
 			*****************************
 			***  m47esportes.com.br  ****
 			*****************************
