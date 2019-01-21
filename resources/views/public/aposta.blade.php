@@ -58,6 +58,7 @@
 						<div class="palpite {{$classe}}">
 							<div class="evento">
 								<span class="evento-id">Evento: {{$palpite->evento->id}}</span><br>
+								<span class="nome-liga"><b> {{$palpite->evento->liga->nome}} </b></span><br>
 								<span class="text-primary">{{$palpite->evento->time1->nome}}</span> vs 
 								<span class="text-danger">{{$palpite->evento->time2->nome}}</span><br>
 								<span class="data-evento">{{$palpite->evento->data}}</span>
