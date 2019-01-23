@@ -13,10 +13,10 @@
                         @csrf
                         
                         <div class="form-group row">
-                            <label for="nickname" class="col-md-4 col-form-label text-md-right">Nome</label>
+                            <label for="nome" class="col-md-4 col-form-label text-md-right">Nome</label>
 
                             <div class="col-md-6">
-                                <input type="tel" id="nome" class="form-control" name="nome" required value="{{ $liga->nome }}">
+                                <input id="nome" class="form-control" name="nome" required value="{{ $liga->nome }}">
                             </div>
                         </div>
 
