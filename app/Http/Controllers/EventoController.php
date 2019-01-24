@@ -70,13 +70,15 @@ class EventoController extends Controller
         $eventosAgrupados = $eventos->groupBy('liga_id');
 
         $arrayIdLigas = $this->getIndexsLigas($eventosAgrupados);
-        $arrayIdTimes = $this->getIndexsTimes($eventos);
-        $arrayIdEventos = $this->getIndexsEventos($eventos);
 
-        $ligas = $todasLigas->whereIn('id', $arrayIdLigas);
+        $ligas = Liga::whereIn('id', $arrayIdLigas)
+            ->where('is_top_list', '>=', 1)
+            ->orderBy('is_top_list', 'desc')
+            ->orderBy('nome')
+            ->get();
 
         foreach ($ligas as $liga) {
-            $liga->eventos = $eventos->where('liga_id',$liga->id);
+            $liga->eventos = Evento::where('liga_id',$liga->id)->where($filtro)->orderBy('data')->get();
             foreach ($liga->eventos as $evento) {
                 $odds = Odd::where('evento_id', $evento->id)->get();
                 $oddsPrincipais = $odds->where('cat_palpite_id', 1);
@@ -88,7 +90,7 @@ class EventoController extends Controller
                 $evento->data = MinhaClasse::data_mysql_to_datahora_formatada($evento->data);
             }
         }
-        // return $ligas;
+
         return $ligas;
     }
 
