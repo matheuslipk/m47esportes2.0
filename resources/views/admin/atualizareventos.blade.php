@@ -43,7 +43,8 @@
 		<table class="table text-center" border="1"  id="tabelaEventos">
 			<thead>
 				<tr>
-					<td>Evento</td>
+					<td>Anular</td>
+					<td colspan='2'>Evento</td>
 					<td>Ações</td>
 				</tr>
 			</thead>
@@ -69,16 +70,24 @@ function atualizarListaEventos(){
 	}).done(function(eventos){
 		var tbody = "";
 		for(index in eventos){
-			tbody+='<tr>';
-			tbody+="<td>"+
+			var status = "";
+			if(eventos[index].status_evento_id == 3){
+				status = "table-success";
+			}
+			tbody+="<tr class='"+ status +"' id='tr-evento"+ eventos[index].id +"'>";
+			tbody+="<td><button class='btn btn-sm btn-danger' onclick='anularEvento("+eventos[index].id+")'>X</button>";
+			tbody+="</td>";
+
+
+			tbody+="<td colspan='2'>"+
+				"<span class='liga'><b>"+eventos[index].liga.nome+"</b></span> <br>" +
 				"<span class='evento-id'>"+eventos[index].id+" - "+eventos[index].status_evento_name+"</span> <br>" +
-				"<span class='text-primary'>"+eventos[index].time1.nome + "</span> vs " +
-				"<span class='text-danger'>" + eventos[index].time2.nome + "</span><br>" +
+				"<span class='text-primary nome-time'>"+eventos[index].time1.nome + "</span> vs " +
+				"<span class='text-danger nome-time'>" + eventos[index].time2.nome + "</span><br>" +
 				"<span class='evento-data'>"+eventos[index].data+"</span>"
 				"</td>";
 			tbody+="<td>"+
 				"<button class='btn btn-sm btn-primary' onclick='atualizarEvento("+eventos[index].id+", "+eventos[index].FI_365+")'>Atualizar</button> "+
-				"<button class='btn btn-sm btn-danger' onclick='anularEvento("+eventos[index].id+")'>X</button>"+
 			"</td>";
 			tbody+='</tr>';
 		}
@@ -94,7 +103,11 @@ function atualizarEvento(evento_id, fi_365){
 		event_id : evento_id,
 		FI : fi_365
 	}).done(function(data){
-		alert(data);
+		if(data=="Evento Finalizado"){
+			$("#tr-evento"+evento_id).addClass("table-success");
+		}else{
+			alert(data + " - "+evento_id);
+		}
 	});
 }
 
@@ -112,7 +125,7 @@ function anularEvento(evento_id){
 
 @section('css')
 <style>
-	.evento-id, .evento-data{
+	.btn-sm, .nome-time, .evento-id, .evento-data, .liga{
 		font-size: 12px;
 	}
 </style>

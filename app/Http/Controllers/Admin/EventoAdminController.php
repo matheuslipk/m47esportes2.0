@@ -93,6 +93,7 @@ class EventoAdminController extends Controller
         $statusEvento = Evento::getStatusEventos();
 
         foreach ($eventos as $evento) {
+            $evento->liga;
             $evento->status_evento_name = $statusEvento[$evento->status_evento_id];
             $evento->data = MinhaClasse::data_mysql_to_datahora_formatada($evento->data);
             $evento->time1 = $times->where('id', $evento->time1_id)->first();
@@ -130,7 +131,7 @@ class EventoAdminController extends Controller
 
         $statusEvento = Evento::getStatusEventos();
         
-        return "Evento  ".$statusEvento[$evento->status_evento_id];
+        return "Evento ".$statusEvento[$evento->status_evento_id];
     }
 
     public function anularevento($evento_id){
