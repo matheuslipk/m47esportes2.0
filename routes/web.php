@@ -150,3 +150,5 @@ Route::get('evento/{id}/odds', 'EventoController@getOdds');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/erro/{id}', 'CodigoErroController@index')->name('erro');

@@ -11,6 +11,7 @@ use App\Aposta;
 use App\ConfigAgente;
 use App\ConfigGlobal;
 use App\Palpite;
+use App\CodigoErro;
 use App\Http\Controllers\Api\MinhaClasse;
 use App\Http\Controllers\ApostaController;
 
@@ -97,8 +98,6 @@ class ApostaAgenteController extends Controller{
                 }
                     
             }
-
-
             
 
             if( $aposta->agente_id == Auth::user()->id ){
@@ -132,13 +131,14 @@ class ApostaAgenteController extends Controller{
     }
 
     public function validarAposta(Request $request){
-        // return $this->isLimitesLiberado(Auth::user()->id);
+        $valorMaxApostaAgente = $this->getValorMaxApostaAgente(); 
 
         $aposta = Aposta::find($request->input('aposta_id'));
         if( isset( $aposta ) ){
             if(!$this->todosEventosDisponiveis($aposta)){
                 return $resultado = [
                     'sucesso' => false,
+                    'validacao_disponivel' => false,
                     'msg' => '1 ou mais eventos ja iniciaram!'
                 ];
             }
@@ -151,6 +151,10 @@ class ApostaAgenteController extends Controller{
                     'validacao_disponivel' => false,
                     'msg' => $limiteLiberado,
                 ];
+            }
+
+            if($aposta->valor_apostado > $valorMaxApostaAgente){
+                return redirect()->route('erro', CodigoErro::ValorMaxAposta);
             }
 
             if( $aposta->agente_id == null){
@@ -185,6 +189,9 @@ class ApostaAgenteController extends Controller{
     public function apostaAgente(Request $request){
         $cotaTotal = 1;
         $quantPalpites = 0;
+        $valorMaxApostaAgente = $this->getValorMaxApostaAgente();        
+        $valorMaxApostaPadrao = $this->getValorMaxApostaPadrao();
+
         foreach ($request->session()->get('palpites') as $palpite) {
             $cotaTotal *= $palpite['valor'];
             $quantPalpites++;
@@ -193,9 +200,18 @@ class ApostaAgenteController extends Controller{
             $cotaTotal=800;
         }
 
+
+        
         $valorApostado = $request->input('valorAposta');
-        if($valorApostado >= 200 ){
-            $valorApostado = 200;
+
+        if($valorApostado > $valorMaxApostaAgente ){
+            return CodigoErro::ValorMaxAposta;
+        }
+
+        if($valorApostado > $valorMaxApostaPadrao){
+            if($cotaTotal < 3.5){
+                return CodigoErro::ValorMinCota;
+            }
         }
 
         $premiacao = $valorApostado*$cotaTotal;
@@ -203,7 +219,7 @@ class ApostaAgenteController extends Controller{
             $premiacao=8000;
         }
 
-
+        
 
         $comissaoAgente = $this->getComissaoApostaAgente($cotaTotal);
 
@@ -331,6 +347,25 @@ class ApostaAgenteController extends Controller{
             $index[] = $aposta->id;
         }
         return $index;
+    }
+
+    private function getValorMaxApostaAgente(){
+        $agente = Auth::user();
+        $config = ConfigAgente::where([
+            ['tipo_config_id', 4],
+            ['agente_id', $agente->id],
+        ])->first();
+        if(isset($config)){
+            $valorMax = $config->valor;
+        }else{
+            $valorMax = ConfigGlobal::where('tipo_config_id', 4)->first()->valor;
+        }
+        return $valorMax;
+    }
+
+    private function getValorMaxApostaPadrao(){        
+        $valorMax = ConfigGlobal::where('tipo_config_id', 4)->first()->valor;
+        return $valorMax;
     }
 
     private function todosEventosDisponiveis($aposta){

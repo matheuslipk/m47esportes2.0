@@ -110,8 +110,8 @@ function atualizarPossivelGanho(){
     if (possivelGanho >= 8000){
         possivelGanho = 8000;
     }
-    if (valorAposta > 300){
-        $("#valorAposta").val(300);
+    if (valorAposta > 500){
+        $("#valorAposta").val(500);
     }
 
     $("#possivelGanho").html("R$ " + possivelGanho.toFixed(2));

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\CodigoErro;
 use App\ConfigAgente;
 use App\ConfigGlobal;
 use App\Time;
@@ -144,20 +145,31 @@ class ApostaController extends Controller{
 
                 $aposta = $apostaAgente->apostaAgente($request);
 
+                if(is_integer($aposta)){
+                    $erro = CodigoErro::find($aposta);
+                    return redirect()->route('erro', $erro);
+                }
+
+                
 
                 return redirect('/aposta/'.$aposta->id);
     			
 	    	}else{
+                
                 $aposta = $this->apostaPublica($request);
+                if(is_integer($aposta)){
+                    $erro = CodigoErro::find($aposta);
+                    return redirect()->route('erro', $erro);
+                }
 	    		return view('public.solicitacao_aposta', compact('aposta'));
 	    	}
     	}
     }
-
-
     private function apostaPublica(Request $request){
+        $valorMaxApostaPadrao = ConfigGlobal::where('tipo_config_id', 4)->first()->valor;
 		$cotaTotal = 1;
 		$quantPalpites = 0;
+
 		foreach ($request->session()->get('palpites') as $palpite) {
     		$cotaTotal *= $palpite['valor'];
     		$quantPalpites++;
@@ -167,8 +179,15 @@ class ApostaController extends Controller{
     	}
 
         $valorApostado = $request->input('valorAposta');
-        if($valorApostado >= 200 ){
-            $valorApostado = 200;
+
+        if($valorApostado > $valorMaxApostaPadrao){
+            if($cotaTotal < 3.5){
+                return CodigoErro::ValorMinCota;
+            }            
+        }
+
+        if($valorApostado >= 500 ){
+            $valorApostado = 500;
         }
 
     	$premiacao = $valorApostado*$cotaTotal;
