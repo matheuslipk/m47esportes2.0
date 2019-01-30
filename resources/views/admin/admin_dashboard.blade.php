@@ -8,6 +8,10 @@ Admin - Dashboard
 
 <canvas id="graficoApostas"></canvas>
 
+<br>
+
+<canvas id="graficoApostasPorAgente"></canvas>
+
 @endsection
 
 
@@ -51,12 +55,31 @@ Admin - Dashboard
 				i++;
 			}
 
-			construirGraficoApostasPorGerente(arrayLabels, arrayDados);
+			construirGraficoApostasPorDia(arrayLabels, arrayDados);
 		});
+
+		$.get("{{ route('ajax_admin_getApostasPorAgente') }}").done(function(data){
+			var arrayLabels = [];
+			var arrayDados = [];
+			var i = 0;
+
+			for(indexData in data){
+				var somaApostas = data[indexData];
+				arrayLabels[i] = somaApostas.agente.nickname;
+				arrayDados[i] = somaApostas.soma_apostas;
+
+				i++;
+
+				if(i>=4) break;
+			}
+
+			construirGraficoApostasPorAgente(arrayLabels, arrayDados);
+		});
+
 		
 	});
 
-	function construirGraficoApostasPorGerente(arrayLabels, arrayDados){
+	function construirGraficoApostasPorDia(arrayLabels, arrayDados){
 		var ctx = document.getElementById("graficoApostas");
 		var myChart = new Chart(ctx, {
 		    type: 'bar',
@@ -87,7 +110,47 @@ Admin - Dashboard
 		    options: {
 		    	title: {
 		    		display: true,
-		    		text: "Soma das apostas nos últimos 7 dias"
+		    		text: "Soma das apostas (Últimos 7 dias)"
+		    	},
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        }
+		    }
+		});
+	}
+
+	function construirGraficoApostasPorAgente(arrayLabels, arrayDados){
+		var ctx = document.getElementById("graficoApostasPorAgente");
+		var myChart = new Chart(ctx, {
+		    type: 'bar',
+		    data: {
+		        labels: arrayLabels,
+		        datasets: [{
+		            label: 'Apostas feitas',
+		            data: arrayDados,
+		            backgroundColor: [
+		                'rgba(0, 255, 0, 0.1)',
+		                'rgba(0, 255, 0, 0.1)',
+		                'rgba(0, 255, 0, 0.1)',
+		                'rgba(0, 255, 0, 0.1)',
+		            ],
+		            borderColor: [
+		                'rgba(0, 255, 0, 1)',
+		                'rgba(0, 255, 0, 1)',
+		                'rgba(0, 255, 0, 1)',
+		                'rgba(0, 255, 0, 1)',
+		            ],
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		    	title: {
+		    		display: true,
+		    		text: "Apostas por agente (Últimos 7 dias)"
 		    	},
 		        scales: {
 		            yAxes: [{

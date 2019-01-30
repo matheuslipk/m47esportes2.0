@@ -152,7 +152,8 @@ Route::get('/teste', function(){
 
 //Ajax
 Route::prefix('ajax/admin')->group(function(){
-	Route::get('/dashboard/apostasPorGerente', "Admin\DashboardAdminController@getApostasPorSemana")->name('ajax_admin_getApostasPorSemana');
+	Route::get('/dashboard/getApostasPorSemana', "Admin\DashboardAdminController@getApostasPorSemana")->name('ajax_admin_getApostasPorSemana');
+	Route::get('/dashboard/getApostasPorAgente', "Admin\DashboardAdminController@getApostasPorAgente")->name('ajax_admin_getApostasPorAgente');
 });
 
 Route::get('evento/{id}/odds', 'EventoController@getOdds');

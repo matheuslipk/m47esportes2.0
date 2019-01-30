@@ -6,6 +6,8 @@ date_default_timezone_set('America/Fortaleza');
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Aposta;
+use App\Agente;
+use Illuminate\Support\Facades\DB;
 
 class DashboardAdminController extends Controller
 {
@@ -21,6 +23,32 @@ class DashboardAdminController extends Controller
      */
     public function index(){
         return view('admin.admin_dashboard');
+    }
+
+    public function getApostasPorAgente(){
+        $data0 = date("Y-m-d", time() );
+        $data6 = date("Y-m-d", strtotime('-6 days', strtotime($data0)) );
+
+        $filtro0 = [
+            ['agente_id', "<>", NULL],
+            ['data_aposta', ">=", $data6."T00:00:00"],
+            ['data_aposta', "<=", $data0."T23:59:59"],
+        ];
+
+
+        $apostas = DB::table('apostas')->select('agente_id', DB::raw('SUM(valor_apostado) soma_apostas'))
+            ->where($filtro0)
+            ->groupBy('agente_id')
+            ->orderBy(DB::raw('SUM(valor_apostado)'), 'DESC')
+            ->get();
+
+        foreach ($apostas as $aposta) {
+            // $aposta->premios = ;
+            $aposta->agente = DB::table('agentes')->select('nickname')
+                ->where('id', $aposta->agente_id)
+                ->first();
+        }
+        return $apostas;
     }
 
     public function getApostasPorSemana(){
