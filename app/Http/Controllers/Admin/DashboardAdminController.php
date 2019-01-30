@@ -30,6 +30,7 @@ class DashboardAdminController extends Controller
         $data3 = date("Y-m-d", strtotime('-3 days', strtotime($data0)) );
         $data4 = date("Y-m-d", strtotime('-4 days', strtotime($data0)) );
         $data5 = date("Y-m-d", strtotime('-5 days', strtotime($data0)) );
+        $data6 = date("Y-m-d", strtotime('-6 days', strtotime($data0)) );
 
         $filtro0 = [
             ['agente_id', "<>", NULL],
@@ -61,6 +62,11 @@ class DashboardAdminController extends Controller
             ['data_aposta', ">=", $data5."T00:00:00"],
             ['data_aposta', "<=", $data5."T23:59:59"],
         ];
+        $filtro6 = [
+            ['agente_id', "<>", NULL],
+            ['data_aposta', ">=", $data6."T00:00:00"],
+            ['data_aposta', "<=", $data6."T23:59:59"],
+        ];
 
         $soma0 = Aposta::where($filtro0)->get()->sum('valor_apostado');
         $soma1 = Aposta::where($filtro1)->get()->sum('valor_apostado');
@@ -68,14 +74,18 @@ class DashboardAdminController extends Controller
         $soma3 = Aposta::where($filtro3)->get()->sum('valor_apostado');
         $soma4 = Aposta::where($filtro4)->get()->sum('valor_apostado');
         $soma5 = Aposta::where($filtro5)->get()->sum('valor_apostado');
+        $soma6 = Aposta::where($filtro6)->get()->sum('valor_apostado');
+
+        $label = "l";
 
         $array = [
-            date("d/M", strtotime('-5 days', strtotime($data0))) => $soma5,
-            date("d/M", strtotime('-4 days', strtotime($data0))) => $soma4,
-            date("d/M", strtotime('-3 days', strtotime($data0))) => $soma3,
-            date("d/M", strtotime('-2 days', strtotime($data0))) => $soma2,
-            date("d/M", strtotime('-1 days', strtotime($data0))) => $soma1,
-            date("d/M", strtotime('-0 days', strtotime($data0))) => $soma0,                      
+            date($label, strtotime('-6 days', strtotime($data0))) => $soma6,
+            date($label, strtotime('-5 days', strtotime($data0))) => $soma5,
+            date($label, strtotime('-4 days', strtotime($data0))) => $soma4,
+            date($label, strtotime('-3 days', strtotime($data0))) => $soma3,
+            date($label, strtotime('-2 days', strtotime($data0))) => $soma2,
+            date($label, strtotime('-1 days', strtotime($data0))) => $soma1,
+            date($label, strtotime('-0 days', strtotime($data0))) => $soma0,                      
             
         ];
 

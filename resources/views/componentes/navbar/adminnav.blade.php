@@ -23,6 +23,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="nav-link" href="{{route('adminapostas')}}">Apostas</a>
           <a class="nav-link" href="{{route('relatorio_admin')}}">Relatório</a>
+          <a class="nav-link" href="{{route('admin_dashboard')}}">Gráficos</a>
         </div>
       </li>
     

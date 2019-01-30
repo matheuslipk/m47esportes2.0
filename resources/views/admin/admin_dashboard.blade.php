@@ -1,17 +1,12 @@
 @extends('componentes.pagina')
 
-
+@section('titulo')
+Admin - Dashboard
+@endsection
 
 @section('content')
 
 <canvas id="graficoApostas"></canvas>
-
-<script type="text/javascript">
-
-			
-
-</script>
-
 
 @endsection
 
@@ -28,7 +23,30 @@
 			var i = 0;
 
 			for(indexData in data){
-				arrayLabels[i] = indexData;
+				switch(indexData){
+					case("Monday"): arrayLabels[i] = "Segunda";
+					break;
+
+					case("Tuesday"): arrayLabels[i] = "Terça";
+					break;
+
+					case("Wednesday"): arrayLabels[i] = "Quarta";
+					break;
+
+					case("Thursday"): arrayLabels[i] = "Quinta";
+					break;
+
+					case("Friday"): arrayLabels[i] = "Sexta";
+					break;
+
+					case("Saturday"): arrayLabels[i] = "Sábado";
+					break;
+
+					case("Sunday"): arrayLabels[i] = "Domingo";
+					break;
+
+				}
+				
 				arrayDados[i] = data[indexData];
 				i++;
 			}
@@ -45,7 +63,7 @@
 		    data: {
 		        labels: arrayLabels,
 		        datasets: [{
-		            label: 'Apostas',
+		            label: 'R$',
 		            data: arrayDados,
 		            backgroundColor: [
 		                'rgba(255, 99, 152, 0.1)',
@@ -69,7 +87,7 @@
 		    options: {
 		    	title: {
 		    		display: true,
-		    		text: "Resumo de Apostas por dia"
+		    		text: "Soma das apostas nos últimos 7 dias"
 		    	},
 		        scales: {
 		            yAxes: [{
