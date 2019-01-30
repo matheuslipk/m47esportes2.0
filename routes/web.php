@@ -68,6 +68,10 @@ Route::prefix('admin')->group(function () {
 			]);
 	});
 
+	Route::prefix('dashboard')->group(function () {
+		Route::get('/', "Admin\DashboardAdminController@index")->name('admin_dashboard');
+	});
+
 });
 
 Route::prefix('agente')->group(function () {
@@ -143,6 +147,12 @@ Route::get('/', 'EventoController@index');
 
 Route::get('/teste', function(){
 	return session()->all('palpites');
+});
+
+
+//Ajax
+Route::prefix('ajax/admin')->group(function(){
+	Route::get('/dashboard/apostasPorGerente', "Admin\DashboardAdminController@getApostasPorSemana")->name('ajax_admin_getApostasPorSemana');
 });
 
 Route::get('evento/{id}/odds', 'EventoController@getOdds');
