@@ -72,7 +72,7 @@
 									@elseif($palpite->tempoJogo=="tempo1")
 										<span>Resultado: <b>{{$palpite->evento->scores->score_t1}} x {{$palpite->evento->scores->score_t2}}</b> 1ºT</span>
 									@elseif($palpite->tempoJogo=="tempo2")
-										<span>Resultado: <b>{{$palpite->evento->scores->score_t1}} x {{$palpite->evento->scores->score_t2}}</b>> 2ºT</span>
+										<span>Resultado: <b>{{$palpite->evento->scores->score_t1}} x {{$palpite->evento->scores->score_t2}}</b> 2ºT</span>
 									@endif
 								@endif
 								@if($palpite->situacao_palpite_id==4)
