@@ -59,6 +59,11 @@ class ConverterApi extends Controller{
          $oddsConvertidas->cat_palpites[] = ConverterApi::golsParImpar($golsParImpar);
       }
 
+      if(isset($odds->goals->sp->result_total_goals)){
+         $resultadoEGols = $odds->goals->sp->result_total_goals;
+         $oddsConvertidas->cat_palpites[] = ConverterApi::resultadoEGols($resultadoEGols);
+      }
+
       //Primeiro tempo
       if(isset($odds->half->sp->half_time_result)){
          $vencedor1T = $odds->half->sp->half_time_result;
@@ -914,6 +919,55 @@ class ConverterApi extends Controller{
 
       $obj->odds = $odd;
       return $obj;      
+   }
+
+   private static function resultadoEGols($resultadoEGols){
+      $obj = new \stdClass;
+      $obj->categoria_id = 13;
+      $obj->nome = "Resultado & Total de gols";
+      $obj->tempo = "90 min";
+
+      
+      $odd[] =   [
+            'tipo_palpite_id' => 806,
+            'nome' => 'Casa & +2.5',
+            'taxa' => $resultadoEGols[0]->odds
+         ];
+
+      $odd[] =   [
+            'tipo_palpite_id' => 807,
+            'nome' => 'Casa & -2.5',
+            'taxa' => $resultadoEGols[1]->odds
+         ];
+
+      $odd[] =   [
+            'tipo_palpite_id' => 808,
+            'nome' => 'Empate & +2.5',
+            'taxa' => $resultadoEGols[2]->odds
+         ];
+
+      $odd[] =   [
+            'tipo_palpite_id' => 809,
+            'nome' => 'Empate & -2.5',
+            'taxa' => $resultadoEGols[3]->odds
+         ];
+
+      $odd[] =   [
+            'tipo_palpite_id' => 810,
+            'nome' => 'Fora & +2.5',
+            'taxa' => $resultadoEGols[4]->odds
+         ];
+
+      $odd[] =   [
+            'tipo_palpite_id' => 811,
+            'nome' => 'Fora & -2.5',
+            'taxa' => $resultadoEGols[5]->odds
+         ];
+
+      $obj->odds = $odd;
+      return $obj; 
+
+
    }
 
    //Primeiro Tempo
