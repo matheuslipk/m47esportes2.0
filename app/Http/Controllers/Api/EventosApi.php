@@ -55,6 +55,27 @@ class EventosApi extends Controller
 
 	   if(isset($objetoOdds->results[0])){
 	   		$oddsConvertidas = Odd::inserir_odds($objetoOdds->results[0], $variaveis['event_id']);
+	   		$oddsConvertidas2 = $this->pre_math_odds2($request);
+	   		return json_encode( (array) $oddsConvertidas);
+	   }
+	   
+	   return 'Nenhum evento encontrado';
+	   
+	}
+
+	public function pre_math_odds2(Request $request){
+	   $url = "https://api.betsapi.com/v1/bet365/start_sp";
+	   $metodo = "GET";
+	   $variaveis["token"] = MinhaClasse::get_token();
+	   $variaveis["FI"] = $request->input('FI');
+	   $variaveis["event_id"] = $request->input('event_id');
+	   $variaveis["rawJSON"] = 1;
+	   
+	   $odds = MinhaClasse::fazer_requisicao($url, $variaveis, $metodo); 
+	   $objetoOdds = json_decode($odds);
+
+	   if(isset($objetoOdds->results[0])){
+	   		$oddsConvertidas = Odd::inserir_odds2($objetoOdds->results[0]);
 	   		return json_encode( (array) $oddsConvertidas);
 	   }
 	   

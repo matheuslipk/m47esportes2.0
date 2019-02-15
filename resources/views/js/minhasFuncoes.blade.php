@@ -12,6 +12,8 @@ function exibirModalOdds(evento){
         for(id_categoria in cat_palpites){
             if(id_categoria==1) string += montarResultadoFinal(cat_palpites[id_categoria]);
             else if(id_categoria==2) string += montarDuplaChance(cat_palpites[id_categoria]);
+            else if(id_categoria==3) string += montarTotalDeGolsCasa(cat_palpites[id_categoria]);
+            else if(id_categoria==4) string += montarTotalDeGolsFora(cat_palpites[id_categoria]);
             else if(id_categoria==5) string += montarTotalDeGols(cat_palpites[id_categoria]);
             else if(id_categoria==6) string += montarAmbosMarcam(cat_palpites[id_categoria]);
             else if(id_categoria==14) string += montarResultFinalEAmbas(cat_palpites[id_categoria]);
@@ -124,6 +126,15 @@ function montarResultadoFinal(odds){
 function montarDuplaChance(odds){
     return montarCatGenerico(odds, 3);
 }
+
+function montarTotalDeGolsCasa(odds){
+    return montarCatGenerico(odds, 2);
+}
+
+function montarTotalDeGolsFora(odds){
+    return montarCatGenerico(odds, 2);
+}
+
 function montarAmbosMarcam(odds){
     return montarCatGenerico(odds, 2);
 }
