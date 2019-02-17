@@ -49,8 +49,9 @@ class EventoAdminController extends Controller
                 $odds = Odd::where('evento_id', $evento->id)->get();
 
                 $evento->quantOdds = $odds->count();
-                $evento->time1 = $times->where('id', $evento->time1_id)->first();
-                $evento->time2 = $times->where('id', $evento->time2_id)->first();
+                $evento->time1 = Time::where('id', $evento->time1_id)->first();
+                $evento->time2 = Time::where('id', $evento->time2_id)->first();
+                $evento->data = MinhaClasse::data_mysql_to_datahora_formatada($evento->data);
             }
         }
 

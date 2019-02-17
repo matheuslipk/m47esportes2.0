@@ -15,10 +15,17 @@ if(is_array($palpites)){
 		}
 	}
 }
-@endphp
 
-@if(!$palpiteExist)
-<button class='btn btn-info btn-sm' data-evento='{{$evento->id}}' data-palpite="{{$tipo_palpite_id}}" onclick="enviarPalpite(this)">
-	{{$evento->odds->where('tipo_palpite_id', $tipo_palpite_id)->first()->valor}}
-</button>
-@endif
+if(!$palpiteExist){
+	$odd = $evento->odds->where('tipo_palpite_id', $tipo_palpite_id)->first();
+	if(!isset($odd)){
+		return;
+	}
+	@endphp
+	<button class='btn btn-info btn-sm' data-evento='{{$evento->id}}' data-palpite="{{$tipo_palpite_id}}" onclick="enviarPalpite(this)">
+		{{$evento->odds->where('tipo_palpite_id', $tipo_palpite_id)->first()->valor}}
+	</button>
+	@php
+}
+
+@endphp

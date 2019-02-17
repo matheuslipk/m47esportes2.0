@@ -12,7 +12,12 @@ class ConverterApi2 extends Controller{
       $oddsConvertidas = new \stdClass;
       $oddsConvertidas->evento_id = $odds->event_id;
       $oddsConvertidas->FI_365 = $odds->FI;
-      $oddsConvertidas->times = explode(" v ", $odds->main->JsonData->F[0]->FD);
+      if(isset($odds->main->JsonData->F[0]->FD)){
+         $oddsConvertidas->times = explode(" v ", $odds->main->JsonData->F[0]->FD);
+      }else{
+         return $oddsConvertidas;
+      }
+      
 
 
       if( isset( $odds->goals->JsonData->F[0]->ML ) ){
