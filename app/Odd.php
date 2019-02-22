@@ -30,7 +30,7 @@ class Odd extends Model
 				
 
 				$oddBanco = Odd::where([
-					['evento_id', $oddsConvertidas->evento_id],
+					['evento_id', $event_id],
 					['tipo_palpite_id', $odd['tipo_palpite_id']],
 				])->first();
 				//Se ja existe as Odds, apenas atualize!
@@ -40,7 +40,7 @@ class Odd extends Model
 					$oddBanco->save();					
 				}else{//Se não insira-as
 					$o = new Odd();
-					$o->evento_id = $oddsConvertidas->evento_id;
+					$o->evento_id = $event_id;
 					$o->cat_palpite_id = $cat_palpite->categoria_id;
 					$o->tipo_palpite_id = $odd['tipo_palpite_id'];
 					$o->valor = $odd['taxa'];
@@ -52,7 +52,7 @@ class Odd extends Model
 		return $oddsConvertidas;
 	}
 
-	public static function inserir_odds2($odds){
+	public static function inserir_odds2($odds, $event_id){
 		$oddsConvertidas = ConverterApi2::converterOdds2($odds);
 		if(!isset($oddsConvertidas->cat_palpites)){
 			return $oddsConvertidas;
@@ -68,7 +68,7 @@ class Odd extends Model
 				
 
 				$oddBanco = Odd::where([
-					['evento_id', $oddsConvertidas->evento_id],
+					['evento_id', $event_id],
 					['tipo_palpite_id', $odd['tipo_palpite_id']],
 				])->first();
 				//Se ja existe as Odds, apenas atualize!
@@ -78,7 +78,7 @@ class Odd extends Model
 					$oddBanco->save();					
 				}else{//Se não insira-as
 					$o = new Odd();
-					$o->evento_id = $oddsConvertidas->evento_id;
+					$o->evento_id = $event_id;
 					$o->cat_palpite_id = $cat_palpite->categoria_id;
 					$o->tipo_palpite_id = $odd['tipo_palpite_id'];
 					$o->valor = $odd['taxa'];

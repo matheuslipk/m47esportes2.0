@@ -47,14 +47,14 @@ class EventosApi extends Controller
 	   $url = "https://api.betsapi.com/v1/bet365/start_sp";
 	   $metodo = "GET";
 	   $variaveis["token"] = MinhaClasse::get_token();
-	   $variaveis["FI"] = $request->input('FI');
-	   $variaveis["event_id"] = $request->input('event_id');
+	   $evento = Evento::find( $request->input('event_id') );
+	   $variaveis["FI"] = $evento->FI_365;
 	   
 	   $odds = MinhaClasse::fazer_requisicao($url, $variaveis, $metodo); 
 	   $objetoOdds = json_decode($odds);
 
 	   if(isset($objetoOdds->results[0])){
-	   		$oddsConvertidas = Odd::inserir_odds($objetoOdds->results[0], $variaveis['event_id']);
+	   		$oddsConvertidas = Odd::inserir_odds( $objetoOdds->results[0], $evento->id );
 	   		$oddsConvertidas2 = $this->pre_math_odds2($request);
 	   		return json_encode( (array) $oddsConvertidas);
 	   }
@@ -74,8 +74,8 @@ class EventosApi extends Controller
 	   $odds = MinhaClasse::fazer_requisicao($url, $variaveis, $metodo); 
 	   $objetoOdds = json_decode($odds);
 
-	   if(isset($objetoOdds->results[0])){
-	   		$oddsConvertidas = Odd::inserir_odds2($objetoOdds->results[0]);
+	   if( isset($objetoOdds->results[0]) ){
+	   		$oddsConvertidas = Odd::inserir_odds2( $objetoOdds->results[0], $request->input('event_id') );
 	   		return json_encode( (array) $oddsConvertidas);
 	   }
 	   
