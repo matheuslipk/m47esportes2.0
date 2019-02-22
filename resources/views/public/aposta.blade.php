@@ -9,21 +9,18 @@
 		<div class="row">
 			<div class="col-sm-2 col-md-3"></div>
 			<div class="col">
-				@if($aposta->controle==NULL)
-					<a style="display: none;" id="botaoCompartilhar" class="btn btn-info btn-block" href="whatsapp://send?text={{ route('viewaposta', $aposta->id) }}">
-					Compartilhar 
-					</a>
-				@else
+				@if(isset($aposta->controle))
 					<a style="display: none;" id="botaoCompartilhar" class="btn btn-info btn-block" href="whatsapp://send?text={{ route('viewcomprovante', $aposta->controle) }}">
 					Compartilhar 
 					</a>
+					<button onclick="compartilhar()" style="display: none;" id="botaoCompartilharWV" class="btn btn-info btn-block" >
+					Compartilhar 
+					</button>
 				@endif
 				
 			</div>
 			<div class="col-sm-2 col-md-3"></div>
 		</div>
-
-		
 
 		<div class="row">
 			<div class="col-sm-2 col-md-3"></div>
@@ -58,9 +55,9 @@
 						<div class="palpite {{$classe}}">
 							<div class="evento">
 								<span class="evento-id">Evento: {{$palpite->evento->id}}</span><br>
-								<span class="nome-liga"><b> {{$palpite->evento->liga->nome}} </b></span><br>
-								<span class="text-primary">{{$palpite->evento->time1->nome}}</span> vs 
-								<span class="text-danger">{{$palpite->evento->time2->nome}}</span><br>
+								<span class="nome-liga">{{$palpite->evento->liga->nome}}</span><br>
+								<span class="text-primary"> <b>{{$palpite->evento->time1->nome}}</span></b> vs 
+								<span class="text-danger"><b>{{$palpite->evento->time2->nome}}</span></b><br>
 								<span class="data-evento">{{$palpite->evento->data}}</span>
 							</div>	
 							<div class="desc-palpite">
@@ -99,12 +96,16 @@
 		<!-- Aposta -->
 		@include('componentes.imprimiraposta', $aposta)
 
-		<div class="row">
-			<div class="col-sm-2 col-md-3"></div>
-			<div class="col">
-				<button id="btnCopiarAposta" onclick="imprimir()" class="btn btn-success btn-block">Copiar Aposta</button>
+		<div class="row justify-content-center">
+			<div class="col-12 col-sm-4">
+				<button id="btnCopiarAposta" onclick="copiarAposta()" class="btn btn-success btn-block">Copiar Aposta</button><br>
 			</div>
-			<div class="col-sm-2 col-md-3"></div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="col-12 col-sm-4">
+				<button style="display: none" id="btnImprimirAposta" onclick="imprimir()" class="btn btn-primry btn-block">Imprimir</button>
+			</div>
 		</div>
 
 		<br>
@@ -151,14 +152,42 @@
 					|| navigator.userAgent.match(/BlackBerry/i)
 					|| navigator.userAgent.match(/Windows Phone/i)
 			 ){
-			    return $("#botaoCompartilhar").show();
+			 	if( navigator.userAgent.match('; wv') ){
+			 		$("#botaoCompartilharWV").show();
+			 	}else{
+			 		$("#botaoCompartilhar").show();
+			 	}
+			    
 			  }
+
+			@auth('web-admin')
+				if( navigator.userAgent.match('; wv') ){
+					$("#btnImprimirAposta").show();
+				}				
+			@endif
+
+			@auth()
+				if( navigator.userAgent.match('; wv') ){
+					$("#btnImprimirAposta").show();
+				}
+			@endif
+		  	
 		});
 
-		function imprimir(){
+		function compartilhar(){
+			var string = '{{route('viewcomprovante', $aposta->controle) }}';
+			App.compartilhaAposta(string);
+		}
+
+		function copiarAposta(){
 	      var aux = document.getElementById("textAposta");
 	      aux.select();
 	      document.execCommand("copy");
+	   }
+
+	   function imprimir(){
+	      var string = $("#textAposta").val();
+	      App.imprimeAposta(string);
 	   }
 
 	</script>
