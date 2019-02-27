@@ -20,6 +20,9 @@ class Odd extends Model
 
     public static function inserir_odds($odds, $event_id){
 		$oddsConvertidas = ConverterApi::converterOdds($odds);
+		if( !isset( $oddsConvertidas->cat_palpites ) ){
+			return $oddsConvertidas;
+		}
 		foreach ($oddsConvertidas->cat_palpites as $cat_palpite) {
 			foreach ($cat_palpite->odds as $odd) {
 				if($cat_palpite->categoria_id == 1){
