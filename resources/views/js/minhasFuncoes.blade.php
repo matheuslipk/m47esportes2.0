@@ -53,6 +53,7 @@ function exibirModalPalpites(){
         var cotaTotal=1;
         var quantPalpites = 0;
         var valorAposta = $("#valorAposta").val();
+        var regrasOk = $('#regrasOk').prop('checked');
 
         for(index in palpites){
             evento_id = palpites[index].evento_id;
@@ -85,6 +86,15 @@ function exibirModalPalpites(){
             $("#btn-fazerAposta").attr('disabled', false);
         }
 
+
+        if( regrasOk === true ){
+            $("#btn-fazerAposta").attr('disabled', false);
+            $("#btn-fazerAposta").html('Fazer Aposta');            
+        }else{
+            $("#btn-fazerAposta").attr('disabled', true);
+            $("#btn-fazerAposta").html('É preciso confirmar que aceita nossas regras');
+        }
+
         string+="<tr>";
         string+="<td>Quant Palpites: <span id='quantPalpites'>"+quantPalpites+"</span></td>"; 
         string+="<td>Cota total: <span class='text-success' id='cotaTotal'>"+cotaTotal.toFixed(2)+"</span></td>"; 
@@ -103,6 +113,10 @@ function exibirModalPalpites(){
         $("#modal-palpites-body").html(string);
         $('#modal-palpites').modal();        
     });    
+}
+
+function verificarRegrasOk(){
+    exibirModalPalpites();
 }
 
 function atualizarPossivelGanho(){

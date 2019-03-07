@@ -145,9 +145,9 @@ Route::prefix('aposta')->group(function () {
 
 Route::get('/', 'EventoController@index');
 
-Route::get('/teste', function(){
-	return session()->all('palpites');
-});
+Route::get('/regras', function(){
+	return view('regras');
+})->name('regras');
 
 
 //Ajax

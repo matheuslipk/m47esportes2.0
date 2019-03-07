@@ -148,6 +148,9 @@
                     </div>
 
                     <div class="form-group">
+                        <input type="checkbox" name="regrasOk" id='regrasOk' onchange="verificarRegrasOk()">
+                        <label class="label"><b> Eu li e estou de acordo com todas as <a target="_blank" href="{{ route('regras') }}">regras do site.</a> </b></label>
+
                         <button class="btn btn-sm btn-primary btn-block" id="btn-fazerAposta">Fazer Aposta</button>
                         <button type="button" class="btn btn-sm btn-secondary btn-block" data-dismiss="modal">Voltar</button>
                     </div>
