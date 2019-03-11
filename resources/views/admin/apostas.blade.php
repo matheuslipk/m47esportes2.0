@@ -2,59 +2,63 @@
 
 @section('content')
 <div class="container">
-	<div class="row">
-		<div class="col-6 form-group">
-			<label>Data de início</label>
-			<input class="form-control" type="date" name="dataInicio" id="dataInicio" value="{{date('Y-m-d', time())}}">
+	<!--Inicio Form-->
+	<form>
+		<div class="row">
+			<div class="col-6 form-group">
+				<label>Data de início</label>
+				<input class="form-control" type="date" name="dataInicio" id="dataInicio" value="{{date('Y-m-d', time())}}">
+			</div>
+			<div class="col-6 form-group">
+				<label>Data Final</label>
+				<input class="form-control" type="date" name="dataFinal" id="dataFinal" value="{{date('Y-m-d', time())}}">
+			</div>	
 		</div>
-		<div class="col-6 form-group">
-			<label>Data Final</label>
-			<input class="form-control" type="date" name="dataFinal" id="dataFinal" value="{{date('Y-m-d', time())}}">
-		</div>	
-	</div>
 
-	<div class="row">
-		<div class="col-6 form-group">
-			@php
-			$gerentes = App\Gerente::orderBy('name')->get();
+		<div class="row">
+			<div class="col-6 form-group">
+				@php
+				$gerentes = App\Gerente::orderBy('name')->get();
 
-			@endphp
-			
-			<label>Gerente</label>
-			<select class="form-control" name="gerente" id="gerente" onchange="atualizarAgentes()">
-				<option value="">Todos</option>
+				@endphp
+				
+				<label>Gerente</label>
+				<select class="form-control" name="gerente" id="gerente" onchange="atualizarAgentes()">
+					<option value="">Todos</option>
 
-				@foreach($gerentes as $gerente)
-					<option value="{{$gerente->id}}"> {{$gerente->name}} </option>
-				@endforeach
-			</select>
+					@foreach($gerentes as $gerente)
+						<option value="{{$gerente->id}}"> {{$gerente->name}} </option>
+					@endforeach
+				</select>
+			</div>
+			<div class="col-6 form-group">
+				<label>Agente</label>
+				<select class="form-control" name="agente" id="agente">
+					<option value="">Todos</option>
+				</select>
+			</div>
 		</div>
-		<div class="col-6 form-group">
-			<label>Agente</label>
-			<select class="form-control" name="agente" id="agente">
-				<option value="">Todos</option>
-			</select>
-		</div>
-	</div>
 
-	<div class="row">
-		<div class="col-6 form-group">
-			<label>Status da aposta</label>
-			<select class="form-control">
-				<option value="">Todos</option>
-			</select>
+		<div class="row">
+			<div class="col-6 form-group">
+				<label>Status da aposta</label>
+				<select class="form-control">
+					<option value="">Todos</option>
+				</select>
+			</div>
+			<div class="col-6 form-group">
+				<label>Prêmios a partir de</label>
+				<input class="form-control" type="number" name="premios_apartir" value="0" id="premios_apartir">
+			</div>
 		</div>
-		<div class="col-6 form-group">
-			<label>Prêmios a partir de</label>
-			<input class="form-control" type="number" name="premios_apartir" value="0" id="premios_apartir">
-		</div>
-	</div>
 
-	<div class="row">
-		<div class="col form-group">
-			<button class="btn btn-block" onclick="atualizarTabelaApostas()">Pesquisar</button>
+		<div class="row">
+			<div class="col form-group">
+				<button class="btn btn-block">Pesquisar</button>
+			</div>
 		</div>
-	</div>
+
+	</form>
 
 	<div class="row">
 		<div class="col">
@@ -67,19 +71,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					@php
-					$somaValorApostado=0;
-					$somaLiquido=0;
-					$somaComissao=0;
-					@endphp
 					@foreach($apostas as $aposta)
 						@php
 						$comissaoAgente = $aposta->valor_apostado * $aposta->comissao_agente;
 						$valorLiquido = $aposta->valor_apostado - $comissaoAgente - $aposta->ganhou;
 
-						// $somaComissao+=$comissaoAgente;
-						// $somaLiquido+=$valorLiquido;
-						// $somaValorApostado+=$aposta->valor_apostado;
 						$classeAposta = "";
 						if($apostasComStatus[$aposta->id]['status']==2){
 							$classeAposta = "table-danger";
@@ -110,14 +106,6 @@
 							</td>
 						</tr>
 					@endforeach
-					{{-- <tr>
-						<th>Subtotal</th>
-						<th>Apostas R$ {{number_format($somaValorApostado, 2)}}</th>
-						<th>
-							Comissão R$ {{number_format($somaComissao, 2)}}<br>
-							Líquido R$ {{number_format($somaLiquido, 2)}}
-						</th>
-					</tr> --}}
 				</tbody>
 			</table>
 		</div>

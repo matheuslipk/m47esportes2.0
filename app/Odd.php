@@ -102,8 +102,8 @@ class Odd extends Model
 			$odd =  1 + (($odd-1) * 0.85);
 		}
 
-		elseif($cat_palpite != NULL){
-			$odd =  1 + (($odd-1) * 0.9);
+		elseif($cat_palpite !== NULL){
+			$odd =  1 + (($odd-1) * 0.8);
 		}
 
 		return $odd;

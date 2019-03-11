@@ -17,9 +17,29 @@ class ApostaAdminController extends Controller{
     }
 
     public function apostas(Request $request){
-    	$apostas = Aposta::where([
-    		['agente_id', "<>", '']
-    	])
+        $entradas = $request->all();
+
+        $filtro = [
+            ['agente_id', "<>", '']
+        ];
+
+        if($request->filled('dataInicio')){
+            $filtro[] = ['data_aposta', ">=", $request->input('dataInicio')."T00:00:00"];
+        }
+
+        if($request->filled('dataFinal')){
+            $filtro[] = ['data_aposta', "<=", $request->input('dataFinal')."T23:59:59"];
+        }
+
+        if($request->filled('agente')){
+            $filtro[] = ['agente_id', $request->input('agente')];
+        }
+
+        if($request->filled('premios_apartir')){
+            $filtro[] = ['premiacao', '>=', $request->input('premios_apartir')];
+        }
+
+    	$apostas = Aposta::where($filtro)
     	->take(250)
     	->orderBy('id', 'desc')
     	->get();
