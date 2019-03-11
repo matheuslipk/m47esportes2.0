@@ -39,11 +39,17 @@ class SessaoController extends Controller{
 				];
 		}
 
+		if($this->eventoIniciado($evento_id)){
+			return [
+				'sucesso' => false,
+				'erro' => 'Evento iniciado ou removido'
+			];
+		}
+
 		$odd = Odd::where([
 			['evento_id',$evento_id],
 			['tipo_palpite_id',$tipo_palpite_id],
 		])->first();
-
 
 
 		if(!isset($odd)) {
@@ -94,6 +100,12 @@ class SessaoController extends Controller{
 			}
 		}
 		return ['sucesso' => true];
+	}
+
+	private function eventoIniciado($evento_id){
+		$evento = Evento::find($evento_id);
+		$timestampEvento = MinhaClasse::date_mysql_to_timestamp($evento->data);
+		return (time() >= $timestampEvento);
 	}
     
 }

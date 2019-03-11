@@ -444,8 +444,6 @@ function montarPlacarExato1T(odds){
     string+="</td>";
 
 
-
-
     //Inicio Fora
     string+="<td colspan='4'>";
     string+= "<div class='btn-group'>";//Inicio btn-group
@@ -538,6 +536,7 @@ function addPalpite(evento_id, tipo_palpite_id) {
     }).done(function (data){
         if(data.sucesso==false){
             alert(data.erro);
+            window.location.reload();
             return;
         }
         $("button[data-evento='"+evento_id+"']").removeClass('btn-danger');
