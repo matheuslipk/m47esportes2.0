@@ -80,16 +80,13 @@ function exibirModalPalpites(){
             cotaTotal=800;
         }
 
-        if(cotaTotal<2.1){
-            $("#btn-fazerAposta").attr('disabled', true);
-        }else{
-            $("#btn-fazerAposta").attr('disabled', false);
-        }
-
-
         if( regrasOk === true ){
-            $("#btn-fazerAposta").attr('disabled', false);
-            $("#btn-fazerAposta").html('Fazer Aposta');            
+            $("#btn-fazerAposta").html('Fazer Aposta');     
+            if(cotaTotal<2.1){
+                $("#btn-fazerAposta").attr('disabled', true);
+            }else{
+                $("#btn-fazerAposta").attr('disabled', false);
+            }
         }else{
             $("#btn-fazerAposta").attr('disabled', true);
             $("#btn-fazerAposta").html('É preciso confirmar que aceita nossas regras');
