@@ -199,8 +199,6 @@ class ApostaAgenteController extends Controller{
         if($cotaTotal>800){
             $cotaTotal=800;
         }
-
-
         
         $valorApostado = $request->input('valorAposta');
 
@@ -209,7 +207,7 @@ class ApostaAgenteController extends Controller{
         }
 
         if($valorApostado > $valorMaxApostaPadrao){
-            if($cotaTotal < 3.5){
+            if($cotaTotal < 3){
                 return CodigoErro::ValorMinCota;
             }
         }
