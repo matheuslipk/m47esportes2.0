@@ -99,7 +99,7 @@ class Odd extends Model
 		}elseif($odd <= 1.35){
 			$odd =  1 + (($odd-1) * 0.7);
 		}elseif($odd <= 1.45){
-			$odd =  1 + (($odd-1) * 0.75);
+			$odd =  1 + (($odd-1) * 0.85);
 		}
 
 		elseif($cat_palpite != NULL){
