@@ -101,11 +101,71 @@
                     <form method="post" action="{{ route('editarconfig_agente', ['id' => $agente->id]) }}">
                         @csrf
                         <h4>Comissão com a cota da aposta: </h4>
+
+                        {{-- INÍCIO Novas atualizações --}}
+
+                        <div class="form-group row">
+                            <label for="cota1" class="col-md-4 col-form-label text-md-right">Odd Mínima de aposta</label>
+
+                            <div class="col-md-6">
+                                <input disabled id="oddMinima" type="number" step="0.5" class="form-control" name="oddMinima" value="{{ ($configAgente->where('tipo_config_id', App\TipoConfig::ODD_MINIMA)
+                                        ->first()->valor) }}" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="cota1" class="col-md-4 col-form-label text-md-right">Odd Máxima de aposta</label>
+
+                            <div class="col-md-6">
+                                <input disabled id="oddMaxima" type="number" class="form-control" name="oddMaxima" value="{{ ($configAgente->where('tipo_config_id', App\TipoConfig::ODD_MAXIMA)
+                                        ->first()->valor) }}" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="cota1" class="col-md-4 col-form-label text-md-right">Valor mínimo apostado</label>
+
+                            <div class="col-md-6">
+                                <input disabled id="minApostado" type="number" class="form-control" name="minApostado" value="{{ ($configAgente->where('tipo_config_id', App\TipoConfig::VALOR_MIN_APOSTA)
+                                        ->first()->valor) }}" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="cota1" class="col-md-4 col-form-label text-md-right">Valor máximo apostado</label>
+
+                            <div class="col-md-6">
+                                <input disabled id="maxApostado" type="number" class="form-control" name="maxApostado" value="{{ ($configAgente->where('tipo_config_id', App\TipoConfig::VALOR_MAX_APOSTA)
+                                        ->first()->valor) }}" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="cota1" class="col-md-4 col-form-label text-md-right">Qnt mínima palpites</label>
+
+                            <div class="col-md-6">
+                                <input disabled id="minPalpites" type="number" class="form-control" name="minPalpites" value="{{ ($configAgente->where('tipo_config_id', App\TipoConfig::QUANT_MIN_PALPITES)
+                                        ->first()->valor) }}" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="cota1" class="col-md-4 col-form-label text-md-right">Qnt máxima palpites</label>
+
+                            <div class="col-md-6">
+                                <input disabled id="maxPalpites" type="number" class="form-control" name="maxPalpites" value="{{ ($configAgente->where('tipo_config_id', App\TipoConfig::QUANT_MAX_PALPITES)
+                                        ->first()->valor) }}" required autofocus>
+                            </div>
+                        </div>
+
+                        {{-- FIM Novas atualizações --}}
+
                         <div class="form-group row">
                             <label for="cota1" class="col-md-4 col-form-label text-md-right"> >= 2 e < 6 </label>
 
                             <div class="col-md-6">
-                                <input disabled id="cota1" type="number" min="7.5" max="18" step="0.5" class="form-control" name="cota1" value="{{ ($configAgente->where('tipo_config_id', 9)->first()->valor)*100 }}" required autofocus>
+                                <input disabled id="cota1" type="number" min="7.5" max="18" step="0.5" class="form-control" name="cota1" value="{{ ($configAgente->where('tipo_config_id', App\TipoConfig::COMISSAO_1)
+                                        ->first()->valor)*100 }}" required autofocus>
                             </div>
                         </div>
 
@@ -113,7 +173,8 @@
                             <label for="cota2" class="col-md-4 col-form-label text-md-right"> >= 6 & < 12 </label>
 
                             <div class="col-md-6">
-                                <input disabled id="cota2" type="number" min="7.5" max="18" step="0.5" class="form-control" name="cota2" value="{{ ($configAgente->where('tipo_config_id', 10)->first()->valor)*100 }}" required autofocus>
+                                <input disabled id="cota2" type="number" min="7.5" max="18" step="0.5" class="form-control" name="cota2" value="{{ ($configAgente->where('tipo_config_id', App\TipoConfig::COMISSAO_2)
+                                        ->first()->valor)*100 }}" required autofocus>
                             </div>
                         </div>
 
@@ -121,7 +182,8 @@
                             <label for="cota3" class="col-md-4 col-form-label text-md-right"> >= 12 & < 18 </label>
 
                             <div class="col-md-6">
-                                <input disabled id="cota3" type="number" min="7.5" max="18" step="0.5" class="form-control" name="cota3" value="{{ ($configAgente->where('tipo_config_id', 11)->first()->valor)*100 }}" required autofocus>
+                                <input disabled id="cota3" type="number" min="7.5" max="18" step="0.5" class="form-control" name="cota3" value="{{ ($configAgente->where('tipo_config_id', App\TipoConfig::COMISSAO_3)
+                                        ->first()->valor)*100 }}" required autofocus>
                             </div>
                         </div>
 
@@ -129,9 +191,12 @@
                             <label for="cota4" class="col-md-4 col-form-label text-md-right"> >= 18 </label>
 
                             <div class="col-md-6">
-                                <input disabled id="cota4" type="number" min="7.5" max="18" step="0.5" class="form-control" name="cota4" value="{{ ($configAgente->where('tipo_config_id', 12)->first()->valor)*100 }}" required autofocus>
+                                <input disabled id="cota4" type="number" min="7.5" max="18" step="0.5" class="form-control" name="cota4" value="{{ ($configAgente->where('tipo_config_id', App\TipoConfig::COMISSAO_4)
+                                        ->first()->valor)*100 }}" required autofocus>
                             </div>
                         </div>
+
+
 
                         <div class="form-group row">
                             <div class="col-4">
@@ -183,6 +248,16 @@
 	}
 
     function ativarFormulario1(){
+
+        $("#oddMinima").attr('disabled', false);
+        $("#oddMaxima").attr('disabled', false);
+        $("#minApostado").attr('disabled', false);
+        $("#maxApostado").attr('disabled', false);
+        $("#minPalpites").attr('disabled', false);
+        $("#maxPalpites").attr('disabled', false);
+
+        
+
         $("#cota1").attr('disabled', false);
         $("#cota2").attr('disabled', false);
         $("#cota3").attr('disabled', false);
@@ -193,6 +268,13 @@
     }
 
     function desativarFormulario1(){
+        $("#oddMinima").attr('disabled', true);
+        $("#oddMaxima").attr('disabled', true);
+        $("#minApostado").attr('disabled', true);
+        $("#maxApostado").attr('disabled', true);
+        $("#minPalpites").attr('disabled', true);
+        $("#maxPalpites").attr('disabled', true);
+        
         $("#cota1").attr('disabled', true);
         $("#cota2").attr('disabled', true);
         $("#cota3").attr('disabled', true);

@@ -11,6 +11,9 @@ use App\User;
 use App\Agente;
 use App\Palpite;
 use App\StatusConta;
+use App\ConfigGlobal;
+use App\TipoConfig;
+use App\ConfigAgente;
 
 class AgenteGerenteController extends Controller
 {

@@ -11,6 +11,7 @@ use App\Gerente;
 use App\StatusConta;
 use App\ConfigAgente;
 use App\ConfigGlobal;
+use App\TipoConfig;
 
 class AgenteAdminController extends Controller
 {
@@ -58,8 +59,6 @@ class AgenteAdminController extends Controller
         $usuario->password = ($request->input('password'));
         $usuario->save();
 
-
-
         $agente = new Agente();
         $agente->id = $usuario->id;
         $agente->name = $request->input('name');
@@ -102,21 +101,28 @@ class AgenteAdminController extends Controller
     }
 
     public function editarConfigAgente(Request $request, $id){
-        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', 9)->update(['valor' => ($request->input('cota1')/100)]);
-        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', 10)->update(['valor' => ($request->input('cota2')/100)]);
-        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', 11)->update(['valor' => ($request->input('cota3')/100)]);
-        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', 12)->update(['valor' => ($request->input('cota4')/100)]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::ODD_MINIMA)->update(['valor' => $request->input('oddMinima')]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::ODD_MAXIMA)->update(['valor' => $request->input('oddMaxima')]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::VALOR_MIN_APOSTA)->update(['valor' => $request->input('minApostado')]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::VALOR_MAX_APOSTA)->update(['valor' => $request->input('maxApostado')]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::QUANT_MIN_PALPITES)->update(['valor' => $request->input('minPalpites')]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::QUANT_MAX_PALPITES)->update(['valor' => $request->input('maxPalpites')]);
+
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::COMISSAO_1)->update(['valor' => ($request->input('cota1')/100)]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::COMISSAO_2)->update(['valor' => ($request->input('cota2')/100)]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::COMISSAO_3)->update(['valor' => ($request->input('cota3')/100)]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::COMISSAO_4)->update(['valor' => ($request->input('cota4')/100)]);
 
         return redirect()->route('editaragente', ['id'=>$id]);
     }
 
     private function salvarConfigAgente($agente){        
-        $configAdmin = ConfigGlobal::where([
+        $configGlobal = ConfigGlobal::where([
             ['tipo_config_id', '>=', '1'],
             ['tipo_config_id', '<=', '12'],
         ])->get();
 
-        foreach ($configAdmin as $config) {
+        foreach ($configGlobal as $config) {
             $configAgente = new ConfigAgente();
             $configAgente->tipo_config_id = $config->tipo_config_id;
             $configAgente->agente_id = $agente->id;
