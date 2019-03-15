@@ -93,13 +93,13 @@ class Odd extends Model
 		return $oddsConvertidas;
 	}
 
-	private  static function reduzirOdds($odd, $cat_palpite = NULL){
+	private  static function reduzirOdds($odd, $cat_palpite = NULL){		
 		if($odd <= 1.12){
 			$odd =  1 + (($odd-1) * 0.6);
 		}elseif($odd <= 1.35){
 			$odd =  1 + (($odd-1) * 0.7);
-		}elseif($odd <= 1.45){
-			$odd =  1 + (($odd-1) * 0.85);
+		}elseif( ($odd >= 3.2) && ($cat_palpite == 1) ){
+			$odd =  1 + (($odd-1) * 1.03);
 		}
 
 		elseif($cat_palpite !== NULL){

@@ -30,7 +30,7 @@
                             <label for="nickname" class="col-md-4 col-form-label text-md-right">Nickname</label>
 
                             <div class="col-md-6">
-                                <input type="tel" id="nickname" class="form-control" name="nickname" required>
+                                <input id="nickname" class="form-control" name="nickname" required>
                             </div>
                         </div>
 
@@ -38,7 +38,7 @@
                             <label for="telefone" class="col-md-4 col-form-label text-md-right">Telefone</label>
 
                             <div class="col-md-6">
-                                <input type="tel" id="telefone" class="form-control" name="telefone" required>
+                                <input id="telefone" class="form-control" name="telefone" required>
                             </div>
                         </div>
 
