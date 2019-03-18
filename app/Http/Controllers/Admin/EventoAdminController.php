@@ -94,10 +94,9 @@ class EventoAdminController extends Controller
             }
         }
 
-
         $eventos = Evento::where($filtro)
         ->orderBy('data', 'desc')
-        ->take(10)
+        ->take(100)
         ->get();
 
         $arrayIdTimes = $this->getIndexsTimes($eventos);
