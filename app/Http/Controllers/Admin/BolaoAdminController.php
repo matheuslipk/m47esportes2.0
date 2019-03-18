@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Bolao;
 use App\Liga;
 use App\EventoBolao;
+use App\Http\Controllers\Api\MinhaClasse;
 
 class BolaoAdminController extends Controller{
 
@@ -16,6 +17,10 @@ class BolaoAdminController extends Controller{
 
     public function index(Request $request){
         $bolaos = Bolao::all();
+        foreach ($bolaos as $bolao) {
+            $bolao->data_abertura = MinhaClasse::data_mysql_to_datahora_formatada($bolao->data_abertura);
+            $bolao->data_fechamento = MinhaClasse::data_mysql_to_datahora_formatada($bolao->data_fechamento);
+        }
         return view('admin.bolaos.listabolaos', compact('bolaos'));
     }    
 
@@ -67,7 +72,7 @@ class BolaoAdminController extends Controller{
             $eventoBolao = new EventoBolao();
             $eventoBolao->bolao_id = $bolao->id;
             $eventoBolao->evento_id = $request->evento_id;
-            $addOk = $eventoBolao->save();
+            $addOk = $eventoBolao->save();            
             $eventoBolao->evento->time1;
             $eventoBolao->evento->time2;
             return response()->json($eventoBolao);

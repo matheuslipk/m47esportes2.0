@@ -163,6 +163,8 @@ Admin - Bolão
 		}, function(response){
 			console.log(response);
 			$("#tabela-eventos > tbody").append( linhaEvento(response) );
+		}).fail(function(){
+			alert('Erro - O evento não foi adicionado');
 		});
 	}
 
@@ -175,7 +177,8 @@ Admin - Bolão
 			}else{
 				alert(response.msg);
 			}
-			console.log(response);
+		}).fail(function(){
+			alert('Erro - O evento não foi adicionado');
 		});
 	}
 

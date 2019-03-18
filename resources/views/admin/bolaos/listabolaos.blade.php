@@ -8,10 +8,10 @@ Admin - Bolão
 
 <div class="container">
 	<div class="row justify-content-center">
-		<div class="col-8">
+		<div class="col-sm-8">
 			<h4>Lista dos bolões</h4>
 			<table class="table">
-				<tbody>
+				<tbody style="font-size: 13px">
 					@foreach( $bolaos as $bolao )
 						<tr>
 							<td>
