@@ -52,7 +52,7 @@ Admin - Bolão
 
 			<div class="row justify-content-center">
 				<div class="col-12 col-sm-6">
-					<button class="btn btn-block btn-primary">Atualizar</button>
+					<button class="btn btn-block btn-primary">Atualizar Bolão</button>
 				</div>			
 			</div>			
 
@@ -64,8 +64,7 @@ Admin - Bolão
 			<h4>Adicionar eventos do bolão</h4>
 		</div>
 
-		<form method="post" action="{{ route('admin_bolaoaddeventos', ['id' => $bolao->id]) }}">
-			@csrf
+		<form>
 			<div class="row justify-content-center">
 				<div class="col-12 col-sm-6">
 					<label>Liga</label>
@@ -89,10 +88,9 @@ Admin - Bolão
 
 			<div class="row justify-content-center">
 				<div class="col-6">
-					<button class="btn btn-block btn-primary">Cadastrar</button>
+					<button type="button" class="btn btn-block btn-primary" onclick="addEventoBolao()">Inserir Evento</button>
 				</div>
 			</div>
-
 		</form>
 	</div>
 
@@ -157,6 +155,17 @@ Admin - Bolão
 		return tbody;
 	}
 
+	function addEventoBolao(){
+		var evento_id = $("#evento").val();
+
+		$.post('{{ route('admin_bolaoaddeventos', ['id' => $bolao->id]) }}',{
+			evento_id: evento_id
+		}, function(response){
+			console.log(response);
+			$("#tabela-eventos > tbody").append( linhaEvento(response) );
+		});
+	}
+
 	function removerEventoBolao(evento_id){
 		$.post('{{ route('admin_bolaoremoveeventos') }}',{
 			evento_id: evento_id
@@ -169,5 +178,24 @@ Admin - Bolão
 			console.log(response);
 		});
 	}
+
+	function linhaEvento(evento_bolao){
+		var strEvento = "<tr style='font-size: 13px' id='tr_evento_" + evento_bolao.id + "'>";
+		
+		strEvento+="<td>";
+		strEvento+="<span style='color: blue' >"+ evento_bolao.evento.time1.nome + "</span> x <span style='color: red' >"+ evento_bolao.evento.time2.nome +"</span><br>";
+		strEvento+=evento_bolao.evento.data;
+		strEvento+="</td>";
+
+		strEvento+="<td>";
+		strEvento+="<button class='btn btn-sm btn-danger' onclick='removerEventoBolao(" + evento_bolao.id + ")' >Remover</button";
+		strEvento+="</td>";
+
+		strEvento+= "</tr>";
+
+		return strEvento;
+
+	}
+
 </script>
 @endsection

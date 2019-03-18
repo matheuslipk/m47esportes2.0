@@ -14,6 +14,11 @@ class BolaoAdminController extends Controller{
         return $this->middleware('auth:web-admin');
     }
 
+    public function index(Request $request){
+        $bolaos = Bolao::all();
+        return view('admin.bolaos.listabolaos', compact('bolaos'));
+    }    
+
     public function novo(Request $request){
     	return view('admin.bolaos.novobolao');
     }
@@ -63,7 +68,9 @@ class BolaoAdminController extends Controller{
             $eventoBolao->bolao_id = $bolao->id;
             $eventoBolao->evento_id = $request->evento_id;
             $addOk = $eventoBolao->save();
-            return back();
+            $eventoBolao->evento->time1;
+            $eventoBolao->evento->time2;
+            return response()->json($eventoBolao);
         }
 
         return response('', 404);
@@ -88,12 +95,13 @@ class BolaoAdminController extends Controller{
             ]);
         }
         
-
-        
     }
 
     public function show(Request $request, $id){
     	$bolao = Bolao::find($id);
+        if( !isset($bolao) ){
+            return response('', 404);
+        }
     	$bolao->eventos;
     	$ligas = Liga::where('is_top_list', '>=', '1')
     		->orderBy('is_top_list', 'desc')

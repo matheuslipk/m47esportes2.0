@@ -3,6 +3,7 @@
 Route::prefix('admin')->group(function () {
 
 	//Inicio BOLÃO
+	Route::get('/bolao', 'Admin\BolaoAdminController@index')->where(['id' => '[0-9]+'])->name('admin_bolao');
 	Route::get('/bolao/{id}', 'Admin\BolaoAdminController@show')->where(['id' => '[0-9]+'])->name('admin_showbolao');
 	Route::put('/bolao/atualizar/{id}', 'Admin\BolaoAdminController@atualizar')->where(['id' => '[0-9]+'])->name('admin_atualizarbolao');
 	Route::get('/bolao/listar', 'Admin\BolaoAdminController@listar');
