@@ -25,12 +25,8 @@ class Odd extends Model
 		}
 		foreach ($oddsConvertidas->cat_palpites as $cat_palpite) {
 			foreach ($cat_palpite->odds as $odd) {
-				if($cat_palpite->categoria_id == 1){
-					$odd['taxa'] = Odd::reduzirOdds($odd['taxa']);
-				}else{
-					$odd['taxa'] = Odd::reduzirOdds($odd['taxa'], 1);
-				}
-				
+								
+				$odd['taxa'] = Odd::reduzirOdds($odd['taxa'], $cat_palpite->categoria_id);
 
 				$oddBanco = Odd::where([
 					['evento_id', $event_id],
@@ -94,15 +90,19 @@ class Odd extends Model
 	}
 
 	private  static function reduzirOdds($odd, $cat_palpite = NULL){		
-		if($odd <= 1.12){
-			$odd =  1 + (($odd-1) * 0.6);
-		}elseif($odd <= 1.35){
-			$odd =  1 + (($odd-1) * 0.7);
-		}elseif( ($odd >= 3.2) && ($cat_palpite == 1) ){
-			$odd =  1 + (($odd-1) * 1.03);
-		}
+		if($cat_palpite == 1){
+			if($odd <= 1.12){
+				$odd =  1 + (($odd-1) * 0.6);
+			}elseif($odd <= 1.35){
+				$odd =  1 + (($odd-1) * 0.7);
+			}elseif($odd <= 1.44){
+				$odd =  1 + (($odd-1) * 0.9);
+			}elseif( $odd >= 2.5 ){
+				$odd =  $odd * 1.02;
+			}
+		}			
 
-		elseif($cat_palpite !== NULL){
+		else{
 			$odd =  1 + (($odd-1) * 0.8);
 		}
 

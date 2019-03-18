@@ -79,7 +79,7 @@ function atualizarListaEventos(){
 			tbody+="</td>";
 
 
-			tbody+="<td colspan='2'>"+
+			tbody+="<td style='padding: 0' colspan='2'>"+
 				"<span class='liga'><b>"+eventos[index].liga.nome+"</b></span> <br>" +
 				"<span class='evento-id'>"+eventos[index].id+" - "+eventos[index].status_evento_name+"</span> <br>" +
 				"<span class='text-primary nome-time'>"+eventos[index].time1.nome + "</span> vs " +
@@ -127,6 +127,9 @@ function anularEvento(evento_id){
 <style>
 	.btn-sm, .nome-time, .evento-id, .evento-data, .liga{
 		font-size: 12px;
+	},
+	th, td :{
+		padding: 0
 	}
 </style>
 @endsection

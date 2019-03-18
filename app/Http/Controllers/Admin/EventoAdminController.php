@@ -68,23 +68,36 @@ class EventoAdminController extends Controller
         return view('admin.cadastrareventos');
     }
 
-    public function getEventosJSON(Request $request){
-        $dataInicio = $request->input('dataInicio');
-        $dataFim = $request->input('dataFim');
-        $statusEvento = $request->input('statusEvento');
+    public function getEventosJSON(Request $request){        
+        
+        if($request->filled('dataFim')){
+            $dataInicio = $request->input('dataInicio');
+        }else{
+            $dataInicio = MinhaClasse::timestamp_to_data_mysql(time());
+        }
 
         $filtro = [
-            ['data','>=',$dataInicio],
-            ['data','<=',$dataFim],            
+            ['data','>=',$dataInicio],        
         ];
 
-        if(!($statusEvento == 'todos')){
-            $filtro[] = ['status_evento_id', intval($statusEvento)];
+        if($request->filled('dataFim')){
+            $filtro[] = ['data','<=', $request->input('dataFim')];
         }
+
+        if($request->filled('liga_id')){
+            $filtro[] = ['liga_id', $request->input('liga_id')];
+        }
+
+        if($request->filled('statusEvento')){
+            if( $request->input('statusEvento') !== 'todos' ){
+                $filtro[] = ['status_evento_id', intval( $request->input('statusEvento') )];
+            }
+        }
+
 
         $eventos = Evento::where($filtro)
         ->orderBy('data', 'desc')
-        ->take(50)
+        ->take(10)
         ->get();
 
         $arrayIdTimes = $this->getIndexsTimes($eventos);
@@ -158,7 +171,6 @@ class EventoAdminController extends Controller
 
         }
     }
-
 
     //privates
 

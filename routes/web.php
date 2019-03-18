@@ -1,6 +1,15 @@
 <?php
 
 Route::prefix('admin')->group(function () {
+
+	//Inicio BOLÃO
+	Route::get('/bolao/{id}', 'Admin\BolaoAdminController@show')->where(['id' => '[0-9]+'])->name('admin_showbolao');
+	Route::put('/bolao/atualizar/{id}', 'Admin\BolaoAdminController@atualizar')->where(['id' => '[0-9]+'])->name('admin_atualizarbolao');
+	Route::get('/bolao/listar', 'Admin\BolaoAdminController@listar');
+	Route::get('/bolao/novo', 'Admin\BolaoAdminController@novo')->name('admin_novobolao');
+	Route::post('/bolao/novo', 'Admin\BolaoAdminController@create');
+	//FIM BOLÃO
+
 	Route::get('/', "AdminController@index")->name('adminhome');
 	Route::get('/apostas', "Admin\ApostaAdminController@apostas")->name('adminapostas');
 	Route::get('/apostasJSON', "Admin\ApostaAdminController@apostasJSON");
@@ -86,8 +95,8 @@ Route::prefix('agente')->group(function () {
 			'id' => '[0-9]+',
 		]);
 
-	Route::get('/relarotio', "Agente\RelatorioAgenteController@showRelatorio")->name('relatorio_agente');
-	Route::post('/relarotio', "Agente\RelatorioAgenteController@relatorio");
+	Route::get('/relatorio', "Agente\RelatorioAgenteController@showRelatorio")->name('relatorio_agente');
+	Route::post('/relatorio', "Agente\RelatorioAgenteController@relatorio");
 
 	Route::get('/conta', "Agente\ContaAgenteController@showConta")->name('agenteconta');
 	Route::post('/conta', "Agente\ContaAgenteController@atualizarConta");
@@ -154,6 +163,8 @@ Route::get('/regras', function(){
 Route::prefix('ajax/admin')->group(function(){
 	Route::get('/dashboard/getApostasPorSemana', "Admin\DashboardAdminController@getApostasPorSemana")->name('ajax_admin_getApostasPorSemana');
 	Route::get('/dashboard/getApostasPorAgente', "Admin\DashboardAdminController@getApostasPorAgente")->name('ajax_admin_getApostasPorAgente');
+	Route::post('/bolao/{id}/addEventos', 'Admin\BolaoAdminController@addEventos')->where(['id' => '[0-9]+'])->name('admin_bolaoaddeventos');
+	Route::post('/bolao/removeEventos', 'Admin\BolaoAdminController@removeEventos')->where(['id' => '[0-9]+'])->name('admin_bolaoremoveeventos');
 });
 
 Route::get('evento/{id}/odds', 'EventoController@getOdds');
