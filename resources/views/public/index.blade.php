@@ -7,18 +7,25 @@
     <a class="btn btn-primary" href="/?data=hoje">Jogos de hoje</a>
 @foreach($ligas as $liga)
 
-@if(count($liga->eventos)==0)
-    @continue
-@endif
+@php
+if(count($liga->eventos)==0){
+    continue; 
+}elseif($liga->is_top_list >= 2){
+    $expandido = 'show';
+}else{
+    $expandido = null;
+}
 
-    <div id="accordion{{$liga->id}}" class="">
+@endphp
+    <div id="accordion{{$liga->id}}" class="" >
         <div class="card">
-            <div class="card-header bg-dark text-white" data-toggle="collapse" data-target='#collapseOne{{$liga->id}}'>
+            <div class="card-header bg-dark text-white" data-toggle="collapse" data-target='#collapseOne{{$liga->id}}' >
                 <div>{{$liga->nome}}</div>
             </div>
 
             <!--Parte dos eventos-->            
-            <div id="collapseOne{{$liga->id}}" class="collapse show card-campeonato" data-parent="#accordion{{$liga->id}}">
+
+            <div id="collapseOne{{$liga->id}}" class="collapse {{$expandido}} card-campeonato" data-parent="#accordion{{$liga->id}}">
                 <div class="card-body">
                     <table border="0" class="center table table-sm">
                         <thead>
@@ -32,6 +39,10 @@
                         </thead>
                         <tbody>
                             @foreach($liga->eventos as $evento)
+                                {{-- @if(!isset($expandido))
+                                    @continue
+                                @endif --}}
+
                                 @php
                                 $quantOdds = $evento->quantOdds;
                                 @endphp
@@ -55,6 +66,7 @@
                                     </td>
                                 </tr>                                                        
                             @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -63,9 +75,7 @@
 
         </div>
     </div>        
-
-
-        
+       
 
 @endforeach
 
@@ -209,5 +219,10 @@
 @endsection
 
 @section('javascript')
+    <script type="text/javascript">
+        function teste(div_liga, liga_id){
+           
+        }
+    </script>
     @include('js.minhasFuncoes')
 @endsection
