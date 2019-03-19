@@ -46,6 +46,18 @@ class Evento extends Model
     	return $this->hasMany('App\Odd');
     }
 
+    public function scores(){
+        return $this->belongsTo('App\Score', 'id', 'evento_id');
+    }
+
+    public function scores_t1(){
+        return $this->belongsTo('App\ScoreT1', 'id', 'evento_id');
+    }
+
+    public function scores_t2(){
+        return $this->belongsTo('App\ScoreT2', 'id', 'evento_id');
+    }
+
     public function quantOdds($evento_id){
         $odd = Odd::where([
             ['evento_id',$evento_id],

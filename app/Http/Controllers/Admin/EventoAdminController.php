@@ -64,6 +64,64 @@ class EventoAdminController extends Controller
         return view('admin.atualizareventos', compact('statusEvento'));
     }
 
+    public function showEditarEventos(Request $request){
+        $request->validate([
+            'evento_id' => 'required|integer'
+        ]);
+        $evento = Evento::find($request->evento_id);
+        $evento->time1;
+        $evento->time2;
+        $evento->scores;
+        $evento->scores_t1;
+        $evento->scores_t2;
+        return view('admin.editarevento', compact('evento'));
+    }
+
+    public function editarEventos(Request $request){
+        $request->validate([
+            'evento_id' => 'required|integer'
+        ]);
+
+        $score = Score::where('evento_id', $request->evento_id)->first();
+        $score1t = ScoreT1::where('evento_id', $request->evento_id)->first();
+        $score2t = ScoreT2::where('evento_id', $request->evento_id)->first();
+
+        if( isset($score) ){
+            $score->score_t1 = $request->gols_casa;
+            $score->score_t2 = $request->gols_fora;
+            $score->save();
+        }else{
+            $score = new Score();
+            $score->score_t1 = $request->gols_casa;
+            $score->score_t2 = $request->gols_fora;
+            $score->save();
+        }
+
+        if( isset($score1t) ){
+            $score1t->score_t1 = $request->gols_casa_1t;
+            $score1t->score_t2 = $request->gols_fora_1t;
+            $score1t->save();
+        }else{
+            $score = new Score();
+            $score->score_t1 = $request->gols_casa_1t;
+            $score->score_t2 = $request->gols_fora_1t;
+            $score->save();
+        }
+
+        if( isset($score2t) ){
+            $score2t->score_t1 = $request->gols_casa_2t;
+            $score2t->score_t2 = $request->gols_fora_2t;
+            $score2t->save();
+        }else{
+            $score = new Score();
+            $score->score_t1 = $request->gols_casa_2t;
+            $score->score_t2 = $request->gols_fora_2t;
+            $score->save();
+        }
+
+        return back();
+    }
+
     public function showCadastrarEventos(Request $request){
         return view('admin.cadastrareventos');
     }

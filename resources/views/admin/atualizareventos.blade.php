@@ -78,10 +78,9 @@ function atualizarListaEventos(){
 			tbody+="<td><button class='btn btn-sm btn-danger' onclick='anularEvento("+eventos[index].id+")'>X</button>";
 			tbody+="</td>";
 
-
 			tbody+="<td style='padding: 0' colspan='2'>"+
 				"<span class='liga'><b>"+eventos[index].liga.nome+"</b></span> <br>" +
-				"<span class='evento-id'>"+eventos[index].id+" - "+eventos[index].status_evento_name+"</span> <br>" +
+				"<span class='evento-id'><a target='blank' href='{{ route('admin_editarevento') }}?evento_id="+ eventos[index].id + " '>" +eventos[index].id+"</a> - "+eventos[index].status_evento_name+"</span> <br>" +
 				"<span class='text-primary nome-time'>"+eventos[index].time1.nome + "</span> vs " +
 				"<span class='text-danger nome-time'>" + eventos[index].time2.nome + "</span><br>" +
 				"<span class='evento-data'>"+eventos[index].data+"</span>"
