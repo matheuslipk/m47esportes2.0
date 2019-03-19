@@ -46,7 +46,7 @@ class ApostaAgenteController extends Controller{
             ['data_aposta', ">=", $dataInico."T00:00:00"],
             ['data_aposta', "<=", $dataFinal."T23:59:59"],
         ])
-        ->take(100)
+        ->take(150)
         ->orderBy('id', 'desc')
         ->get();
 
