@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container-fluid">
+<div class="container-fluid" id="conteudo-principal">
     <a class="btn btn-primary" href="/">Todos os jogos</a>
     <a class="btn btn-primary" href="/?data=hoje">Jogos de hoje</a>
 @foreach($ligas as $liga)
@@ -214,6 +214,9 @@ if(count($liga->eventos)==0){
     }
     #modal-odds{
         background: rgba(207, 177, 254, 0.0);
+    }
+    #conteudo-principal{
+        padding-bottom: 70px;
     }
 </style>
 @endsection
