@@ -83,7 +83,7 @@
 			aposta+="<div class='evento'>";//Inicio Evento
 			aposta+="<span class='text-primary'>"+ap.palpites[index].evento.time1.nome+"</span> vs ";
 			aposta+="<span class='text-danger'>"+ap.palpites[index].evento.time2.nome+"</span><br>";
-			aposta+="<span class='data-evento'>"+ap.data_aposta+"</span>";
+			aposta+="<span class='data-evento'>"+ap.palpites[index].evento.data+"</span>";
 			aposta+="</div>";//Fim Evento
 
 			aposta+="<div class='desc-palpite'>";//Inicio desc palpite 
