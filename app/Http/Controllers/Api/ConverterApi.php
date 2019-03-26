@@ -674,7 +674,10 @@ class ConverterApi extends Controller{
                   break;
             }            
          }
-         $odd[]=$temp;
+         if( isset($temp) ){
+            $odd[]=$temp;
+         }
+         
       }
 
       $obj->odds = $odd;
@@ -1289,7 +1292,9 @@ class ConverterApi extends Controller{
                   break;               
             }            
          }
-         $odd[]=$temp;
+         if( isset($temp) ){
+            $odd[]=$temp;
+         }
       }
 
       $obj->odds = $odd;
