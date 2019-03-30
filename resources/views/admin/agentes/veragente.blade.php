@@ -196,6 +196,15 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="limite_7dias" class="col-md-4 col-form-label text-md-right"> Limite de aposta em 7 dias </label>
+
+                            <div class="col-md-6">
+                                <input disabled id="limite_7dias" type="number" class="form-control" name="limite_7dias" value="{{ ($configAgente->where('tipo_config_id', App\TipoConfig::LIM_APOSTAS_7_DIAS)
+                                        ->first()->valor) }}" required autofocus>
+                            </div>
+                        </div>
+
 
 
                         <div class="form-group row">
@@ -256,12 +265,12 @@
         $("#minPalpites").attr('disabled', false);
         $("#maxPalpites").attr('disabled', false);
 
-        
-
         $("#cota1").attr('disabled', false);
         $("#cota2").attr('disabled', false);
         $("#cota3").attr('disabled', false);
         $("#cota4").attr('disabled', false);
+        $("#limite_7dias").attr('disabled', false);
+
         $("#btn-salvar1").attr('disabled', false);
         $("#btn-editar1").attr('disabled', true);
         $("#btn-cancelar1").attr('disabled', false);
@@ -279,6 +288,8 @@
         $("#cota2").attr('disabled', true);
         $("#cota3").attr('disabled', true);
         $("#cota4").attr('disabled', true);
+        $("#limite_7dias").attr('disabled', true);
+        
         $("#btn-salvar1").attr('disabled', true);
         $("#btn-editar1").attr('disabled', false);
         $("#btn-cancelar1").attr('disabled', true);

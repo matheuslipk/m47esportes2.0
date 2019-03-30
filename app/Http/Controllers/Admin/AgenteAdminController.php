@@ -112,15 +112,22 @@ class AgenteAdminController extends Controller
         ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::COMISSAO_2)->update(['valor' => ($request->input('cota2')/100)]);
         ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::COMISSAO_3)->update(['valor' => ($request->input('cota3')/100)]);
         ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::COMISSAO_4)->update(['valor' => ($request->input('cota4')/100)]);
+        ConfigAgente::where('agente_id', $id)->where('tipo_config_id', TipoConfig::LIM_APOSTAS_7_DIAS)->update(['valor' => $request->input('limite_7dias')]);
 
         return redirect()->route('editaragente', ['id'=>$id]);
     }
 
     private function salvarConfigAgente($agente){        
-        $configGlobal = ConfigGlobal::where([
-            ['tipo_config_id', '>=', '1'],
-            ['tipo_config_id', '<=', '12'],
-        ])->get();
+
+        $filtroArray = [
+            TipoConfig::ODD_MINIMA, TipoConfig::ODD_MAXIMA, TipoConfig::VALOR_MIN_APOSTA,
+            TipoConfig::VALOR_MAX_APOSTA, TipoConfig::QUANT_MIN_PALPITES, TipoConfig::QUANT_MAX_PALPITES,
+            TipoConfig::COMISSAO_1, TipoConfig::COMISSAO_2, TipoConfig::COMISSAO_3,
+            TipoConfig::COMISSAO_4, TipoConfig::LIM_APOSTAS_7_DIAS
+        ];
+
+
+        $configGlobal = ConfigGlobal::whereIn('tipo_config_id', $filtroArray)->get();
 
         foreach ($configGlobal as $config) {
             $configAgente = new ConfigAgente();

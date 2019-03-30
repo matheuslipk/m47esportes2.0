@@ -88,13 +88,17 @@ class AgenteGerenteController extends Controller
     }
     
 
-    private function salvarConfigAgente($agente){        
-        $configAdmin = ConfigGlobal::where([
-            ['tipo_config_id', '>=', '1'],
-            ['tipo_config_id', '<=', '12'],
-        ])->get();
+    private function salvarConfigAgente($agente){     
+        $filtroArray = [
+            TipoConfig::ODD_MINIMA, TipoConfig::ODD_MAXIMA, TipoConfig::VALOR_MIN_APOSTA,
+            TipoConfig::VALOR_MAX_APOSTA, TipoConfig::QUANT_MIN_PALPITES, TipoConfig::QUANT_MAX_PALPITES,
+            TipoConfig::COMISSAO_1, TipoConfig::COMISSAO_2, TipoConfig::COMISSAO_3,
+            TipoConfig::COMISSAO_4, TipoConfig::LIM_APOSTAS_7_DIAS
+        ];
 
-        foreach ($configAdmin as $config) {
+        $configGlobal = ConfigGlobal::whereIn('tipo_config_id', $filtroArray)->get();
+
+        foreach ($configGlobal as $config) {
             $configAgente = new ConfigAgente();
             $configAgente->tipo_config_id = $config->tipo_config_id;
             $configAgente->agente_id = $agente->id;
