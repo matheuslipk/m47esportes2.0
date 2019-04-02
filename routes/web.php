@@ -155,7 +155,7 @@ Route::prefix('aposta')->group(function () {
 	Route::get('{id}', 'ApostaController@get')->name('viewaposta');
 });
 
-Route::get('/', 'EventoController@index');
+Route::get('/', 'EventoController@index')->name('index');
 
 Route::get('/regras', function(){
 	return view('regras');
@@ -177,3 +177,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/erro/{id}', 'CodigoErroController@index')->name('erro');
+
+Route::post("logout", "SessaoController@logout")->name('logout');

@@ -8,6 +8,8 @@ use App\Odd;
 use App\Evento;
 use App\TipoPalpite;
 use App\ConfigGlobal;
+use Illuminate\Support\Facades\Auth;
+
 
 class SessaoController extends Controller{
 	public function salvarPalpite(Request $request, $evento_id, $tipo_palpite_id){		
@@ -88,6 +90,14 @@ class SessaoController extends Controller{
 
 		$request->session()->push('palpites' , $palpite);
 		return ['sucesso' => true];
+	}
+
+	public function logout(Request $request){
+		Auth::guard('web')->logout();
+		Auth::guard('web-admin')->logout();
+		Auth::guard('gerente')->logout();
+
+		return redirect()->route('index');
 	}
 
 	private function removePalpite(&$request, $evento_id){
