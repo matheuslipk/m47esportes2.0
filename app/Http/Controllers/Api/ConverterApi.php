@@ -97,7 +97,8 @@ class ConverterApi extends Controller{
       }
       $t = "2nd_half_goals";
       if(isset($odds->half->sp->$t)){
-         $oddsConvertidas->cat_palpites[] = ConverterApi::quantGols2T($odds);
+         $tempGols2Tempo = $odds->half->sp->$t;
+         $oddsConvertidas->cat_palpites[] = ConverterApi::quantGols2T($tempGols2Tempo);
       }
 
       //Tempo Misto
@@ -1372,9 +1373,8 @@ class ConverterApi extends Controller{
       $obj->tempo = "45 - 90 min";
 
       $temp=[];
-      if(isset($odds->goals->sp->first_half_goals)){
-         $golsAlternativos = $odds->goals->sp->first_half_goals;
-      }
+
+      $golsAlternativos = $odds;
       
       foreach ($golsAlternativos as $opc){
          switch ($opc->header){
