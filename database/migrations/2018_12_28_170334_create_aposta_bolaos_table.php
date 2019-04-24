@@ -19,11 +19,12 @@ class CreateApostaBolaosTable extends Migration
             $table->integer('agente_id')->nullable();
             $table->integer('user_id')->nullable();
             $table->string('nome');
-            $table->integer('vantagem');
+            $table->integer('quant_acertos')->default(0);
+            $table->integer('quant_erros')->default(0);
             $table->decimal('valor_apostado', 6,2);
             $table->dateTime('data_criacao');
             $table->dateTime('data_validacao');
-            $table->integer('status_id');;
+            $table->integer('status_id');
         });
 
         Schema::table('aposta_bolaos', function (Blueprint $table) {
