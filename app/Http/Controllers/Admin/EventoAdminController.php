@@ -152,10 +152,11 @@ class EventoAdminController extends Controller
             }
         }
 
-        $eventos = Evento::where($filtro)
-        ->orderBy('data', 'desc')
-        ->take(100)
-        ->get();
+        $eventos = Evento::whereIn('liga_id', Liga::getIdProxLigas() )
+            ->where($filtro)
+            ->orderBy('data', 'desc')
+            ->take(100)
+            ->get();
 
         $arrayIdTimes = $this->getIndexsTimes($eventos);
 
