@@ -1004,7 +1004,10 @@ class ConverterApi extends Controller{
                'taxa'=>$opc->odds,
             ];            
          }
-         $odd[]=$temp;
+         if(isset($temp)){
+            $odd[]=$temp;
+         }
+         
 
       }
       $obj->odds = $odd;
