@@ -40,6 +40,15 @@
         </div>
       </li>
 
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bolões</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{route('admin_novobolao')}}">Novo Bolao</a>
+          <a class="dropdown-item" href="{{route('admin_listabolaos')}}">Lista de Bolões</a>
+          <a class="dropdown-item" href="{{route('admin.evento_bolaos.novo')}}">Eventos Pra Bolão</a>
+        </div>
+      </li>
+
       <li class="nav-item">
         <form method="post" action="{{route('logout')}}">
           @csrf

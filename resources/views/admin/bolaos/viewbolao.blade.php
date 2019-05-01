@@ -128,9 +128,9 @@ Admin - Bolão
 				@foreach($bolao->eventosBolao as $eventoBolao)
 				<tr style="font-size: 13px" id="tr_evento_{{$eventoBolao->id}}">
 					<td >
-						<span style="color: blue">{{$eventoBolao->evento->time1->nome}}</span> x 
-						<span style="color: red">{{$eventoBolao->evento->time2->nome}}</span><br>
-						{{$eventoBolao->evento->data}}
+						<span style="color: blue">{{$eventoBolao->time1->nome}}</span> x 
+						<span style="color: red">{{$eventoBolao->time2->nome}}</span><br>
+						{{$eventoBolao->data_evento}}
 					</td>
 					<td><button class="btn btn-sm btn-danger" onclick="removerEventoBolao({{$eventoBolao->id}})">Remover</button></td>
 				</tr>
@@ -156,7 +156,7 @@ Admin - Bolão
 @section('javascript')
 <script type="text/javascript">
 	function ligaChange(){
-		$.get('{{route('getEventosJSONAdmin')}}', {
+		$.get('{{route('admin.evento_bolaos')}}', {
 			liga_id: $("#liga").val()
 		}, function(eventos){
 			var tbody = construirTabela(eventos);
@@ -190,7 +190,8 @@ Admin - Bolão
 
 	function removerEventoBolao(evento_id){
 		$.post('{{ route('admin_bolaoremoveeventos') }}',{
-			evento_id: evento_id
+			evento_id: evento_id,
+			bolao_id: {{ $bolao->id }}
 		}, function(response){
 			if(response.sucesso === true){
 				$("#tr_evento_"+evento_id).remove();

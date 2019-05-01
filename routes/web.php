@@ -3,12 +3,16 @@
 Route::prefix('admin')->group(function () {
 
 	//Inicio BOLÃO
-	Route::get('/bolao', 'Admin\BolaoAdminController@index')->name('admin_bolao');
+	Route::get('/bolao', 'Admin\BolaoAdminController@index')->name('admin_listabolaos');
 	Route::get('/bolao/{id}', 'Admin\BolaoAdminController@show')->where(['id' => '[0-9]+'])->name('admin_showbolao');
 	Route::put('/bolao/atualizar/{id}', 'Admin\BolaoAdminController@atualizar')->where(['id' => '[0-9]+'])->name('admin_atualizarbolao');
 	Route::get('/bolao/listar', 'Admin\BolaoAdminController@listar');
 	Route::get('/bolao/novo', 'Admin\BolaoAdminController@novo')->name('admin_novobolao');
 	Route::post('/bolao/novo', 'Admin\BolaoAdminController@create');
+
+	Route::get('/evento_bolaos', 'Admin\EventoBolaoAdminController@getEventosBolaoJson')->name('admin.evento_bolaos');
+	Route::get('/evento_bolaos/novo', 'Admin\EventoBolaoAdminController@showFormCadastro')->name('admin.evento_bolaos.novo');
+	Route::post('/evento_bolaos/store', 'Admin\EventoBolaoAdminController@store')->name('admin.evento_bolaos.store');
 	//FIM BOLÃO
 
 	Route::get('/', "AdminController@index")->name('adminhome');
@@ -167,7 +171,7 @@ Route::prefix('ajax/admin')->group(function(){
 	Route::get('/dashboard/getApostasPorSemana', "Admin\DashboardAdminController@getApostasPorSemana")->name('ajax_admin_getApostasPorSemana');
 	Route::get('/dashboard/getApostasPorAgente', "Admin\DashboardAdminController@getApostasPorAgente")->name('ajax_admin_getApostasPorAgente');
 	Route::post('/bolao/{id}/addEventos', 'Admin\BolaoAdminController@addEventos')->where(['id' => '[0-9]+'])->name('admin_bolaoaddeventos');
-	Route::post('/bolao/removeEventos', 'Admin\BolaoAdminController@removeEventos')->where(['id' => '[0-9]+'])->name('admin_bolaoremoveeventos');
+	Route::post('/bolao/removeEventos', 'Admin\BolaoAdminController@removeEventos')->name('admin_bolaoremoveeventos');
 });
 
 Route::get('evento/{id}/odds', 'EventoController@getOdds');

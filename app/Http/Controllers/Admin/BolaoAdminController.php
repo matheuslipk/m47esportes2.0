@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Bolao;
 use App\Liga;
 use App\EventoBolao;
+use App\BolaoEventoBolao;
 use App\Http\Controllers\Api\MinhaClasse;
 
 class BolaoAdminController extends Controller{
@@ -16,7 +17,10 @@ class BolaoAdminController extends Controller{
     }
 
     public function index(Request $request){
-        $bolaos = Bolao::all();
+        $bolaos = Bolao::all()->sortByDesc('id');
+
+
+
         foreach ($bolaos as $bolao) {
             $bolao->data_abertura = MinhaClasse::data_mysql_to_datahora_formatada($bolao->data_abertura);
             $bolao->data_fechamento = MinhaClasse::data_mysql_to_datahora_formatada($bolao->data_fechamento);
@@ -55,6 +59,8 @@ class BolaoAdminController extends Controller{
             $bolao->valor_aposta = $request->valor_aposta;
             $bolao->data_abertura = $request->data_abertura;
             $bolao->data_fechamento = $request->data_fechamento;
+            $bolao->comissao_agente = $request->comissao_agente;
+            $bolao->comissao_casa = $request->comissao_casa;
             $bolao->status_id = $request->status_id;
             $bolao->save();
             return back();
@@ -71,13 +77,11 @@ class BolaoAdminController extends Controller{
 
         $bolao = Bolao::find($id);
         if(isset($bolao)){
-            $eventoBolao = new EventoBolao();
+            $eventoBolao = new BolaoEventoBolao();
             $eventoBolao->bolao_id = $bolao->id;
-            $eventoBolao->evento_id = $request->evento_id;
-            $addOk = $eventoBolao->save();            
-            $eventoBolao->evento->time1;
-            $eventoBolao->evento->time2;
-            return response()->json($eventoBolao);
+            $eventoBolao->evento_bolao_id = $request->evento_id;
+            $eventoBolao->save();          
+            return back();
         }
 
         return response('', 404);
@@ -85,12 +89,21 @@ class BolaoAdminController extends Controller{
 
     public function removeEventos(Request $request){
         $request->validate([
-            'evento_id' => 'required|integer'
+            'evento_id' => 'required|integer',
+            'bolao_id' => 'required|integer',
         ]);
 
-        $eventoBolao = EventoBolao::find($request->evento_id);
+        $eventoBolao = BolaoEventoBolao::where([
+            [ 'evento_bolao_id', $request->evento_id ],
+            [ 'bolao_id', $request->bolao_id ],
+        ])->get();
+
         if( isset($eventoBolao) ){
-            $eventoBolao->delete();
+            BolaoEventoBolao::where([
+                [ 'evento_bolao_id', $request->evento_id ],
+                [ 'bolao_id', $request->bolao_id ],
+            ])->delete();
+
             return response()->json([
                 'sucesso' => true,
                 'msg' => 'Evento removido com sucesso!'
