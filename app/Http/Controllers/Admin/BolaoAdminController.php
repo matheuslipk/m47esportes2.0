@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\MinhaClasse;
 class BolaoAdminController extends Controller{
 
     public function __construct(){
-        return $this->middleware('auth:web-admin');
+        // return $this->middleware('auth:web-admin');
     }
 
     public function index(Request $request){
@@ -35,6 +35,8 @@ class BolaoAdminController extends Controller{
     	$bolao->valor_aposta = $request->valor_aposta;
     	$bolao->data_abertura = $request->data_abertura;
     	$bolao->data_fechamento = $request->data_fechamento;
+        $bolao->comissao_agente = $request->comissao_agente;
+        $bolao->comissao_casa = $request->comissao_casa;
     	$bolao->status_id = $request->status_id;
     	$bolao->save();
     	return redirect()->route('admin_showbolao', ['id' => $bolao->id]);
@@ -107,7 +109,9 @@ class BolaoAdminController extends Controller{
         if( !isset($bolao) ){
             return response('', 404);
         }
-    	$bolao->eventos;
+
+        $bolao->eventosBolao;
+
     	$ligas = Liga::where('is_top_list', '>=', '1')
     		->orderBy('is_top_list', 'desc')
             ->orderBy('nome')

@@ -37,6 +37,17 @@ Admin - Bolão
 				</div>				
 			</div>
 
+			<div class="row justify-content-center">					
+				<div class="col-12 col-sm-6">
+					<label>Comissão Agente</label>
+					<input class="form-control" value="{{ $bolao->comissao_agente }}" type="number" step="0.01" min="0" max="0.2" name="comissao_agente" required>
+				</div>
+				<div class="col-12 col-sm-6">
+					<label>Comissão Casa</label>
+					<input class="form-control" value="{{ $bolao->comissao_casa }}" type="number" step="0.01" min="0" max="0.2" name="comissao_casa" required>
+				</div>				
+			</div>
+
 			<div class="row justify-content-center">
 				<div class="col-12 col-sm-6">
 					<label>Valor das apostas</label>
@@ -44,7 +55,16 @@ Admin - Bolão
 				</div>
 				<div class="col-12 col-sm-6">
 					<label>Status bolão</label>
-					<input class="form-control" value="{{ $bolao->status_id }}" type="" name="status_id" required>
+					<select name="status_id" class="form-control">
+						@if( $bolao->status_id === 1 )
+							<option selected value="1">Válido</option>
+							<option value="0">Inválido</option>
+						@else
+							<option value="1">Válido</option>
+							<option selected value="0">Inválido</option>
+						@endif
+						
+					</select>
 				</div>			
 			</div>
 

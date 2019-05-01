@@ -18,6 +18,8 @@ class CreateBolaosTable extends Migration
             $table->string('nome');
             $table->integer('quant_eventos');
             $table->decimal('valor_aposta', 5,2);
+            $table->decimal('comissao_agente', 2,2);
+            $table->decimal('comissao_casa', 2,2);
             $table->dateTime('data_abertura');
             $table->dateTime('data_fechamento');
             $table->integer('status_id');

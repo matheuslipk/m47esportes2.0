@@ -29,7 +29,8 @@ class CreatePalpiteBolaosTable extends Migration
             $table->foreign('aposta_bolao_id')->references('id')->on('aposta_bolaos');
             $table->foreign('tipo_palpite_id')->references('id')->on('tipo_palpites');
             $table->foreign('situacao_palpite_id')->references('id')->on('situacao_palpites');
-            $table->foreign(['bolao_id', 'evento_id'])->references(['bolao_id', 'evento_id'])->on('evento_bolaos');
+            $table->foreign('evento_id')->references('id')->on('evento_bolaos');
+            $table->foreign('bolao_id')->references('id')->on('bolaos');
         });
     }
 

@@ -8,7 +8,7 @@ class EventoBolao extends Model
 {
     public $timestamps = false;
 
-    public function evento(){
-    	return $this->belongsTo('App\Evento');
+    public function bolaos(){
+    	return $this->belongsToMany('App\Bolao');
     }
 }
