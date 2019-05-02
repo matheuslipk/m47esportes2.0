@@ -23,6 +23,7 @@ class CreateAgentesTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('permissao_bolao')->default( 0 );
             $table->rememberToken();
             $table->timestamps();
         });

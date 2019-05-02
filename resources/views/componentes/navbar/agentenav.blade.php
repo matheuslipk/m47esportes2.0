@@ -18,6 +18,17 @@
         </div>
       </li>
 
+      @if( Auth::user()->permissao_bolao == 1 )
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Bolões
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{{ route('agente.bolaodisponivel') }}">Bolões disponiveis</a>
+          </div>
+      </li>
+      @endif
+
       <li class="nav-item">
         <a class="nav-link" href="{{ route('agenteconta') }}">Minha conta</a>
       </li>
