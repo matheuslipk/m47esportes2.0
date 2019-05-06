@@ -46,6 +46,7 @@
           <a class="dropdown-item" href="{{route('admin_novobolao')}}">Novo Bolao</a>
           <a class="dropdown-item" href="{{route('admin_listabolaos')}}">Lista de Bolões</a>
           <a class="dropdown-item" href="{{route('admin.evento_bolaos.novo')}}">Eventos Pra Bolão</a>
+          <a class="dropdown-item" href="{{route('admin.apostaboloes')}}">Últimos Apostas</a>
         </div>
       </li>
 

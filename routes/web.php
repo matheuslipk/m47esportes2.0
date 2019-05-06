@@ -4,11 +4,14 @@ Route::prefix('admin')->group(function () {
 
 	//Inicio BOLÃO
 	Route::get('/bolao', 'Admin\BolaoAdminController@index')->name('admin_listabolaos');
-	Route::get('/bolao/{id}', 'Admin\BolaoAdminController@show')->where(['id' => '[0-9]+'])->name('admin_showbolao');
+	Route::get('/bolao/{id}', 'Admin\BolaoAdminController@show')->where(['id' => '[0-9]+'])->name('admin_showbolao');	
 	Route::put('/bolao/atualizar/{id}', 'Admin\BolaoAdminController@atualizar')->where(['id' => '[0-9]+'])->name('admin_atualizarbolao');
 	Route::get('/bolao/listar', 'Admin\BolaoAdminController@listar');
 	Route::get('/bolao/novo', 'Admin\BolaoAdminController@novo')->name('admin_novobolao');
 	Route::post('/bolao/novo', 'Admin\BolaoAdminController@create');
+
+	Route::get('/bolao/apostas', 'Admin\ApostaBolaoAdminController@apostas')->name('admin.apostaboloes');
+	Route::get('/bolao/apostas/{aposta}', 'Admin\ApostaBolaoAdminController@showAposta')->name('admin.viewaposta');
 
 	Route::get('/evento_bolaos', 'Admin\EventoBolaoAdminController@getEventosBolaoJson')->name('admin.evento_bolaos');
 	Route::get('/evento_bolaos/novo', 'Admin\EventoBolaoAdminController@showFormCadastro')->name('admin.evento_bolaos.novo');

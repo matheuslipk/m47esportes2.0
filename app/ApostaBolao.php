@@ -9,4 +9,8 @@ class ApostaBolao extends Model{
 	const STATUS_CANCELADO = 4;
 
     public $timestamps = false;
+
+    public function agente(){
+        return $this->belongsTo('App\Agente');
+    }
 }

@@ -14,4 +14,18 @@ class Bolao extends Model{
     public function eventosBolao(){
     	return $this->belongsToMany('App\EventoBolao');
     }
+
+    
+
+    public function arrecadado( $bolao_id ){
+    	$filtro = [ 
+    		['bolao_id', $bolao_id],
+    		['agente_id', '<>', ''],
+    		['status_id', 1],
+    	];
+
+    	$apostaBolaos = ApostaBolao::where($filtro)->get();
+
+    	return $apostaBolaos->sum('valor_apostado');
+    }
 }

@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\MinhaClasse;
 
 class ApostaAdminController extends Controller{
 
-	 public function __construct(){
+	public function __construct(){
         $this->middleware('auth:web-admin');
     }
 
