@@ -4,7 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApostaBolao extends Model
-{
+class ApostaBolao extends Model{
+	const STATUS_VALIDO = 1;
+	const STATUS_CANCELADO = 4;
+
     public $timestamps = false;
 }

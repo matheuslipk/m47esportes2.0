@@ -33,6 +33,6 @@ class CreateBolaoEventoBolaosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bolao_evento_bolaos');
+        Schema::dropIfExists('bolao_evento_bolao');
     }
 }

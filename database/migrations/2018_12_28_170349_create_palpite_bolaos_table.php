@@ -24,7 +24,6 @@ class CreatePalpiteBolaosTable extends Migration
 
         Schema::table('palpite_bolaos', function (Blueprint $table) {
             $table->unique(['aposta_bolao_id', 'evento_id']);
-            $table->unique(['bolao_id', 'evento_id']);
 
             $table->foreign('aposta_bolao_id')->references('id')->on('aposta_bolaos');
             $table->foreign('tipo_palpite_id')->references('id')->on('tipo_palpites');

@@ -18,7 +18,7 @@ class CreateApostaBolaosTable extends Migration
             $table->integer('bolao_id');
             $table->integer('agente_id')->nullable();
             $table->integer('user_id')->nullable();
-            $table->string('nome');
+            $table->string('nome')->nullable();
             $table->integer('quant_acertos')->default(0);
             $table->integer('quant_erros')->default(0);
             $table->decimal('valor_apostado', 6,2);

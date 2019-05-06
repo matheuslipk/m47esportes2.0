@@ -22,7 +22,7 @@ class CreateScoreBolaosTable extends Migration
         });
 
         Schema::table('score_bolaos', function (Blueprint $table) {
-            $table->foreign('evento_id')->references('id')->on('eventos');
+            $table->foreign('evento_id')->references('id')->on('evento_bolaos');
         });
 
     }

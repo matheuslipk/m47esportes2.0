@@ -92,7 +92,7 @@ Route::prefix('admin')->group(function () {
 
 Route::prefix('agente')->group(function () {
 	Route::get('/bolao_disponiveis', 'Agente\BolaoAgenteController@index')->name('agente.bolaodisponivel');
-
+	Route::post('/bolao_disponiveis/fazerbolao', 'Agente\BolaoAgenteController@fazerBolaoAgente')->name('agente.fazerbolao');
 
     Route::get('/apostas', 'Agente\ApostaAgenteController@apostas')->name('agenteapostas');
     Route::get('/apostasJSON', "Agente\ApostaAgenteController@apostasJSON");
