@@ -94,8 +94,10 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('agente')->group(function () {
-	Route::get('/bolao_disponiveis', 'Agente\BolaoAgenteController@index')->name('agente.bolaodisponivel');
-	Route::post('/bolao_disponiveis/fazerbolao', 'Agente\BolaoAgenteController@fazerBolaoAgente')->name('agente.fazerbolao');
+	Route::get('/bolao/apostas', 'Agente\ApostaBolaoAgenteController@apostas')->name('agente.bolao.apostas');
+	Route::get('/bolao/bolao_disponiveis', 'Agente\BolaoAgenteController@index')->name('agente.bolaodisponivel');
+	Route::post('/bolao/bolao_disponiveis/fazerbolao', 'Agente\BolaoAgenteController@fazerBolaoAgente')->name('agente.fazerbolao');
+	Route::get('/bolao/apostas/{aposta}', 'Agente\ApostaBolaoAgenteController@showAposta')->name('agente.viewaposta');
 
     Route::get('/apostas', 'Agente\ApostaAgenteController@apostas')->name('agenteapostas');
     Route::get('/apostasJSON', "Agente\ApostaAgenteController@apostasJSON");

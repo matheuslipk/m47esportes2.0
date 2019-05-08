@@ -8,6 +8,9 @@
 	    		Comissão Agente: {{ $bolao->comissao_agente*100 }}%<br>
 	    		Comissão Casa: {{ $bolao->comissao_casa*100 }}%
 	    	</p>
+	    	<p class="card-text">
+	    		Premiação Atual: R$ {{ number_format($bolao->arrecadado($bolao->id) * (1-( $bolao->comissao_agente + $bolao->comissao_casa )), 2) }}   		
+	    	</p>
 	  	</div>
 
   		<table border="0">

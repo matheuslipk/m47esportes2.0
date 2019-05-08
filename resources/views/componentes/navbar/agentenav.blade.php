@@ -25,6 +25,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{{ route('agente.bolaodisponivel') }}">Bolões disponiveis</a>
+            <a class="dropdown-item" href="{{ route('agente.bolao.apostas') }}">Ultimas Apostas</a>
           </div>
       </li>
       @endif
