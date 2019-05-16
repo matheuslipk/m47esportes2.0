@@ -17,11 +17,11 @@ BEGIN
   UPDATE palpite_bolaos SET situacao_palpite_id=2 WHERE evento_id=new.evento_id;
   
   IF( varGolsTime1 > varGolsTime2 )THEN
-    UPDATE palpite_bolaos SET situacao_palpite_id=1 WHERE evento_id=new.evento_id AND palpite_id=1;
+    UPDATE palpite_bolaos SET situacao_palpite_id=1 WHERE evento_id=new.evento_id AND tipo_palpite_id=1;
   ELSEIF ( varGolsTime1 = varGolsTime2) THEN
-    UPDATE palpite_bolaos SET situacao_palpite_id=1 WHERE evento_id=new.evento_id AND palpite_id=2;
+    UPDATE palpite_bolaos SET situacao_palpite_id=1 WHERE evento_id=new.evento_id AND tipo_palpite_id=2;
   ELSEIF ( varGolsTime1 < varGolsTime2) THEN
-    UPDATE palpite_bolaos SET situacao_palpite_id=1 WHERE evento_id=new.evento_id AND palpite_id=3;
+    UPDATE palpite_bolaos SET situacao_palpite_id=1 WHERE evento_id=new.evento_id AND tipo_palpite_id=3;
   END IF;
   
 END");

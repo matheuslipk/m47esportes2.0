@@ -13,7 +13,8 @@ Route::prefix('admin')->group(function () {
 	Route::get('/bolao/apostas', 'Admin\ApostaBolaoAdminController@apostas')->name('admin.apostaboloes');
 	Route::get('/bolao/apostas/{aposta}', 'Admin\ApostaBolaoAdminController@showAposta')->name('admin.viewaposta');
 
-	Route::get('/evento_bolaos', 'Admin\EventoBolaoAdminController@getEventosBolaoJson')->name('admin.evento_bolaos');
+	Route::get('/bolao/eventos/atualizar', 'Admin\EventoBolaoAdminController@showAtualizarEventos')->name('admin.bolao.eventos.atualizar');
+	Route::post('/bolao/eventos/atualizar', 'Admin\EventoBolaoAdminController@update');
 	Route::get('/evento_bolaos/novo', 'Admin\EventoBolaoAdminController@showFormCadastro')->name('admin.evento_bolaos.novo');
 	Route::post('/evento_bolaos/store', 'Admin\EventoBolaoAdminController@store')->name('admin.evento_bolaos.store');
 	//FIM BOLÃO
@@ -180,6 +181,7 @@ Route::prefix('ajax/admin')->group(function(){
 	Route::get('/dashboard/getApostasPorAgente', "Admin\DashboardAdminController@getApostasPorAgente")->name('ajax_admin_getApostasPorAgente');
 	Route::post('/bolao/{id}/addEventos', 'Admin\BolaoAdminController@addEventos')->where(['id' => '[0-9]+'])->name('admin_bolaoaddeventos');
 	Route::post('/bolao/removeEventos', 'Admin\BolaoAdminController@removeEventos')->name('admin_bolaoremoveeventos');
+	Route::get('/bolao/eventos', 'Admin\EventoBolaoAdminController@getEventosBolaoJson')->name('admin.evento_bolaos');
 });
 
 Route::get('evento/{id}/odds', 'EventoController@getOdds');

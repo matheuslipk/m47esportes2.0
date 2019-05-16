@@ -13,7 +13,7 @@ use App\Http\Controllers\Api\MinhaClasse;
 class BolaoAdminController extends Controller{
 
     public function __construct(){
-        // return $this->middleware('auth:web-admin');
+        return $this->middleware('auth:web-admin');
     }
 
     public function index(Request $request){

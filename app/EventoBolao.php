@@ -14,6 +14,10 @@ class EventoBolao extends Model
     	return $this->belongsToMany('App\Bolao');
     }
 
+    public function score(){
+        return $this->belongsTo('App\ScoreBolao', 'id', 'evento_id');
+    }
+
     public function liga(){
     	return $this->belongsTo('App\Liga');
     }

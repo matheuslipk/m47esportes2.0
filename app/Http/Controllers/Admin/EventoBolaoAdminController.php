@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Liga;
 use App\Time;
 use App\EventoBolao;
+use App\ScoreBolao;
 use App\Http\Controllers\Api\MinhaClasse;
 
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use App\Http\Controllers\Controller;
 
 class EventoBolaoAdminController extends Controller{
     public function __construct(){
-        //$this->middleware('auth:web-admin');
+        $this->middleware('auth:web-admin');
     }
 
     public function getEventosBolaoJson(Request $request){
@@ -61,6 +62,40 @@ class EventoBolaoAdminController extends Controller{
     	$evento->time1_id = $request->time1_id;
     	$evento->time2_id = $request->time2_id;
     	$evento->save();
+        return back();
+    }
+
+
+    public function showAtualizarEventos(){
+        $eventos = EventoBolao::all()->take(30)->sortBy('id');
+        return view('admin.bolaos.atualizar_eventos_bolaos', compact('eventos'));
+    }
+
+    public function update(Request $request){
+        $request->validate([
+            'evento_id' => 'required|integer',
+            'score_time1' => 'required|integer',
+            'score_time2' => 'required|integer',
+        ]);
+
+        $evento = EventoBolao::find($request->evento_id);
+        if(isset( $evento )){
+            $score = ScoreBolao::where([
+                ['evento_id', $request->evento_id]
+            ])->first();
+            if(isset($score)){
+                $score->evento_id = $request->evento_id;
+                $score->score_time1 = $request->score_time1;
+                $score->score_time2 = $request->score_time2;
+                $score->save();
+            }else{
+                $score = new ScoreBolao();
+                $score->evento_id = $request->evento_id;
+                $score->score_time1 = $request->score_time1;
+                $score->score_time2 = $request->score_time2;
+                $score->save();
+            }
+        }
         return back();
     }
 }
