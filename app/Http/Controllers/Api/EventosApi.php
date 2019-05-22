@@ -55,7 +55,7 @@ class EventosApi extends Controller
 
 	   if(isset($objetoOdds->results[0])){
 	   		$oddsConvertidas = Odd::inserir_odds( $objetoOdds->results[0], $evento->id );
-	   		$oddsConvertidas2 = $this->pre_math_odds2($request);
+	   		// $oddsConvertidas2 = $this->pre_math_odds2($request);
 	   		return json_encode( (array) $oddsConvertidas);
 	   }
 	   

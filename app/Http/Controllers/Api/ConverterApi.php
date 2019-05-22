@@ -64,6 +64,12 @@ class ConverterApi extends Controller{
          $oddsConvertidas->cat_palpites[] = ConverterApi::resultadoEGols($resultadoEGols);
       }
 
+      if(isset($odds->goals->sp->team_total_goals)){
+         $team_total_goals = $odds->goals->sp->team_total_goals;
+         $oddsConvertidas->cat_palpites[] = ConverterApi::team_total_goals_casa($team_total_goals);
+         $oddsConvertidas->cat_palpites[] = ConverterApi::team_total_goals_fora($team_total_goals);
+      }
+
       //Primeiro tempo
       if(isset($odds->half->sp->half_time_result)){
          $vencedor1T = $odds->half->sp->half_time_result;
@@ -967,6 +973,138 @@ class ConverterApi extends Controller{
             'nome' => 'Fora & -2.5',
             'taxa' => $resultadoEGols[5]->odds
          ];
+
+      $obj->odds = $odd;
+      return $obj; 
+
+
+   }
+
+   private static function team_total_goals_casa($team_total_goals){
+      $obj = new \stdClass;
+      $obj->categoria_id = 3;
+      $obj->nome = "Total de Gols Casa";
+      $obj->tempo = "90 min";
+
+      foreach ($team_total_goals as $gols) {
+         $temp = null;
+         if($gols->header=='Home'){
+            if( $gols->handicap=='O 1.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>8,
+                  'nome'=> 'Casa +1.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+            if( $gols->handicap=='U 1.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>18,
+                  'nome'=> 'Casa -1.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+
+            if( $gols->handicap=='O 2.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>9,
+                  'nome'=> 'Casa +2.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+            if( $gols->handicap=='U 2.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>19,
+                  'nome'=> 'Casa -2.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+
+            if( $gols->handicap=='O 3.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>10,
+                  'nome'=> 'Casa +3.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+            if( $gols->handicap=='U 3.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>20,
+                  'nome'=> 'Casa -3.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+
+         }
+
+         if( isset($temp) )$odd[]=$temp;
+         
+      }
+
+      $obj->odds = $odd;
+      return $obj; 
+
+
+   }
+
+   private static function team_total_goals_fora($team_total_goals){
+      $obj = new \stdClass;
+      $obj->categoria_id = 4;
+      $obj->nome = "Total de Gols Fora";
+      $obj->tempo = "90 min";
+
+      foreach ($team_total_goals as $gols) {
+         $temp = null;
+         if($gols->header=='Away'){
+            if( $gols->handicap=='O 1.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>28,
+                  'nome'=> 'Fora +1.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+            if( $gols->handicap=='U 1.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>38,
+                  'nome'=> 'Fora -1.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+
+            if( $gols->handicap=='O 2.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>29,
+                  'nome'=> 'Fora +2.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+            if( $gols->handicap=='U 2.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>39,
+                  'nome'=> 'Fora -2.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+
+            if( $gols->handicap=='O 3.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>30,
+                  'nome'=> 'Fora +3.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+            if( $gols->handicap=='U 3.5' ){
+               $temp = [
+                  'tipo_palpite_id'=>40,
+                  'nome'=> 'Fora -3.5',
+                  'taxa'=> $gols->odds,
+               ];
+            }
+
+         }
+
+         if( isset($temp) )$odd[]=$temp;
+         
+      }
 
       $obj->odds = $odd;
       return $obj; 
