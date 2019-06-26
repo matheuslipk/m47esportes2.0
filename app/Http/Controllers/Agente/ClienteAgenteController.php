@@ -38,7 +38,7 @@ class ClienteAgenteController extends Controller
         $quantClientes = DB::table('clientes')
             ->where('agente_id', $agente->id)->count();
 
-        $quantPaginas = round($quantClientes/$quantPorPagina) ;
+        $quantPaginas = ceil($quantClientes/$quantPorPagina) ;
 
         return view('agente.clientes.lista_clientes', compact('clientes', 'quantPaginas', 'request'));
     }

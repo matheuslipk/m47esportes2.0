@@ -73,6 +73,8 @@
 			alert('Cliente cadastrado com sucesso!!');
 			$('#nome').val('');
 			$('#telefone').val('');
+		}).fail(function (){
+			alert('Prencha os campos corretamente');
 		});
 	}
 </script>
