@@ -10,7 +10,7 @@
 @php
 if(count($liga->eventos)==0){
     continue; 
-}elseif($liga->is_top_list >= 2){
+}elseif($liga->is_top_list >= 1){
     $expandido = 'show';
 }else{
     $expandido = null;
