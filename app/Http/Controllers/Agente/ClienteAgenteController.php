@@ -104,7 +104,7 @@ class ClienteAgenteController extends Controller
             return view('agente.clientes.editar_cliente', compact('cliente'));
         }
 
-        return $id;
+        return response('Erro', 422);
     }
 
     /**
@@ -128,6 +128,15 @@ class ClienteAgenteController extends Controller
         $nome = ucwords( mb_strtolower( trim($request->nome) ) );
 
         if( isset($cliente) && ($cliente->agente_id === $agente->id) ){
+
+            $nomeExistente = Cliente::where([
+                ['agente_id', $request->user()->id],
+                ['nome', $nome],
+                ['id', '<>', $cliente->id],
+            ])->first();
+
+            if( isset($nomeExistente) )return response("Ja existe um cliente na sua lista com esse nome", 422);
+
             $cliente->nome = $nome;
             $cliente->telefone = $request->telefone;
             $cliente->save();

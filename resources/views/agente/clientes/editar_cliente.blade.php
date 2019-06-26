@@ -76,6 +76,8 @@
 			telefone: $('#telefone').val()
 		}).done(function (resposta){
 			alert('Informações atualizadas com sucesso!!');
+		}).fail(function(response){
+			alert(response.responseText);
 		});
 	}
 </script>
