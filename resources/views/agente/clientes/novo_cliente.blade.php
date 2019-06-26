@@ -24,7 +24,7 @@
 	                            <label class="col-md-4 col-form-label text-md-right">Telefone</label>
 
 	                            <div class="col-md-6">
-	                                <input id="telefone" type="number" class="form-control" name="telefone">
+	                                <input id="telefone" class="form-control" name="telefone">
 	                            </div>
 	                        </div>
 	                       
@@ -57,7 +57,14 @@
 @endsection
 
 @section('javascript')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
 <script type="text/javascript">
+
+	$(document).ready(function (){
+		$('#telefone').mask('(00) 00000-0000');
+	});
+
 	function cadastrarCliente(){
 		$.post('{{ route('agente.novocliente') }}', {
 			nome: $('#nome').val(),
