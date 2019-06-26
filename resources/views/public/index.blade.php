@@ -150,12 +150,18 @@ if(count($liga->eventos)==0){
                     @csrf
                     <div class="form-group">
                         <label for="valorAposta">Valor da Aposta</label>
-                        <input  min="2"  class="form-control" placeholder="Valor da aposta" type="number" name="valorAposta" id="valorAposta" onkeyup ="atualizarPossivelGanho()", onclick="atualizarPossivelGanho()">
+                        <input required min="2"  class="form-control" placeholder="Valor da aposta" type="number" name="valorAposta" id="valorAposta" onkeyup ="atualizarPossivelGanho()", onclick="atualizarPossivelGanho()">
                     </div>
                     <div class="form-group">
                         <label for="nomeAposta">Nome da aposta</label>
-                        <input class="form-control" placeholder="Digite um nome para sua aposta" name="nomeAposta" id="nomeAposta">
+                        <input required class="form-control" placeholder="Digite um nome para sua aposta" name="nomeAposta" id="nomeAposta">
                     </div>
+
+                    <!--Se agente estiver logado-->
+                    @auth('web')
+                    
+                    @endif
+                    <!--Se agente estiver logado-->
 
                     <div class="form-group">
                         <input type="checkbox" name="regrasOk" id='regrasOk' onchange="verificarRegrasOk()">

@@ -114,6 +114,13 @@ Route::prefix('agente')->group(function () {
 	Route::get('/relatorio', "Agente\RelatorioAgenteController@showRelatorio")->name('relatorio_agente');
 	Route::post('/relatorio', "Agente\RelatorioAgenteController@relatorio");
 
+	Route::get('/clientes', "Agente\ClienteAgenteController@index")->name('agente.clientes');
+	Route::get('/clientes/novo', "Agente\ClienteAgenteController@create")->name('agente.novocliente');
+	Route::post('/clientes/novo', "Agente\ClienteAgenteController@store")->name('agente.novocliente');
+	Route::get('/clientes/{id}/editar', "Agente\ClienteAgenteController@edit")->name('agente.editarcliente')
+		->where(['id' => '[0-9]+']);
+	Route::post('/clientes/{id}/editar', "Agente\ClienteAgenteController@update")->where(['id' => '[0-9]+']);
+
 	Route::get('/conta', "Agente\ContaAgenteController@showConta")->name('agenteconta');
 	Route::post('/conta', "Agente\ContaAgenteController@atualizarConta");
 	Route::post('/atualizarsenha', "Agente\ContaAgenteController@atualizarsenha")->name("agente-atualizarsenha");

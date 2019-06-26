@@ -49,7 +49,7 @@ class MinhaClasse extends Controller{
    }
 
    public static function atualizarOdds($evento){
-      $url = "https://api.betsapi.com/v1/bet365/start_sp";
+      $url = "https://api.betsapi.com/v1/bet365/prematch";
       $metodo = "GET";
       $variaveis["token"] = MinhaClasse::get_token();
       $variaveis["event_id"] = $evento;
