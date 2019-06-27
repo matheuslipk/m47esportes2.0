@@ -15,6 +15,7 @@
           <a class="dropdown-item" href="{{ route('agenteapostas') }}">Suas apostas</a>
           <a class="dropdown-item" href="{{ route('relatorio_agente') }}">Relatório</a>
           <a class="dropdown-item" href="{{ route('agentevalidar') }}">Validar aposta</a>
+          <a class="dropdown-item" href="{{ route('agente.clientes') }}">Meus Clientes</a>
         </div>
       </li>
 
