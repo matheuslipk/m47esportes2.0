@@ -159,7 +159,35 @@ if(count($liga->eventos)==0){
 
                     <!--Se agente estiver logado-->
                     @auth('web')
-                    
+                    <div class="row">
+                        <div class="col-9">
+                            <select class="form-control" name="cliente_id">
+                                <option value="">Selecione um cliente</option>
+                                @foreach($clientes as $cliente)
+                                <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-3">
+                            <a class="btn btn-success" href="{{ route('agente.novocliente') }}">Adicionar</a>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <label><b>Aposta ja foi paga?</b></label>
+                        </div>
+
+                        <div class="col-8 radio">
+                            <label><input type="radio" name="aposta_paga" value="1" required>Sim</label><br>
+                            <label><input type="radio" name="aposta_paga" value="0" required>Não</label>
+                        </div>
+                    </div>
+
+                    <br>
                     @endif
                     <!--Se agente estiver logado-->
 

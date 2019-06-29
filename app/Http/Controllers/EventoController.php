@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\CatPalpite;
 use App\TipoPalpite;
 use App\Liga;
@@ -49,8 +50,18 @@ class EventoController extends Controller
                 $evento->data = MinhaClasse::data_mysql_to_datahora_formatada($evento->data);
             }
         }
-        // return $ligas;
-    	return view('public.index', compact('ligas'));
+
+        $agente = auth()->guard('web')->user();
+        $clientes = [];
+
+        if( isset($agente) ){
+            $clientes = DB::table('clientes')
+                ->where('agente_id', $agente->id)
+                ->orderBy('nome', 'asc')
+                ->get();
+        }
+
+    	return view('public.index', compact('ligas', 'clientes'));
     }
 
     public function indexApi(Request $request){

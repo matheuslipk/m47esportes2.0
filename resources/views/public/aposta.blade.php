@@ -34,8 +34,16 @@
 					    @endif					    
 					    Nome: {{$aposta->nome}}<br>
 					    @if(isset($aposta->agente_id))
-					    	Agente: {{$aposta->agente->nickname}}
+					    	Agente: {{$aposta->agente->nickname}}<br>
 					    @endif
+					    @auth
+
+					    	@if( isset($aposta->cliente_id) )
+					    		Cliente: <b>{{ $aposta->cliente->nome }}</b><br>
+					    	@endif
+
+						    
+						@endif
 					</div>
 
 					<div class="card-body text-center">
@@ -84,7 +92,22 @@
 						Cota Total: {{$aposta->cotacao_total}}<br>
 						Valor Apostado: R$ {{$aposta->valor_apostado}}<br>
 						Possíveis ganhos: R$ {{$aposta->premiacao}}<br>
-						Aqui ficará algumas regras do site
+						@auth
+							@if( (auth()->user()->id == $aposta->agente_id) && isset($aposta->aposta_paga))
+						    <div class="row justify-content-center">
+						    	<select style="font-size: 13px" class="form-control col-5" id="aposta_paga" disabled>
+					    			@if($aposta->aposta_paga == 0)
+							    		<option value="1">Aposta paga</option>
+							    		<option value="0" selected>Aposta não paga</option>
+						    		@elseif($aposta->aposta_paga == 1)
+							    		<option value="1" selected>Aposta paga</option>
+							    		<option value="0" >Aposta não paga</option>
+						    		@endif
+						    	</select>
+						    	<button class="col-3 btn btn-sm btn-warning" onclick="liberarEdicao(this)" salvar="false" >Atualizar</button>
+						    </div>					    								    	
+						    @endif
+					    @endif <!-- Fim auth -->
 					</div>
 				</div>
 				<div class="col-sm-2 col-md-3"></div>
@@ -189,6 +212,40 @@
 	      var string = $("#textAposta").val();
 	      App.imprimeAposta(string);
 	   }
+
+
+	   	function liberarEdicao(botao){
+
+	   		var acao = $(botao).attr('Salvar');
+
+	   		if(acao == 'false'){
+	   			$(botao).removeClass('btn-warning');
+		   		$(botao).addClass('btn-success');
+		   		$(botao).html('Salvar');
+		   		$(botao).attr('Salvar', 'true');
+		   		$("#aposta_paga").attr('disabled', false);
+	   		}
+
+	   		if(acao == 'true'){
+	   			
+
+		   		$.post('{{ route('ajax.agente.atualizarAposta') }}', {
+		   			aposta_id: {{ $aposta->id }},
+		   			aposta_paga: $("#aposta_paga").val()
+		   		}).done(function(resposta){
+		   			alert("Aposta atualizada");
+		   			$(botao).removeClass('btn-success');
+			   		$(botao).addClass('btn-warning');
+			   		$(botao).html('Atualizar');
+			   		$(botao).attr('Salvar', 'false');
+		   			$("#aposta_paga").attr('disabled', true);
+		   		});
+
+		   		
+	   		}
+
+	   	
+	   	}
 
 	</script>
 
