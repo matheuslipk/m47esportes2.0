@@ -201,6 +201,7 @@ class ApostaController extends Controller{
     	$aposta->data_aposta = MinhaClasse::timestamp_to_data_mysql(time());
     	$aposta->cotacao_total = $cotaTotal;
     	$aposta->valor_apostado = $valorApostado;
+        $aposta->aposta_paga = 0;
     	$aposta->premiacao = $premiacao;
     	$aposta->ganhou = 0;
     	$aposta->save();

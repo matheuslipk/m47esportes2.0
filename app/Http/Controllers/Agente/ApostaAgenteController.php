@@ -223,11 +223,17 @@ class ApostaAgenteController extends Controller{
 
         $aposta = new Aposta();
         $aposta->agente_id = Auth::user()->id;
+
+        if( $request->filled('cliente_id') ){
+            $aposta->cliente_id = $request->cliente_id;
+        }
+
         $aposta->nome = $request->input('nomeAposta');
         $aposta->data_aposta = MinhaClasse::timestamp_to_data_mysql(time());
         $aposta->data_validacao = MinhaClasse::timestamp_to_data_mysql(time());
         $aposta->cotacao_total = $cotaTotal;
         $aposta->valor_apostado = $valorApostado;
+        $aposta->aposta_paga = $request->aposta_paga;
         $aposta->comissao_agente = $comissaoAgente;
         $aposta->premiacao = $premiacao;
         $aposta->ganhou = 0;
@@ -327,6 +333,24 @@ class ApostaAgenteController extends Controller{
         }
 
         return $soma_apostas;
+    }
+
+
+    public function atualizarAposta(Request $request){
+        $request->validate([
+            'aposta_id'=>'required|integer',
+            'aposta_paga'=>'required|integer',
+        ]);
+
+        $aposta = Aposta::find($request->aposta_id);
+        if( isset($aposta)  && $aposta->agente_id==$request->user()->id ){
+            $aposta->aposta_paga = $request->aposta_paga;
+            $aposta->save();
+            return response('Ok');
+        }else{
+            return response('Erro', 422);
+        }
+
     }
 
     public function getConfigAgente($agente_id){

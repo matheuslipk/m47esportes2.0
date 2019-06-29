@@ -191,6 +191,10 @@ Route::prefix('ajax/admin')->group(function(){
 	Route::get('/bolao/eventos', 'Admin\EventoBolaoAdminController@getEventosBolaoJson')->name('admin.evento_bolaos');
 });
 
+Route::prefix('ajax/agente')->group(function(){
+	Route::post('/aposta/atualizar', "Agente\ApostaAgenteController@atualizarAposta")->name('ajax.agente.atualizarAposta');
+});
+
 Route::get('evento/{id}/odds', 'EventoController@getOdds');
 
 Auth::routes();

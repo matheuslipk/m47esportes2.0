@@ -19,6 +19,10 @@ class Aposta extends Model
     public function agente(){
         return $this->belongsTo('App\Agente');
     }
+
+    public function cliente(){
+        return $this->belongsTo('App\Cliente');
+    }
 	
     public $timestamps = false;
 
