@@ -42,10 +42,10 @@
 	</div>
 
 	<div class="row justify-content-center">
-		<table class="table col-6" id="tabela_relatorio">
+		<table class="table col-sm-6" id="tabela_relatorio">
 			<thead>
 				<tr>
-					<th>Relatório</th>
+					<th colspan="2">Relatório</th>
 				</tr>
 			</thead>
 			<tbody>
