@@ -132,6 +132,15 @@
 				somaComissao -= valorAposta * comissao;
 
 			}
+			var total = somaApostas+somaComissao+somaPremios;
+			var corTexto = "";
+			if(total>=0){
+				corTexto = "text-success";
+			} else{
+				corTexto = "text-danger";
+			}
+
+
 			var tr = "<tr>";
 			tr += "<td>Arrecadado</td>";
 			tr += "<td>R$"+ somaApostas.toFixed(2) +"</td>";
@@ -144,7 +153,7 @@
 			tr += "<td>R$"+ somaPremios.toFixed(2) +"</td></tr>";
 
 			tr += "<tr><td>Total</td>";
-			tr += "<td>R$"+ (somaApostas+somaComissao+somaPremios).toFixed(2) +"</td></tr>";
+			tr += "<td class='" + corTexto + "'><b>R$"+ (somaApostas+somaComissao+somaPremios).toFixed(2) +"</b></td></tr>";
 
 			$("#tabela_relatorio>tbody").html(tr);
 		});
